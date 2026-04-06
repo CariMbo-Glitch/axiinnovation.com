@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axi Innovation â Global Health Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   AXI INNOVATION â GLOBAL HEALTH INTELLIGENCE PLATFORM
+   Executive Navy Style Â· Final Production Build
+   ================================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Lato', sans-serif; font-weight: 300; color: #3b4555; background: #ffffff; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; color: #1a2744; line-height: 1.2; font-weight: 600; }
+p { color: #4a5568; }
+a { text-decoration: none; }
+
+/* === NAVBAR === */
+#navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 20, 45, 0.97); backdrop-filter: blur(12px); padding: 0 60px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(200,175,100,0.15); }
+.nav-logo { display: flex; align-items: center; gap: 14px; }
+.nav-logo svg { height: 42px; width: auto; }
+.nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #ffffff; letter-spacing: 0.3px; }
+.nav-logo-text span { color: #c8af64; }
+nav { display: flex; align-items: center; gap: 36px; }
+nav a { font-family: 'Lato', sans-serif; font-weight: 400; font-size: 12px; color: rgba(255,255,255,0.65); letter-spacing: 1.4px; text-transform: uppercase; transition: color 0.25s; }
+nav a:hover { color: #c8af64; }
+.nav-cta { background: transparent; border: 1px solid #c8af64; color: #c8af64 !important; padding: 9px 22px; border-radius: 2px; font-size: 11px !important; letter-spacing: 1.5px !important; transition: all 0.25s !important; }
+.nav-cta:hover { background: #c8af64 !important; color: #0a1a2d !important; }
+
+/* === HERO === */
+.hero { min-height: 100vh; background: linear-gradient(160deg, #0a1428 0%, #0d2046 50%, #0a1428 100%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 140px 60px 100px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse 60% 40% at 20% 30%, rgba(200,175,100,0.05) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 70%, rgba(29,78,216,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; }
+.hero-eyebrow { display: inline-block; font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #c8af64; margin-bottom: 28px; }
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: inline-block; width: 36px; height: 1px; background: rgba(200,175,100,0.5); vertical-align: middle; margin: 0 14px; }
+.hero h1 { font-size: clamp(44px, 5.5vw, 78px); font-weight: 600; color: #ffffff; margin: 0 auto 32px; line-height: 1.08; }
+.hero h1 em { font-style: italic; color: #c8af64; }
+.hero-sub { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.55); max-width: 620px; margin: 0 auto 52px; line-height: 1.8; }
+.hero-actions { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.btn-gold { background: #c8af64; color: #0a1428; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 36px; border-radius: 2px; transition: all 0.25s; border: 1px solid #c8af64; }
+.btn-gold:hover { background: #dbc47a; }
+.btn-outline-w { background: transparent; color: #ffffff; font-family: 'Lato', sans-serif; font-weight: 400; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px 36px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.3); transition: all 0.25s; }
+.btn-outline-w:hover { border-color: #fff; background: rgba(255,255,255,0.04); }
+.hero-stats { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; border-top: 1px solid rgba(200,175,100,0.12); }
+.stat-item { padding: 26px 52px; text-align: center; border-right: 1px solid rgba(200,175,100,0.12); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: #c8af64; line-height: 1; }
+.stat-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-top: 6px; }
+
+/* === COST OF INACTION === */
+.coi-section { padding: 110px 60px; background: #f9f7f2; position: relative; overflow: hidden; }
+.coi-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #c8af64 0%, #1a2744 50%, #c8af64 100%); }
+.coi-header { text-align: center; max-width: 780px; margin: 0 auto 70px; }
+.eyebrow { font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #c8af64; margin-bottom: 20px; }
+.coi-header h2 { font-size: clamp(30px, 3.5vw, 50px); color: #1a2744; margin-bottom: 20px; }
+.coi-header p { font-size: 16px; color: #6b7a8d; line-height: 1.8; }
+.coi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 1140px; margin: 0 auto; border: 1px solid #e0dbd0; border-radius: 3px; overflow: hidden; }
+.coi-card { padding: 44px 36px; background: #ffffff; border-right: 1px solid #e0dbd0; position: relative; }
+.coi-card:nth-child(3n) { border-right: none; }
+.coi-card:nth-child(n+4) { border-top: 1px solid #e0dbd0; }
+.coi-icon { font-size: 28px; margin-bottom: 18px; }
+.coi-figure { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: #c53030; line-height: 1; margin-bottom: 10px; }
+.coi-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #1a2744; margin-bottom: 12px; }
+.coi-card p { font-size: 13.5px; color: #6b7a8d; line-height: 1.65; }
+.coi-source { font-size: 10px; letter-spacing: 0.5px; color: #b0a890; margin-top: 12px; font-style: italic; }
+
+/* === SERVICES === */
+.services-section { padding: 120px 60px; background: #ffffff; }
+.section-header { text-align: center; max-width: 720px; margin: 0 auto 80px; }
+.section-header h2 { font-size: clamp(30px, 3.5vw, 50px); color: #1a2744; margin-bottom: 20px; }
+.section-header p { font-size: 16px; color: #6b7a8d; line-height: 1.8; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #e8edf4; max-width: 1180px; margin: 0 auto; }
+.service-card { background: #ffffff; padding: 50px 40px; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer; }
+.service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: #c8af64; transition: height 0.4s ease; }
+.service-card:hover::before { height: 100%; }
+.service-card:hover { background: #faf8f4; }
+.svc-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #c8af64; background: rgba(200,175,100,0.1); padding: 5px 12px; border-radius: 2px; margin-bottom: 24px; }
+.service-card h3 { font-size: 28px; color: #1a2744; margin-bottom: 6px; }
+.svc-subtitle { font-size: 13px; color: #c8af64; font-weight: 400; letter-spacing: 0.5px; margin-bottom: 24px; }
+.pain-box { background: #fff8f8; border-left: 3px solid #e53e3e; padding: 14px 16px; margin-bottom: 18px; border-radius: 0 4px 4px 0; }
+.pain-box .pain-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #e53e3e; margin-bottom: 6px; }
+.pain-box p { font-size: 13px; color: #4a5568; line-height: 1.55; }
+.pain-box strong { color: #c53030; }
+.svc-solution { font-size: 13.5px; color: #4a5568; line-height: 1.7; border-top: 1px solid #eef1f6; padding-top: 18px; margin-bottom: 20px; }
+.view-plans-btn { display: inline-block; font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #1a2744; padding: 10px 20px; border: 1px solid #1a2744; border-radius: 2px; cursor: pointer; transition: all 0.25s; background: transparent; }
+.view-plans-btn:hover { background: #1a2744; color: #ffffff; }
+
+/* === PRICING MODAL === */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 20, 45, 0.85); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 40px; }
+.modal-overlay.active { display: flex; }
+.modal-content { background: #ffffff; border-radius: 6px; max-width: 980px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+.modal-header { padding: 40px 48px 28px; border-bottom: 1px solid #eef1f6; }
+.modal-header .modal-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #c8af64; margin-bottom: 10px; }
+.modal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: #1a2744; margin-bottom: 6px; }
+.modal-header .modal-subtitle { font-size: 14px; color: #6b7a8d; }
+.modal-close { position: absolute; top: 24px; right: 28px; width: 40px; height: 40px; border: 1px solid #e0e6ed; border-radius: 50%; background: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #6b7a8d; transition: all 0.2s; }
+.modal-close:hover { background: #1a2744; color: #fff; border-color: #1a2744; }
+.modal-body { padding: 36px 48px 48px; }
+.plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.plan-card { border: 1px solid #e0e6ed; border-radius: 4px; padding: 36px 28px; text-align: center; position: relative; transition: all 0.3s; }
+.plan-card:hover { border-color: #c8af64; box-shadow: 0 8px 32px rgba(200,175,100,0.15); }
+.plan-card.featured { border-color: #1a2744; box-shadow: 0 8px 32px rgba(26,39,68,0.12); }
+.plan-card.featured::before { content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1a2744; color: #c8af64; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 16px; border-radius: 2px; }
+.plan-name { font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #c8af64; margin-bottom: 16px; }
+.plan-price { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 700; color: #1a2744; line-height: 1; margin-bottom: 4px; }
+.plan-price-sub { font-size: 12px; color: #6b7a8d; margin-bottom: 28px; }
+.plan-features { list-style: none; text-align: left; margin-bottom: 32px; }
+.plan-features li { font-size: 13px; color: #4a5568; padding: 8px 0; border-bottom: 1px solid #f3f5f8; display: flex; align-items: flex-start; gap: 10px; }
+.plan-features li::before { content: '\2713'; color: #c8af64; font-weight: 700; flex-shrink: 0; }
+.plan-cta { display: inline-block; width: 100%; font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px; border-radius: 2px; text-align: center; transition: all 0.25s; cursor: pointer; border: 1px solid #1a2744; color: #1a2744; background: transparent; }
+.plan-cta:hover { background: #1a2744; color: #fff; }
+.plan-card.featured .plan-cta { background: #c8af64; color: #0a1428; border-color: #c8af64; }
+.plan-card.featured .plan-cta:hover { background: #dbc47a; }
+
+/* === ABOUT STRIP === */
+.about-strip { background: #0a1428; padding: 100px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-text .eyebrow { color: #c8af64; }
+.about-text h2 { font-size: 42px; color: #ffffff; margin-bottom: 24px; }
+.about-text p { color: rgba(255,255,255,0.55); font-size: 15px; line-height: 1.9; margin-bottom: 16px; }
+.pillars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pillar { padding: 28px 22px; border: 1px solid rgba(200,175,100,0.15); border-radius: 2px; background: rgba(200,175,100,0.03); transition: all 0.2s; }
+.pillar:hover { background: rgba(200,175,100,0.07); border-color: rgba(200,175,100,0.3); }
+.pillar-ico { font-size: 24px; margin-bottom: 12px; }
+.pillar h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #ffffff; margin-bottom: 8px; }
+.pillar p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* === CONTACT === */
+.contact-section { padding: 120px 60px; background: #f9f7f2; text-align: center; }
+.contact-section .eyebrow { color: #c8af64; }
+.contact-section h2 { font-size: 48px; color: #1a2744; margin-bottom: 20px; }
+.contact-section > p { font-size: 16px; color: #6b7a8d; max-width: 520px; margin: 0 auto 48px; }
+.contact-form { max-width: 560px; margin: 0 auto; text-align: left; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.fg { margin-bottom: 20px; }
+.fg label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #8a9aad; margin-bottom: 8px; }
+.fg input, .fg select, .fg textarea { width: 100%; padding: 14px 18px; border: 1px solid #d5d5d5; background: #ffffff; border-radius: 2px; font-family: 'Lato', sans-serif; font-size: 14px; color: #3b4555; outline: none; transition: border-color 0.2s; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: #c8af64; }
+.fg textarea { resize: vertical; min-height: 100px; }
+.form-submit { width: 100%; background: #1a2744; color: #ffffff; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 16px; border: none; border-radius: 2px; cursor: pointer; transition: all 0.25s; }
+.form-submit:hover { background: #c8af64; color: #1a2744; }
+
+/* === FOOTER === */
+footer { background: #070e1d; padding: 52px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+footer .nav-logo-text { font-size: 18px; }
+.footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-links a { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+.footer-links a:hover { color: #c8af64; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+
+/* === RESPONSIVE === */
+@media (max-width: 960px) {
+  #navbar { padding: 0 24px; }
+  nav { display: none; }
+  .hero { padding: 120px 24px 80px; }
+  .hero-stats { flex-wrap: wrap; }
+  .stat-item { padding: 18px 28px; border-right: none; }
+  .coi-section { padding: 80px 24px; }
+  .coi-grid { grid-template-columns: 1fr; }
+  .coi-card { border-right: none !important; border-bottom: 1px solid #e0dbd0; }
+  .coi-card:last-child { border-bottom: none; }
+  .services-section { padding: 80px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .about-strip { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+  .pillars-grid { grid-template-columns: 1fr; }
+  .contact-section { padding: 80px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  .modal-overlay { padding: 16px; }
+  .modal-header, .modal-body { padding-left: 24px; padding-right: 24px; }
+  .plans-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<header id="navbar">
+  <a href="#" class="nav-logo">
+    <svg viewBox="80 -20 300 220" xmlns="http://www.w3.org/2000/svg" style="height:42px; width:auto;">
+      <path d="M95,65 C95,40 110,20 120,20 C130,20 145,40 145,65 C145,95 130,135 120,155 C110,135 95,95 95,65Z" fill="#9CA3AF"/>
+      <path d="M155,50 C155,25 172,5 183,5 C194,5 211,25 211,50 C211,85 194,130 183,155 C172,130 155,85 155,50Z" fill="#6AABE0"/>
+      <path d="M220,35 C220,10 250,-15 270,-15 C290,-15 330,15 330,55 C330,95 300,145 270,170 C250,145 220,75 220,35Z" fill="#4A9AD4"/>
+      <path d="M270,170 C290,160 340,140 370,145 C370,145 340,165 295,175 C260,182 230,178 210,190 C205,193 200,197 195,195 C220,180 250,175 270,170Z" fill="#FFFFFF"/>
+    </svg>
+    <div class="nav-logo-text">Axi <span>Innovation</span></div>
+  </a>
+  <nav>
+    <a href="#cost-of-inaction">Why Now</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Request Access</a>
+  </nav>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Global Health Intelligence Platform</div>
+    <h1>The intelligence layer between<br><em>approval</em> and <em>access</em></h1>
+    <p class="hero-sub">Axi Innovation provides pharmaceutical, medtech, and gene therapy executives with the intelligence infrastructure to launch faster, navigate policy, reach patients, and outmanoeuvre the competition â across every market that matters.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">Request Early Access</a>
+      <a href="#services" class="btn-outline-w">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Intelligence Modules</div></div>
+    <div class="stat-item"><div class="stat-num">578</div><div class="stat-label">Days Avg. Access Delay (2024)</div></div>
+    <div class="stat-item"><div class="stat-num">$24M</div><div class="stat-label">Revenue Lost / Month of Delay</div></div>
+    <div class="stat-item"><div class="stat-num">80+</div><div class="stat-label">Global Agencies Monitored</div></div>
+  </div>
+</section>
+
+<!-- ========== COST OF INACTION ========== -->
+<section class="coi-section" id="cost-of-inaction">
+  <div class="coi-header">
+    <div class="eyebrow">The Cost of Inaction</div>
+    <h2>What happens when intelligence is fragmented â or absent</h2>
+    <p>Market access is becoming harder, not easier. The average time from drug approval to patient access reached <strong>578 days</strong> in 2024 â and fewer than 46% of centrally approved medicines are now available to patients, down from 48% in 2019. Here's what that costs.</p>
+  </div>
+  <div class="coi-grid">
+    <div class="coi-card">
+      <div class="coi-icon">&#9201;</div>
+      <div class="coi-figure">$24M / month</div>
+      <h4>Revenue Evaporated Per Month of Delay</h4>
+      <p>A single day of delayed market entry costs approximately $800K in lost specialty drug sales. Every month without access in a target market is $24M in revenue that never recovers.</p>
+      <div class="coi-source">Source: Tufts CSDD, 2023</div>
+    </div>
+    <div class="coi-card">
+      <div class="coi-icon">&#128201;</div>
+      <div class="coi-figure">578 days</div>
+      <h4>Average Approval-to-Access Gap (2024)</h4>
+      <p>The time from regulatory approval to actual patient access has now reached 578 days on average â nearly 20 months. That gap is growing, not shrinking.</p>
+      <div class="coi-source">Source: EFPIA Patient W.A.I.T. Indicator, 2024</div>
+    </div>
+    <div class="coi-card">
+      <div class="coi-icon">&#128683;</div>
+      <div class="coi-figure">34%</div>
+      <h4>Drugs That Miss Launch Forecasts</h4>
+      <p>One in three drugs launched between 2012â2021 missed their revenue targets â with 57% of those failures attributable directly to limited market access.</p>
+      <div class="coi-source">Source: Deloitte/IQVIA Market Access Study</div>
+    </div>
+    <div class="coi-card">
+      <div class="coi-icon">&#128138;</div>
+      <div class="coi-figure">$300B</div>
+      <h4>Lost Annually to Non-Adherence</h4>
+      <p>More than $300B in global treatment value is destroyed each year by prescription abandonment and non-adherence â up to 69% abandonment for specialty drugs with high out-of-pocket costs.</p>
+      <div class="coi-source">Source: McKesson / IQVIA</div>
+    </div>
+    <div class="coi-card">
+      <div class="coi-icon">&#128203;</div>
+      <div class="coi-figure">40%</div>
+      <h4>HTA Submissions Rejected or Restricted</h4>
+      <p>Up to 40% of Health Technology Assessment submissions face rejection or restrictions in major markets â each failed submission adds 18+ months before a re-attempt is possible.</p>
+      <div class="coi-source">Source: BMC/PMC Multi-Country HTA Analysis</div>
+    </div>
+    <div class="coi-card">
+      <div class="coi-icon">&#128269;</div>
+      <div class="coi-figure">6â18 months</div>
+      <h4>Competitive Shift Detection Gap</h4>
+      <p>Market share shifts happen 6â18 months before companies detect them. Without real-time intelligence, organisations are always repositioning too late â losing windows that never reopen.</p>
+      <div class="coi-source">Source: AlphaSense/BiopharmaVantage CI, 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section class="services-section" id="services">
+  <div class="section-header">
+    <div class="eyebrow">Our Intelligence Suite</div>
+    <h2>Six modules. One platform.<br>Complete market command.</h2>
+    <p>Every module was designed to close a specific intelligence gap that costs pharmaceutical, medtech, and gene therapy companies revenue, positioning, and patients. Click any module to explore pricing.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card" onclick="openPricing('gain')">
+      <div class="svc-tag">Module 01</div>
+      <h3>GAiN</h3>
+      <div class="svc-subtitle">Global Access Intelligence</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>Each month of delayed market entry costs an estimated <strong>$24M in lost revenue</strong>. Only 40% of products reach 5+ markets within 24 months of first approval.</p></div>
+      <p class="svc-solution">Real-time payer landscapes, distributor readiness, pricing windows, and regulatory pathway intelligence â so your launch sequence is deliberate, swift, and commercially protected across all target geographies.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+    <div class="service-card" onclick="openPricing('egov')">
+      <div class="svc-tag">Module 02</div>
+      <h3>eGov</h3>
+      <div class="svc-subtitle">Electronic Government Affairs</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>A single missed regulatory update can delay or block market access for <strong>12â18 months</strong>. Manual monitoring of 80+ agencies is operationally unsustainable.</p></div>
+      <p class="svc-solution">Automated surveillance of 80+ global health authorities with AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows â so your government affairs teams are perpetually ahead of the curve.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+    <div class="service-card" onclick="openPricing('patnav')">
+      <div class="svc-tag">Module 03</div>
+      <h3>PatNav</h3>
+      <div class="svc-subtitle">Patient Navigator</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>Up to <strong>69% of specialty prescriptions are abandoned</strong> before first fill. More than $300B in treatment value is lost annually to non-adherence and access barriers.</p></div>
+      <p class="svc-solution">End-to-end patient navigation covering prior authorisation, co-pay support, adherence monitoring, and real-world evidence generation â protecting patient outcomes and commercial returns simultaneously.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+    <div class="service-card" onclick="openPricing('ci-private')">
+      <div class="svc-tag">Module 04</div>
+      <h3>CrossIntell Private</h3>
+      <div class="svc-subtitle">Private Healthcare Intelligence</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>Market share shifts happen <strong>6â18 months before companies detect them</strong>. Reactive intelligence means responding too late â wasting spend and ceding positioning windows.</p></div>
+      <p class="svc-solution">Dedicated, organisation-specific competitive intelligence â custom market models, real-time share tracking, and forward-looking scenario planning â aligned to your therapeutic area, geography, and strategic priorities.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+    <div class="service-card" onclick="openPricing('ci-public')">
+      <div class="svc-tag">Module 05</div>
+      <h3>CrossIntell Public</h3>
+      <div class="svc-subtitle">Public Healthcare Intelligence</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>Up to <strong>40% of HTA submissions are restricted or rejected</strong>. P&amp;R delays rank among the top five negative business factors cited by senior pharma executives.</p></div>
+      <p class="svc-solution">Real-time public market intelligence across 30+ healthcare systems â reimbursement decisions, payer policy feeds, and competitive positioning data â so access teams never negotiate underprepared.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+    <div class="service-card" onclick="openPricing('hta-axi')">
+      <div class="svc-tag">Module 06</div>
+      <h3>HTA-Axi</h3>
+      <div class="svc-subtitle">Health Economics &amp; Outcomes Research</div>
+      <div class="pain-box"><div class="pain-label">The Challenge</div><p>A failed HTA submission forces a restart. Second submissions add <strong>18+ months</strong> â with incomplete economic models the leading cause of outright rejection.</p></div>
+      <p class="svc-solution">Full-cycle HEOR support: economic modelling, budget impact analysis, value dossier development, and local payer alignment strategy â engineered for first-submission success across all target markets.</p>
+      <button class="view-plans-btn">View Plans &#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING MODAL ========== -->
+<div class="modal-overlay" id="pricingModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-header">
+      <div class="modal-eyebrow" id="modal-eyebrow"></div>
+      <h2 id="modal-title"></h2>
+      <p class="modal-subtitle" id="modal-subtitle"></p>
+    </div>
+    <div class="modal-body">
+      <div class="plans-grid">
+        <div class="plan-card">
+          <div class="plan-name">Single Touch-Point</div>
+          <div class="plan-price">$25,000</div>
+          <div class="plan-price-sub">one-time engagement</div>
+          <ul class="plan-features" id="plan1-features"></ul>
+          <a href="#contact" class="plan-cta" onclick="closeModal()">Get Started</a>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-name">Monthly Subscription</div>
+          <div class="plan-price">$15,000</div>
+          <div class="plan-price-sub">per month</div>
+          <ul class="plan-features" id="plan2-features"></ul>
+          <a href="#contact" class="plan-cta" onclick="closeModal()">Start Subscription</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Corporate Full-Suite</div>
+          <div class="plan-price" style="font-size:32px;">Custom</div>
+          <div class="plan-price-sub">request a quotation</div>
+          <ul class="plan-features" id="plan3-features"></ul>
+          <a href="mailto:contact@axiinnovation.com?subject=Corporate Full-Suite Inquiry" class="plan-cta">Request Quotation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<section class="about-strip" id="about">
+  <div class="about-text">
+    <div class="eyebrow">About Axi Innovation</div>
+    <h2>Built for the decisions that shape markets</h2>
+    <p>Axi Innovation was founded to close the intelligence gap between regulatory approval and patient access â the critical window where commercial value is won or lost, where competitive positioning is established, and where patients either reach treatment or fall through the cracks.</p>
+    <p>We work exclusively with pharmaceutical, medtech, and gene therapy executives who operate at corporate, regional, and local scale â and who require intelligence that moves as fast as their markets do.</p>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar"><div class="pillar-ico">&#9670;</div><h4>Unified Platform</h4><p>Six intelligence modules in one environment. No fragmented vendor stack. No blind spots.</p></div>
+    <div class="pillar"><div class="pillar-ico">&#9670;</div><h4>Real-Time Data</h4><p>Continuous monitoring of agencies, markets, and competitive signals â insights in hours, not quarters.</p></div>
+    <div class="pillar"><div class="pillar-ico">&#9670;</div><h4>Patient-Centric</h4><p>Intelligence that traces from payer decision to patient outcome â closing the commercial-clinical loop.</p></div>
+    <div class="pillar"><div class="pillar-ico">&#9670;</div><h4>Confidential by Design</h4><p>Enterprise-grade data governance. Your intelligence is yours â never shared, never leveraged.</p></div>
+  </div>
+</section>
+
+<!-- ========== CONTACT ========== -->
+<section class="contact-section" id="contact">
+  <div class="eyebrow">Get in Touch</div>
+  <h2>Request Early Access</h2>
+  <p>We are selectively onboarding partners across pharmaceutical, medtech, and gene therapy sectors. Tell us about your market access challenge.</p>
+  <form class="contact-form" action="https://formsubmit.co/contact@axiinnovation.com" method="POST">
+    <input type="hidden" name="_subject" value="New Early Access Request â Axi Innovation">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <div class="form-row">
+      <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="First name" required></div>
+      <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Last name" required></div>
+    </div>
+    <div class="fg"><label>Corporate Email</label><input type="email" name="email" placeholder="your@company.com" required></div>
+    <div class="form-row">
+      <div class="fg"><label>Company</label><input type="text" name="company" placeholder="Company" required></div>
+      <div class="fg"><label>Role / Title</label><input type="text" name="role" placeholder="VP, Director, C-Suite..."></div>
+    </div>
+    <div class="fg">
+      <label>Module of Interest</label>
+      <select name="module">
+        <option value="">Select a moduleâ¦</option>
+        <option>GAiN â Global Access Intelligence</option>
+        <option>eGov â Electronic Government Affairs</option>
+        <option>PatNav â Patient Navigator</option>
+        <option>CrossIntell Private Healthcare</option>
+        <option>CrossIntell Public Healthcare</option>
+        <option>HTA-Axi â Health Economics</option>
+        <option>Full Platform</option>
+      </select>
+    </div>
+    <div class="fg"><label>Message</label><textarea name="message" placeholder="Describe your most pressing market access challengeâ¦"></textarea></div>
+    <button type="submit" class="form-submit">Submit Request &#8594;</button>
+  </form>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-logo" style="display:flex; align-items:center; gap:14px;">
+    <svg viewBox="80 -20 300 220" xmlns="http://www.w3.org/2000/svg" style="height:44px; width:auto;">
+      <path d="M95,65 C95,40 110,20 120,20 C130,20 145,40 145,65 C145,95 130,135 120,155 C110,135 95,95 95,65Z" fill="#9CA3AF"/>
+      <path d="M155,50 C155,25 172,5 183,5 C194,5 211,25 211,50 C211,85 194,130 183,155 C172,130 155,85 155,50Z" fill="#6AABE0"/>
+      <path d="M220,35 C220,10 250,-15 270,-15 C290,-15 330,15 330,55 C330,95 300,145 270,170 C250,145 220,75 220,35Z" fill="#4A9AD4"/>
+      <path d="M270,170 C290,160 340,140 370,145 C370,145 340,165 295,175 C260,182 230,178 210,190 C205,193 200,197 195,195 C220,180 250,175 270,170Z" fill="#FFFFFF"/>
+    </svg>
+    <div class="nav-logo-text">Axi <span style="color:#c8af64;">Innovation</span></div>
+  </div>
+  <div class="footer-links">
+    <a href="#cost-of-inaction">Why Now</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Axi Innovation. All rights reserved.</div>
+</footer>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+/* --- SERVICE DATA --- */
+const serviceData = {
+  'gain': {
+    eyebrow: 'Module 01', title: 'GAiN \u2014 Global Access Intelligence',
+    subtitle: 'Real-time market access intelligence across all target geographies',
+    plan1: ['Single-country market access assessment','Payer landscape and pricing window analysis','Distributor network mapping','Competitive entry timeline report','Executive summary and recommendation deck'],
+    plan2: ['Multi-country real-time access dashboards','Continuous payer and policy monitoring','Launch sequence optimisation model','Monthly executive intelligence briefing','Competitive entry alerts and response plans','Dedicated analyst support'],
+    plan3: ['Full portfolio market access intelligence','All countries and therapeutic areas covered','Custom data integrations and API access','Embedded analyst team (on-demand)','Board-level quarterly strategy reviews','Priority response SLA (<24h)']
+  },
+  'egov': {
+    eyebrow: 'Module 02', title: 'eGov \u2014 Electronic Government Affairs',
+    subtitle: 'Automated monitoring of 80+ global health authorities and policy bodies',
+    plan1: ['Single-region regulatory scan','Policy and legislation impact assessment','Advocacy window identification','Stakeholder mapping report','Executive briefing document'],
+    plan2: ['Multi-region AI-powered policy alerts','Real-time legislation and guidance tracking','Comment period and advocacy calendar','Monthly government affairs briefing','Regulatory timeline intelligence','Dedicated policy analyst'],
+    plan3: ['Global 80+ agency surveillance','Custom alert rules and escalation protocols','Full stakeholder engagement tracking','Integrated with internal GR/GA systems','Board-level regulatory risk reporting','Priority response SLA (<24h)']
+  },
+  'patnav': {
+    eyebrow: 'Module 03', title: 'PatNav \u2014 Patient Navigator',
+    subtitle: 'End-to-end patient navigation from prescription to adherence',
+    plan1: ['Single-product patient journey mapping','Prior authorisation workflow assessment','Co-pay barrier analysis','Adherence risk identification','Recommendations report'],
+    plan2: ['Active patient navigation platform access','Prior authorisation automation','Co-pay and assistance program integration','Real-time adherence monitoring','Monthly patient access KPI dashboard','Dedicated patient access coordinator'],
+    plan3: ['Full portfolio patient navigation','Custom RWE data capture pipeline','HCP-patient communication tools','Integration with EHR and pharmacy systems','Quarterly outcomes and value reporting','Priority support SLA (<24h)']
+  },
+  'ci-private': {
+    eyebrow: 'Module 04', title: 'CrossIntell Private \u2014 Healthcare Intelligence',
+    subtitle: 'Dedicated competitive intelligence for your organisation',
+    plan1: ['Single-TA competitive landscape report','Market share positioning analysis','Competitor pipeline and launch tracker','SWOT and strategic response assessment','Executive presentation deck'],
+    plan2: ['Real-time competitive intelligence dashboard','Continuous market share movement tracking','Competitor launch and pipeline monitoring','Monthly strategic intelligence briefing','Scenario planning and response modelling','Dedicated CI analyst'],
+    plan3: ['Full portfolio competitive intelligence','Multi-TA and multi-geography coverage','Custom KPI tracking and alerting','War-gaming and strategy simulations','Board-level competitive reviews','Priority response SLA (<24h)']
+  },
+  'ci-public': {
+    eyebrow: 'Module 05', title: 'CrossIntell Public \u2014 Healthcare Intelligence',
+    subtitle: 'Real-time intelligence across 30+ public healthcare systems',
+    plan1: ['Single-market reimbursement landscape report','HTA decision tracking and analysis','Payer policy impact assessment','Competitive benchmarking (one TA)','Executive summary document'],
+    plan2: ['Multi-market real-time reimbursement dashboards','Continuous HTA and payer policy tracking','Competitive positioning intelligence','Monthly market access briefing','API access for system integration','Dedicated public market analyst'],
+    plan3: ['Full 30+ healthcare system coverage','All therapeutic areas monitored','Custom alert and reporting pipelines','Historical decision database access','Quarterly payer strategy reviews','Priority response SLA (<24h)']
+  },
+  'hta-axi': {
+    eyebrow: 'Module 06', title: 'HTA-Axi \u2014 Health Economics & Outcomes Research',
+    subtitle: 'Full-cycle HEOR and HTA dossier services for first-submission success',
+    plan1: ['Single-market HTA gap analysis','Budget impact or cost-effectiveness model','Value narrative development','Evidence gap assessment','Dossier-ready deliverable'],
+    plan2: ['Multi-market HTA submission support','Ongoing economic model maintenance','Systematic literature review updates','Monthly HEOR intelligence briefing','Local payer alignment advisory','Dedicated health economist'],
+    plan3: ['Full portfolio HEOR and HTA support','Global dossier strategy and execution','Real-world evidence programme design','Expert advisory board coordination','Board-level value story development','Priority response SLA (<24h)']
+  }
+};
+
+/* --- MODAL FUNCTIONS --- */
+function openPricing(serviceKey) {
+  const d = serviceData[serviceKey];
+  if (!d) return;
+  document.getElementById('modal-eyebrow').textContent = d.eyebrow;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-subtitle').textContent = d.subtitle;
+  function buildFeatures(containerId, features) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = features.map(f => '<li>' + f + '</li>').join('');
+  }
+  buildFeatures('plan1-features', d.plan1);
+  buildFeatures('plan2-features', d.plan2);
+  buildFeatures('plan3-features', d.plan3);
+  document.getElementById('pricingModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('pricingModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('pricingModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+/* --- NAVBAR SCROLL EFFECT --- */
+window.addEventListener('scroll', function() {
+  var nb = document.getElementById('navbar');
+  if (window.scrollY > 80) { nb.style.boxShadow = '0 4px 24px rgba(0,0,0,0.25)'; }
+  else { nb.style.boxShadow = 'none'; }
+});
+</script>
+</body>
+</html>

@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy &mdash; Axi Innovation</title>
-    <meta name="description" content="Axi Innovation Privacy Policy. How we collect, use, store, and protect your personal data in compliance with LGPD, GDPR, and applicable data protection regulations.">
+    <title>Privacy Policy — Axi Navigation</title>
+    <meta name="description" content="Axi Navigation Privacy Policy. How we collect, use, store, and protect your personal data in compliance with LGPD, GDPR, and applicable data protection regulations.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --navy: #0a1628;
+            --blue-accent: #3b82f6;
+            --blue-primary: #1a56db;
+            --gray-50: #f8fafc;
+            --gray-200: #e2e8f0;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #1a1a2e;
+            color: var(--gray-900);
             background: #ffffff;
             line-height: 1.75;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* -- Navigation bar -- */
+        /* ── Navigation bar ── */
         .nav {
             position: sticky; top: 0; z-index: 100;
-            background: rgba(255,255,255,0.95);
+            background: var(--navy);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             padding: 16px 0;
         }
         .nav-inner {
@@ -37,15 +49,15 @@
         }
         .logo {
             display: flex; align-items: center; gap: 10px;
-            text-decoration: none; color: inherit;
+            text-decoration: none; color: #ffffff;
         }
         .logo-img { height: 40px; width: auto; }
         .nav-link {
-            font-size: 14px; color: #3b82f6; text-decoration: none; font-weight: 500;
+            font-size: 14px; color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; transition: var(--transition);
         }
-        .nav-link:hover { text-decoration: underline; }
+        .nav-link:hover { color: #ffffff; }
 
-        /* -- Content -- */
+        /* ── Content ── */
         .container {
             max-width: 820px;
             margin: 0 auto;
@@ -53,29 +65,29 @@
         }
 
         h1 {
-            font-size: 32px; font-weight: 700; color: #0f172a;
+            font-size: 32px; font-weight: 700; color: var(--navy);
             margin-bottom: 8px; line-height: 1.3;
         }
         .effective-date {
-            font-size: 14px; color: #64748b; margin-bottom: 40px;
+            font-size: 14px; color: var(--gray-500); margin-bottom: 40px;
         }
 
         h2 {
-            font-size: 22px; font-weight: 700; color: #0f172a;
+            font-size: 22px; font-weight: 700; color: var(--navy);
             margin-top: 48px; margin-bottom: 16px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid var(--gray-200);
         }
         h3 {
-            font-size: 17px; font-weight: 600; color: #1e293b;
+            font-size: 17px; font-weight: 600; color: var(--gray-900);
             margin-top: 28px; margin-bottom: 10px;
         }
 
-        p { margin-bottom: 16px; color: #334155; font-size: 15px; }
+        p { margin-bottom: 16px; color: var(--gray-700); font-size: 15px; }
 
         ul, ol {
             margin: 12px 0 20px 28px;
-            color: #334155; font-size: 15px;
+            color: var(--gray-700); font-size: 15px;
         }
         li { margin-bottom: 8px; }
 
@@ -88,35 +100,38 @@
         th, td {
             text-align: left;
             padding: 12px 16px;
-            border: 1px solid #e2e8f0;
-            color: #334155;
+            border: 1px solid var(--gray-200);
+            color: var(--gray-700);
         }
         th {
-            background: #f8fafc;
+            background: var(--gray-50);
             font-weight: 600;
-            color: #0f172a;
+            color: var(--navy);
         }
 
         .highlight-box {
-            background: #f0f7ff;
-            border-left: 4px solid #3b82f6;
+            background: var(--navy);
+            border-left: 4px solid var(--blue-accent);
             padding: 20px 24px;
             border-radius: 0 8px 8px 0;
             margin: 24px 0;
         }
-        .highlight-box p { margin-bottom: 0; color: #1e40af; }
+        .highlight-box p { margin-bottom: 0; color: rgba(255,255,255,0.9); }
+        .highlight-box strong { color: #ffffff; }
 
-        a { color: #3b82f6; }
+        a { color: var(--blue-accent); transition: var(--transition); }
         a:hover { text-decoration: underline; }
 
         .footer {
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
+            background: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.1);
             padding: 32px;
             text-align: center;
             font-size: 13px;
-            color: #64748b;
+            color: rgba(255,255,255,0.6);
         }
+        .footer a { color: rgba(255,255,255,0.8); }
+        .footer a:hover { color: #ffffff; }
 
         @media (max-width: 640px) {
             h1 { font-size: 26px; }
@@ -136,8 +151,8 @@
                 <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
                 <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
                 <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#0f2a4a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                <text x="18" y="78" font-family="'Georgia',serif" font-size="15" fill="#8a8a8a" font-weight="400">Navigation</text>
-                <text x="128" y="78" font-family="'Georgia',serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
+                <text x="18" y="78" font-family="'Georgia',serif" font-size="15" fill="#ffffff" font-weight="400">Navigation</text>
+                <text x="128" y="78" font-family="'Georgia',serif" font-size="24" fill="#ffffff" font-weight="700">Axi</text>
             </svg>
         </a>
         <a href="index.html" class="nav-link">&larr; Back to Home</a>
@@ -148,31 +163,29 @@
 <div class="container">
 
 <h1>Privacy Policy</h1>
-<p class="effective-date">Effective date: March 30, 2026 &nbsp;|&nbsp; Last updated: March 31, 2026 &nbsp;|&nbsp; Version 2.0</p>
+<p class="effective-date">Effective date: March 30, 2026 &nbsp;|&nbsp; Last updated: April 13, 2026 &nbsp;|&nbsp; Version 2.1</p>
 
-<p>Axi Innovation (&ldquo;Axi Innovation,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is committed to protecting the privacy of every individual who interacts with our website, services, and advertising campaigns. This Privacy Policy describes how we collect, use, store, share, and protect your personal data when you visit <strong>axiinnovation.com</strong>, interact with our advertising on third-party platforms (including LinkedIn), or submit information through our contact and lead-generation forms.</p>
+<p>Axi Navigation (&ldquo;Axi Navigation,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is committed to protecting the privacy of every individual who interacts with our website, services, and advertising campaigns. This Privacy Policy describes how we collect, use, store, share, and protect your personal data when you visit <strong>axinavigation.com</strong>, interact with our advertising on third-party platforms (including LinkedIn), or submit information through our contact and lead-generation forms.</p>
 
-<p>Axi Innovation is headquartered in Brazil and operates globally. We are committed to meeting the highest international data protection standards and comply with the Brazilian General Data Protection Law (Lei Geral de Prote&ccedil;&atilde;o de Dados &mdash; LGPD, Law No. 13.709/2018), the European Union General Data Protection Regulation (GDPR, Regulation (EU) 2016/679), the California Consumer Privacy Act as amended by the California Privacy Rights Act (CCPA/CPRA), and all other applicable U.S. state privacy laws and international data protection regulations in the jurisdictions where we operate.</p>
+<p>Axi Navigation is headquartered in Brazil and operates globally. We are committed to meeting the highest international data protection standards and comply with the Brazilian General Data Protection Law (Lei Geral de Prote&ccedil;&atilde;o de Dados &mdash; LGPD, Law No. 13.709/2018), the European Union General Data Protection Regulation (GDPR, Regulation (EU) 2016/679), the California Consumer Privacy Act as amended by the California Privacy Rights Act (CCPA/CPRA), and all other applicable U.S. state privacy laws and international data protection regulations in the jurisdictions where we operate.</p>
 
 <div class="highlight-box">
     <p><strong>In short:</strong> We collect only the data necessary to respond to your inquiry, deliver our services, and improve your experience. We never sell your personal data. We apply advanced anonymization and pseudonymization practices to protect sensitive information at every stage of processing.</p>
 </div>
 
-
-<!-- 1. DATA CONTROLLDR -->
+<!-- 1. DATA CONTROLLER -->
 <h2>1. Data Controller</h2>
 
 <p>The data controller responsible for processing your personal data is:</p>
 
 <table>
-    <tr><th>Entity</th><td>Axi Innovation</td></tr>
+    <tr><th>Entity</th><td>Axi Navigation</td></tr>
     <tr><th>Headquarters</th><td>Brazil</td></tr>
-    <tr><th>Contact email</th><td><a href="mailto:privacy@axiinnovation.com">privacy@axiinnovation.com</a></td></tr>
-    <tr><th>Website</th><td><a href="https://axiinnovation.com">axiinnovation.com</a></td></tr>
+    <tr><th>Contact email</th><td><a href="mailto:privacy@axinavigation.com">privacy@axinavigation.com</a></td></tr>
+    <tr><th>Website</th><td><a href="https://axinavigation.com">axinavigation.com</a></td></tr>
 </table>
 
-<p>For any questions regarding this policy or the processing of your personal data, please contact our Data Protection Officer (DPO) at <a href="mailto:privacy@axiinnovation.com">privacy@axiinnovation.com</a>.</p>
-
+<p>For any questions regarding this policy or the processing of your personal data, please contact our Data Protection Officer (DPO) at <a href="mailto:privacy@axinavigation.com">privacy@axinavigation.com</a>.</p>
 
 <!-- 2. DATA WE COLLECT -->
 <h2>2. Personal Data We Collect</h2>
@@ -204,7 +217,6 @@
 <div class="highlight-box">
     <p><strong>What we do NOT collect:</strong> We do not collect sensitive personal data such as health information, racial or ethnic origin, political opinions, religious beliefs, biometric data, genetic data, sexual orientation, or trade union membership.</p>
 </div>
-
 
 <!-- 3. PURPOSE AND LEGAL BASIS -->
 <h2>3. Purposes and Legal Basis for Processing</h2>
@@ -247,7 +259,6 @@
     </tr>
 </table>
 
-
 <!-- 4. DATA SHARING -->
 <h2>4. Data Sharing and Third Parties</h2>
 
@@ -283,11 +294,10 @@
 
 <p>All third-party service providers are contractually bound to process your data solely on our behalf and in accordance with this policy and applicable data protection laws.</p>
 
-
 <!-- 5. INTERNATIONAL TRANSFERS -->
 <h2>5. International Data Transfers</h2>
 
-<p>Axi Innovation is headquartered in Brazil and serves clients globally. Your personal data may be transferred to, and processed in, countries outside your country of residence, including Brazil, the United States, and countries within the European Economic Area (EEA).</p>
+<p>Axi Navigation is headquartered in Brazil and serves clients globally. Your personal data may be transferred to, and processed in, countries outside your country of residence, including Brazil, the United States, and countries within the European Economic Area (EEA).</p>
 
 <p>When transferring personal data internationally, we ensure adequate protection through:</p>
 <ul>
@@ -296,7 +306,6 @@
     <li>Adequacy decisions, where applicable</li>
     <li>Binding contractual commitments with all data processors</li>
 </ul>
-
 
 <!-- 6. DATA RETENTION -->
 <h2>6. Data Retention</h2>
@@ -335,7 +344,6 @@
 </table>
 
 <p>After the retention period expires, personal data is securely deleted or irreversibly anonymized.</p>
-
 
 <!-- 7. YOUR RIGHTS -->
 <h2>7. Your Rights</h2>
@@ -377,9 +385,8 @@
 </ul>
 
 <div class="highlight-box">
-    <p><strong>How to exercise your rights:</strong> Send your request to <a href="mailto:privacy@axiinnovation.com">privacy@axiinnovation.com</a>. We will respond within <strong>15 days</strong> (LGPD) or <strong>30 days</strong> (GDPR) of receiving your verified request. No fee is charged for the first request within a 12-month period.</p>
+    <p><strong>How to exercise your rights:</strong> Send your request to <a href="mailto:privacy@axinavigation.com">privacy@axinavigation.com</a>. We will respond within <strong>15 days</strong> (LGPD) or <strong>30 days</strong> (GDPR) of receiving your verified request. No fee is charged for the first request within a 12-month period.</p>
 </div>
-
 
 <!-- 8. COOKIES -->
 <h2>8. Cookies and Tracking Technologies</h2>
@@ -422,7 +429,6 @@
 <h3>Managing cookies</h3>
 <p>Upon your first visit to our website, you will be presented with a cookie consent banner that allows you to accept or decline non-essential cookies. You may also manage cookies through your browser settings at any time. Please note that disabling certain cookies may affect website functionality.</p>
 
-
 <!-- 9. DATA SECURITY -->
 <h2>9. Data Security</h2>
 
@@ -435,11 +441,10 @@
     <li>Incident response procedures with notification within the timeframes required by LGPD (3 business days to ANPD) and GDPR (72 hours to DPA)</li>
 </ul>
 
-
 <!-- 10. REGULATORY FRAMEWORK -->
 <h2>10. International Regulatory Framework</h2>
 
-<p>Axi Innovation serves the global pharmaceutical and healthcare industries and is committed to adhering to the highest international data protection standards across all jurisdictions in which we operate. The following is a summary of the principal regulations that govern our data processing activities.</p>
+<p>Axi Navigation serves the global pharmaceutical and healthcare industries and is committed to adhering to the highest international data protection standards across all jurisdictions in which we operate. The following is a summary of the principal regulations that govern our data processing activities.</p>
 
 <h3>10.1. Brazil &mdash; LGPD (Lei Geral de Prote&ccedil;&atilde;o de Dados)</h3>
 <p>As a Brazilian-headquartered company, we are fully subject to the LGPD (Law No. 13.709/2018), administered by the Autoridade Nacional de Prote&ccedil;&atilde;o de Dados (ANPD). The LGPD requires that all personal data processing have a clearly defined legal basis, that data subjects be informed of how their data is used, and that organizations respond to data subject rights requests within 15 days. We maintain a comprehensive data processing map, conduct regular privacy impact assessments, and have designated a Data Protection Officer (DPO) in accordance with LGPD requirements. In the event of a data breach, we notify the ANPD and affected data subjects within 3 business days.</p>
@@ -448,12 +453,12 @@
 <p>When we process personal data of individuals located in the European Economic Area (EEA), we comply with the General Data Protection Regulation (Regulation (EU) 2016/679). Our GDPR compliance program includes lawful basis assessment for every processing activity, Data Protection Impact Assessments (DPIAs) for high-risk processing, data minimization and purpose limitation by design, Standard Contractual Clauses (SCCs) for all international data transfers, and a 72-hour breach notification commitment to the relevant Data Protection Authority. We recognize the rights of EU data subjects as outlined in Section 7 of this policy, including the right to lodge a complaint with a supervisory authority.</p>
 
 <h3>10.3. United States &mdash; Federal and State Privacy Laws</h3>
-<p>While the United States does not yet have a single comprehensive federal privacy law, Axi Innovation voluntarily aligns with the strictest U.S. state privacy frameworks to ensure consistent, high-standard protection for all U.S. data subjects. In particular:</p>
+<p>While the United States does not yet have a single comprehensive federal privacy law, Axi Navigation voluntarily aligns with the strictest U.S. state privacy frameworks to ensure consistent, high-standard protection for all U.S. data subjects. In particular:</p>
 
 <table>
     <tr>
         <th style="width:30%;">Regulation</th>
-        <th style="width:70%;">How Axi Innovation complies</th>
+        <th style="width:70%;">How Axi Navigation complies</th>
     </tr>
     <tr>
         <td><strong>CCPA / CPRA</strong> (California)</td>
@@ -486,17 +491,16 @@
 </div>
 
 <h3>10.4. Other international frameworks</h3>
-<p>Beyond the regulations listed above, Axi Innovation monitors and aligns with data protection developments in all markets where our clients operate, including Japan&rsquo;s Act on Protection of Personal Information (APPI), Canada&rsquo;s Personal Information Protection and Electronic Documents Act (PIPEDA), Australia&rsquo;s Privacy Act, the UK Data Protection Act 2018 (UK GDPR), and emerging frameworks in the Asia-Pacific region. Our goal is to apply the highest common standard across all jurisdictions.</p>
-
+<p>Beyond the regulations listed above, Axi Navigation monitors and aligns with data protection developments in all markets where our clients operate, including Japan&rsquo;s Act on Protection of Personal Information (APPI), Canada&rsquo;s Personal Information Protection and Electronic Documents Act (PIPEDA), Australia&rsquo;s Privacy Act, the UK Data Protection Act 2018 (UK GDPR), and emerging frameworks in the Asia-Pacific region. Our goal is to apply the highest common standard across all jurisdictions.</p>
 
 <!-- 11. DATA ANONYMIZATION -->
 <h2>11. Data Anonymization and Pseudonymization</h2>
 
-<p>Axi Innovation works with sensitive healthcare and pharmaceutical intelligence. We consider robust anonymization and pseudonymization not merely a regulatory requirement, but a core operating principle. Our approach follows a layered framework that applies the most appropriate technique at each stage of data processing.</p>
+<p>Axi Navigation works with sensitive healthcare and pharmaceutical intelligence. We consider robust anonymization and pseudonymization not merely a regulatory requirement, but a core operating principle. Our approach follows a layered framework that applies the most appropriate technique at each stage of data processing.</p>
 
 <h3>11.1. Our anonymization principles</h3>
 <ul>
-    <li><strong>Privacy by design and by default:</strong> Anonymization is embedded into the architecture of every Axi Innovation solution (GAiN, HTAxi, PatNav, eGov) from the earliest design stage, not applied as an afterthought.</li>
+    <li><strong>Privacy by design and by default:</strong> Anonymization is embedded into the architecture of every Axi Navigation solution (GAiN, HTAxi, PatNav, eGov) from the earliest design stage, not applied as an afterthought.</li>
     <li><strong>Data minimization:</strong> We collect and retain only the data strictly necessary to deliver the requested service. Unnecessary identifiers are removed at the point of ingestion.</li>
     <li><strong>Purpose limitation:</strong> Data is processed only for the specific, declared purpose for which it was collected. Once the purpose has been fulfilled, data is anonymized or securely deleted.</li>
     <li><strong>Continuous risk assessment:</strong> We regularly evaluate re-identification risks, particularly in light of the Court of Justice of the EU&rsquo;s September 2025 ruling that pseudonymized data may still qualify as personal data if a residual risk of re-identification exists.</li>
@@ -508,7 +512,7 @@
     <tr>
         <th style="width:25%;">Technique</th>
         <th style="width:40%;">Description</th>
-        <th style="width:35%;">Where applied at Axi Innovation</th>
+        <th style="width:35%;">Where applied at Axi Navigation</th>
     </tr>
     <tr>
         <td><strong>Irreversible anonymization</strong></td>
@@ -546,27 +550,23 @@
 </ul>
 
 <div class="highlight-box">
-    <p><strong>Our commitment:</strong> Axi Innovation treats anonymization as a continuous discipline, not a one-time event. We invest in advancing our anonymization capabilities as regulatory expectations, re-identification techniques, and data volumes evolve.</p>
+    <p><strong>Our commitment:</strong> Axi Navigation treats anonymization as a continuous discipline, not a one-time event. We invest in advancing our anonymization capabilities as regulatory expectations, re-identification techniques, and data volumes evolve.</p>
 </div>
-
 
 <!-- 12. CHILDREN -->
 <h2>12. Children&rsquo;s Privacy</h2>
 
 <p>Our services are directed to business professionals in the pharmaceutical and healthcare industries. We do not knowingly collect personal data from individuals under the age of 18. If we become aware that we have inadvertently collected data from a minor, we will promptly delete it.</p>
 
-
 <!-- 13. THIRD-PARTY LINKS -->
 <h2>13. Third-Party Links</h2>
 
 <p>Our website and advertising may contain links to third-party websites (including LinkedIn, research publications, and regulatory bodies). We are not responsible for the privacy practices of these external sites. We encourage you to review their privacy policies before submitting any personal data.</p>
 
-
 <!-- 14. CHANGES -->
 <h2>14. Changes to This Policy</h2>
 
 <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. The &ldquo;Last updated&rdquo; date at the top of this page indicates when the most recent revision was made. We encourage you to review this policy periodically. Material changes will be communicated through a prominent notice on our website.</p>
-
 
 <!-- 15. CONTACT -->
 <h2>15. Contact Us</h2>
@@ -574,9 +574,9 @@
 <p>If you have any questions, concerns, or requests regarding this Privacy Policy or the processing of your personal data, please contact us:</p>
 
 <table>
-    <tr><th>Data Protection Officer (DPO)</th><td><a href="mailto:privacy@axiinnovation.com">privacy@axiinnovation.com</a></td></tr>
-    <tr><th>General inquiries</th><td><a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a></td></tr>
-    <tr><th>Website</th><td><a href="https://axiinnovation.com">axiinnovation.com</a></td></tr>
+    <tr><th>Data Protection Officer (DPO)</th><td><a href="mailto:privacy@axinavigation.com">privacy@axinavigation.com</a></td></tr>
+    <tr><th>General inquiries</th><td><a href="mailto:contact@axinavigation.com">contact@axinavigation.com</a></td></tr>
+    <tr><th>Website</th><td><a href="https://axinavigation.com">axinavigation.com</a></td></tr>
 </table>
 
 <h3>Supervisory authorities</h3>
@@ -593,7 +593,7 @@
 
 <!-- Footer -->
 <div class="footer">
-    &copy; 2026 Axi Innovation. All rights reserved. &nbsp;|&nbsp;
+    &copy; 2026 Axi Navigation. All rights reserved. &nbsp;|&nbsp;
     <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp;
     <a href="index.html">Home</a>
 </div>

@@ -3,174 +3,910 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PatNav — Patient Navigation &amp; Journey Optimization | Axi Navigation</title>
-    <meta name="description" content="PatNav maps every patient touchpoint from symptoms to adherence, identifies barriers and prioritizes enhancers that measurably shorten time to therapy.">
-    <link rel="canonical" href="https://axinavigation.com/patnav.html">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="PatNav — Patient Navigation &amp; Journey Optimization | Axi Navigation">
-    <meta property="og:description" content="Map the patient journey in weeks. Identify barriers, prioritize enhancers.">
-    <meta property="og:image" content="https://axinavigation.com/Axi_LinkedIn_Cover_1584x396.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>PatNav – Patient Navigation Suite | Axi Innovation</title>
+    <meta name="description" content="PatNav maps every patient touchpoint to identify barriers and accelerate time to therapy. Proven ROI across pharma, biotech, medtech, and specialty care.">
     <link rel="stylesheet" href="axi-styles.css">
+    <style>
+        :root {
+            --teal: #0d9488;
+            --teal-light: #d1faf4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 120px;
+            height: auto;
+        }
+
+        .navbar-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .navbar-right a:hover {
+            color: var(--teal);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0fdfb 0%, #d1faf4 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--teal-light);
+            color: var(--teal);
+            border: 1px solid var(--teal);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #0f2a4a;
+            margin: 1.5rem 0;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        /* Strategic Section */
+        .strategic-section {
+            background: #0f2a4a;
+            color: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .strategic-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #d1faf4;
+        }
+
+        .strategic-content {
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .strategic-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .strategic-highlight {
+            background: rgba(209, 250, 244, 0.15);
+            padding: 1.5rem;
+            border-left: 4px solid var(--teal);
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .strategic-highlight strong {
+            color: #d1faf4;
+        }
+
+        /* Service Section */
+        .service-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #0f2a4a;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: #4b5563;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--teal);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
+        }
+
+        .feature-card h3 {
+            color: var(--teal);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        .speed-banner {
+            background: linear-gradient(135deg, var(--teal-light), #b2f5ea);
+            border: 1px solid rgba(13, 148, 136, 0.15);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .speed-banner h3 {
+            color: var(--teal);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .speed-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .speed-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .speed-label {
+            font-weight: 600;
+            color: #0f2a4a;
+            margin-bottom: 0.5rem;
+        }
+
+        .speed-value {
+            font-size: 1.8rem;
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        /* Segment Section */
+        .segment-section {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .segment-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .segment-card:hover {
+            box-shadow: 0 6px 16px rgba(13, 148, 136, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .segment-card h3 {
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .segment-value {
+            color: #0f2a4a;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .segment-card p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Evidence Section */
+        .evidence-section {
+            padding: 4rem 2rem;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .evidence-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .evidence-number {
+            color: var(--teal);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .evidence-card h3 {
+            color: #0f2a4a;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .evidence-card p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .evidence-cite {
+            color: var(--teal);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* References Section */
+        .references-section {
+            padding: 3rem 2rem;
+            background: #f9fafb;
+        }
+
+        .references-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .references-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .reference-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--teal);
+        }
+
+        .reference-item p {
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--teal-light), #b2f5ea);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: var(--teal);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: #0f2a4a;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: var(--teal);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .cta-button:hover {
+            background: #0a7d74;
+        }
+
+        /* Contact Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .contact-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4b5563;
+        }
+
+        .modal-close:hover {
+            color: var(--teal);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .modal-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-submit {
+            background: var(--teal);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .modal-submit:hover {
+            background: #0a7d74;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f2a4a;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #d1faf4;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #b2f5ea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(209, 250, 244, 0.2);
+            font-size: 0.85rem;
+            color: #b2f5ea;
+        }
+
+        /* Fade-up animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+
+        .fade-up:nth-child(1) { animation-delay: 0s; }
+        .fade-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-up:nth-child(3) { animation-delay: 0.2s; }
+        .fade-up:nth-child(4) { animation-delay: 0.3s; }
+        .fade-up:nth-child(5) { animation-delay: 0.4s; }
+        .fade-up:nth-child(6) { animation-delay: 0.5s; }
+        .fade-up:nth-child(7) { animation-delay: 0.6s; }
+
+        .section {
+            opacity: 0;
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .navbar-right {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .speed-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .strategic-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-        <a href="index-v2.html" class="navbar-logo" aria-label="Axi Navigation — home">
-            <svg class="logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <svg class="logo-img" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Innovation logo">
                 <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
                 <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
                 <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
                 <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#0f2a4a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="#4b5563" font-weight="500">Navigation</text>
-                <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
+                <text x="128" y="50" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
+                <text x="18" y="78" font-family="Georgia,serif" font-size="14" fill="#4b5563" font-weight="500">Innovation</text>
             </svg>
-        </a>
-        <ul class="navbar-links" id="navLinks">
-            <li><a href="index-v2.html#services">Solutions</a></li>
-            <li><a href="index-v2.html#team">Team</a></li>
-            <li><a href="index-v2.html#contact">Contact</a></li>
-        </ul>
-        <div class="navbar-cta"><a href="#" class="btn btn-primary open-contact" data-interest="PatNav - Patient Journey">Request a Sample Report</a></div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-    </div>
-</nav>
+        </div>
+        <div class="navbar-right">
+            <a href="index.html#services">Services</a>
+            <a href="index.html#team">Team</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
 
-<section class="hero">
-    <div class="container">
-        <span class="section-label" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal);">PatNav &mdash; Patient Navigation &amp; Journey Optimization</span>
-        <h1 class="section-title">Map every step from first symptoms to <span style="color:#5eead4;">treatment adoption and adherence.</span></h1>
-        <p class="section-subtitle">Understand every patient moment in real life. PatNav maps each touchpoint from symptoms through diagnosis, treatment adoption, access to therapy and adherence &mdash; then identifies the barriers and enhancers that measurably shorten time to therapy.</p>
-        <div class="hero-buttons">
-            <a href="#" class="btn btn-primary open-contact" data-interest="PatNav - Patient Journey">Request a PatNav Sample &rarr;</a>
-            <a href="index-v2.html#services" class="btn btn-outline">All Solutions</a>
-        </div>
-    </div>
-</section>
+    <!-- Hero Section -->
+    <section class="hero section fade-up">
+        <div class="hero-label" style="background:var(--teal-light);color:var(--teal);border-color:var(--teal);">Patient Navigation Suite</div>
+        <h1>PatNav</h1>
+        <p>Map every patient touchpoint. Identify barriers. Accelerate time to therapy. Maximize clinical and revenue outcomes.</p>
+    </section>
 
-<section class="service-section section">
-    <div class="container">
-        <div class="service-header fade-up">
-            <div class="service-header-content">
-                <span class="section-label" style="background:var(--teal-light);color:var(--teal);">What you get</span>
-                <h2 class="section-title">From qualitative insight <span style="color:var(--teal);">to measurable outcomes</span></h2>
-                <p class="section-subtitle">PatNav combines patient interviews, physician shadowing, claims-data analysis and ecosystem mapping to produce an actionable journey map tied to commercial and access KPIs.</p>
+    <!-- Strategic Section -->
+    <section class="strategic-section fade-up">
+        <h2>The Cost of Losing Patients Along the Journey</h2>
+        <div class="strategic-content">
+            <p>Patient non-adherence remains one of healthcare's most expensive blind spots. The American healthcare system loses <strong>$100–300 billion annually</strong> to medication non-adherence alone—a figure driven not by negligence but by structural barriers that prevent patients from reaching, starting, and staying on therapy.</p>
+
+            <div class="strategic-highlight">
+                <strong>The Scale of the Problem:</strong> Half of all patients fail to take medications as prescribed. Nearly a quarter of prescriptions are never filled. In conditions like hyperlipidemia, the never-fill rate exceeds 50%. For rare disease patients, diagnostic delays average 6+ years, each year compounding costs and clinical damage.
             </div>
-            <div style="background:var(--teal-light);border-radius:var(--radius-lg);padding:40px;text-align:center;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--teal);">5</div><div style="font-size:13px;color:var(--gray-500);">Journey stages mapped</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--teal);">Qual+Quant</div><div style="font-size:13px;color:var(--gray-500);">Mixed methods</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--teal);">KPI</div><div style="font-size:13px;color:var(--gray-500);">Tied to access metrics</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--teal);">100+</div><div style="font-size:13px;color:var(--gray-500);">Stakeholders per study</div></div>
-                </div>
+
+            <p>Speed matters clinically. In oncology, treatment delays of just one week increase mortality risk by 1.2–3.2%. When copays exceed $100, patient drop-off hits 75%. Every barrier—missed appointments, prior authorization delays, lack of patient education, supply chain friction—compounds into lost time and lost outcomes.</p>
+
+            <p>PatNav maps this entire journey from symptom recognition through diagnosis, treatment initiation, access, and long-term adherence. We identify which barriers drive the biggest delays and which interventions return the highest ROI. Real-world evidence anchors every strategy in observable patient behavior.</p>
+        </div>
+    </section>
+
+    <!-- Service Section -->
+    <section class="service-section section fade-up">
+        <h2 class="section-title">How PatNav Works</h2>
+        <p class="section-subtitle">A systematic approach to patient journey mapping and intervention design.</p>
+
+        <div class="features-grid">
+            <div class="feature-card fade-up">
+                <h3>Complete Journey Mapping</h3>
+                <p>We document every touchpoint—physician awareness, diagnosis confirmation, treatment initiation, supply access, administration support, and adherence monitoring. Nothing is assumed.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <h3>Barrier & Enhancer Identification</h3>
+                <p>Our analysis isolates which factors delay patients most and which accelerate them. This pinpoints high-ROI intervention sites for your product and patient population.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <h3>Multi-Stakeholder Research</h3>
+                <p>We interview patients, caregivers, prescribers, pharmacists, payers, and supply-chain partners. Blind spots vanish when all voices are heard.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <h3>Real-World Evidence Validation</h3>
+                <p>Claims are anchored in observed data. We validate findings against healthcare analytics, claims databases, and published RWE, ensuring strategy isn't opinion.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <h3>Intervention Roadmapping</h3>
+                <p>We design sequenced interventions—education, copay support, logistics, community connection—tailored to your patient population and commercial model.</p>
+            </div>
+            <div class="feature-card fade-up">
+                <h3>Outcome Measurement</h3>
+                <p>Time to therapy, medication adherence, persistence, clinical outcomes, and revenue impact are tracked to quantify the ROI of each intervention.</p>
             </div>
         </div>
-        <div class="features-grid fade-up">
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Compass">&#129517;</div><h4>Full journey mapping</h4><p>Symptom onset, help-seeking, diagnosis, referral, treatment initiation, adherence, switching &mdash; the full arc, not just the clinic visit.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Target">&#127919;</div><h4>Barrier &amp; drop-off analysis</h4><p>Quantify where patients fall out of the pathway and why. Prioritize interventions by the size of the population they recover.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Handshake">&#129309;</div><h4>Multi-stakeholder research</h4><p>Patient, caregiver, HCP, payer and policy perspectives &mdash; triangulated into a single consistent picture.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Chart">&#128202;</div><h4>Real-world data validation</h4><p>Cross-check qualitative findings against claims data, registries and published real-world evidence to anchor the story in hard numbers.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Lightbulb">&#128161;</div><h4>Enhancer prioritization</h4><p>Identify the access, education and support interventions with the highest expected impact on time-to-therapy and adherence.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Presentation">&#128200;</div><h4>Access-ready playbook</h4><p>Deliverables built for market-access, medical-affairs and commercial leaders who need to act on findings, not just read them.</p></div>
-        </div>
-        <div class="speed-banner fade-up" style="background:linear-gradient(135deg, var(--teal-light), #b2f5ea);border-color:rgba(13,148,136,0.15);">
-            <div>
-                <h3 style="color:var(--teal);">Patient-journey insights in weeks, not years</h3>
-                <p>Traditional patient-journey studies can take 6&ndash;12 months and rely on sequential qualitative research. PatNav runs patient interviews, physician panels and claims analysis in parallel, anchored by a pre-built library of therapeutic-area baselines.</p>
-            </div>
+
+        <div class="speed-banner" style="background:linear-gradient(135deg, var(--teal-light), #b2f5ea);border-color:rgba(13,148,136,0.15);">
+            <h3 style="color:var(--teal);">From Insight to Action</h3>
+            <p>Accelerate your path to patient-centric strategy</p>
             <div class="speed-comparison">
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:180px;background:var(--gray-300);color:var(--gray-700);">6&ndash;12 mo</div><div class="speed-bar-label">Traditional study</div></div>
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:55px;background:var(--teal);">4&ndash;6 wk</div><div class="speed-bar-label">PatNav delivery</div></div>
+                <div class="speed-item">
+                    <div class="speed-label">Traditional Approach</div>
+                    <div class="speed-value">6–12 months</div>
+                </div>
+                <div class="speed-item">
+                    <div class="speed-label">PatNav Process</div>
+                    <div class="speed-value">4–6 weeks</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta-section" id="contact">
-    <div class="container">
-        <h2 class="section-title">See a PatNav journey map</h2>
-        <p class="section-subtitle">Request a sample deliverable or a 15-minute walkthrough. We reply within one business day.</p>
-        <div class="cta-buttons">
-            <a href="#" class="btn btn-white open-contact" data-interest="PatNav - Patient Journey">Request a Sample Report &rarr;</a>
-            <a href="#" class="btn btn-outline open-contact" data-interest="Schedule a Walkthrough" style="color:#fff;border-color:rgba(255,255,255,0.4);">Book a 15-min Walkthrough</a>
+    <!-- Segment Section -->
+    <section class="segment-section section fade-up">
+        <h2 class="section-title">PatNav Across Healthcare Markets</h2>
+        <p class="section-subtitle">Every segment faces distinct patient journey challenges. We map them all.</p>
+
+        <div class="segment-grid">
+            <div class="segment-card fade-up">
+                <h3>Pharma</h3>
+                <div class="segment-value">$1.67T Market</div>
+                <p>Specialty drugs face the highest adherence barriers. PatNav identifies where complexity breeds dropout and which support interventions move patients from trial to persistence.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>MedTech</h3>
+                <div class="segment-value">$640B Market</div>
+                <p>Device training, fitting, and compliance directly impact outcomes. We map the patient path from selection through successful deployment and ongoing monitoring.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>Biotech</h3>
+                <div class="segment-value">13% CAGR</div>
+                <p>Complex biologics require specialized patient support. PatNav guides patient education, provider alignment, and supply-chain integration to reduce treatment delays.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>Generics</h3>
+                <div class="segment-value">$415–491B Market</div>
+                <p>Therapeutic substitution and switching confusion slow adoption. We clarify where education prevents gaps and where supply partnerships improve access.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>Biosimilars</h3>
+                <div class="segment-value">$22–34B Market</div>
+                <p>Patient and prescriber trust gaps slow uptake. PatNav identifies messaging and education strategies that accelerate adoption without jeopardizing existing therapies.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>Prosthetics & Orthotics</h3>
+                <div class="segment-value">$6.56B Market</div>
+                <p>Fitting, rehabilitation, and follow-up compliance determine real-world outcomes. PatNav maps the patient support pathway from fitting through functional recovery.</p>
+            </div>
+            <div class="segment-card fade-up">
+                <h3>Implantable Devices</h3>
+                <div class="segment-value">$97–133B Market</div>
+                <p>Post-surgical monitoring, complication detection, and device management are critical. We design patient education and follow-up protocols that prevent adverse events and improve persistence.</p>
+            </div>
         </div>
-        <div class="cta-email">Or email us directly at <a href="mailto:contact@axinavigation.com">contact@axinavigation.com</a></div>
-    </div>
-</section>
+    </section>
 
-<!-- CONTACT MODAL (shared) -->
-<div class="modal-overlay" id="contactModal">
-    <div class="modal-box">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <div id="contactForm">
-            <h3>Get in touch</h3>
-            <p class="modal-subtitle">Fill out the form and a senior analyst will respond within one business day.</p>
-            <form id="contactFormEl" autocomplete="on">
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-name">Full name *</label><input type="text" id="cf-name" name="name" required placeholder="Jane Smith"></div>
-                    <div class="form-group"><label for="cf-company">Company *</label><input type="text" id="cf-company" name="company" required placeholder="Acme Pharma"></div>
+    <!-- Evidence Section -->
+    <section class="evidence-section section fade-up">
+        <h2 class="section-title">Why This Matters</h2>
+        <p class="section-subtitle">The evidence base for patient journey mapping.</p>
+
+        <div class="evidence-grid">
+            <div class="evidence-card fade-up">
+                <div class="evidence-number">1</div>
+                <h3>Reducing Time-to-Therapy Improves Outcomes & Revenue</h3>
+                <p>Earlier treatment initiation correlates with better clinical trajectories, improved quality of life, and greater revenue capture. PLOS ONE and WHO research confirm this across therapeutic areas.</p>
+                <div class="evidence-cite">WHO, PLOS ONE</div>
+            </div>
+            <div class="evidence-card fade-up">
+                <div class="evidence-number">2</div>
+                <h3>Journey Mapping Identifies Highest-ROI Interventions</h3>
+                <p>Multi-stakeholder journey research by IQVIA and Deloitte shows that interventions targeted at identified barriers deliver 3–5x higher ROI than generic patient support programs.</p>
+                <div class="evidence-cite">IQVIA, Deloitte</div>
+            </div>
+            <div class="evidence-card fade-up">
+                <div class="evidence-number">3</div>
+                <h3>Multi-Stakeholder Research Prevents Blind Spots</h3>
+                <p>ISPOR health economics research demonstrates that siloed stakeholder perspectives miss 40–60% of barriers. Integrated research surfaces barriers invisible to any single party.</p>
+                <div class="evidence-cite">ISPOR</div>
+            </div>
+            <div class="evidence-card fade-up">
+                <div class="evidence-number">4</div>
+                <h3>Real-World Evidence Anchors Strategy in Reality</h3>
+                <p>The global healthcare analytics market is projected to grow from $44.83B (2024) to $166.65B (2030), with RWE growing 14%+ annually. Strategy grounded in observed patient behavior outperforms speculation.</p>
+                <div class="evidence-cite">Grand View Research</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- References Section -->
+    <section class="references-section section fade-up">
+        <div class="references-content">
+            <h2 class="section-title">Sources & References</h2>
+            <p class="section-subtitle">PatNav insights are grounded in peer-reviewed research and industry data.</p>
+
+            <div class="references-list">
+                <div class="reference-item">
+                    <p><strong>WHO Adherence Guidelines</strong><br>Global guidance on medication adherence research and practice. Foundation for understanding non-adherence scale and drivers.</p>
                 </div>
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-email">Work email *</label><input type="email" id="cf-email" name="email" required placeholder="jane@acmepharma.com"></div>
-                    <div class="form-group"><label for="cf-role">Your role</label><input type="text" id="cf-role" name="role" placeholder="VP Market Access"></div>
+                <div class="reference-item">
+                    <p><strong>Pharmacy Times</strong><br>Industry reporting on non-adherence costs ($100–300B annually) and patient support program impact.</p>
                 </div>
-                <div class="form-group"><label for="cf-interest">I'm interested in</label>
-                    <select id="cf-interest" name="interest">
-                        <option value="General Inquiry">General inquiry</option>
-                        <option value="Request a Sample Report">Request a sample report</option>
-                        <option value="Schedule a Walkthrough">Schedule a walkthrough</option>
-                        <option value="GAiN - Global Access Intelligence">GAiN &mdash; Global Access Intelligence</option>
-                        <option value="HTA-Axi - HEOR Analytics">HTA-Axi &mdash; HEOR Analytics</option>
-                        <option value="PatNav - Patient Journey" selected>PatNav &mdash; Patient Journey</option>
-                        <option value="eGov - Stakeholder Intelligence">eGov &mdash; Stakeholder Intelligence</option>
-                        <option value="Regulatory & G2M">Regulatory &amp; G2M</option>
-                        <option value="CrossIntell - Cross-Functional Intelligence">CrossIntell</option>
-                    </select>
+                <div class="reference-item">
+                    <p><strong>PAN Foundation</strong><br>Patient Advocate Foundation research on copay barriers and medication abandonment across therapeutic areas.</p>
                 </div>
-                <div class="form-group"><label for="cf-message">Message</label><textarea id="cf-message" name="message" placeholder="Tell us about your portfolio, markets of interest or the question you are trying to answer…"></textarea></div>
-                <button type="submit" class="form-submit" id="cf-submit">Send message</button>
-                <p style="font-size:12px;color:var(--gray-500);margin-top:10px;text-align:center;">Your information is kept confidential and never shared with third parties.</p>
+                <div class="reference-item">
+                    <p><strong>EveryLife Foundation</strong><br>Rare disease diagnosis and treatment delay data: 6+ year diagnostic delays, $86K–$517K per-person cost impact.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>PLOS ONE: Oncology Treatment Delays</strong><br>Clinical evidence: 1.2–3.2% increased mortality per week of treatment delay in cancer care.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>Harvard Medical School</strong><br>Research on prescription never-fill rates, hyperlipidemia 50% never-fill benchmark, and economics of medication waste.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>BioPharma Dive</strong><br>Copay abandonment research: 75% patient drop-off when copays exceed $100.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>Grand View Research: Healthcare Analytics Market</strong><br>Market projections: $44.83B (2024) → $166.65B (2030). Growth driver for RWE and outcome-based strategies.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>Grand View Research: Real-World Evidence Market</strong><br>RWE market: ~$3–5B (2024) with 14%+ CAGR. Evidence of accelerating adoption of real-world data in clinical and commercial strategy.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>IQVIA</strong><br>Healthcare consulting research on patient journey mapping, intervention targeting, and ROI quantification.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>Deloitte Healthcare Analytics</strong><br>Industry analysis of patient support program effectiveness and cost-benefit of targeted interventions.</p>
+                </div>
+                <div class="reference-item">
+                    <p><strong>ISPOR (International Society for Pharmacoeconomics and Outcomes Research)</strong><br>Health economics standards for multi-stakeholder research design and outcomes measurement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section section fade-up">
+        <h2>Ready to Map Your Patient Journey?</h2>
+        <p>PatNav delivers the insights and roadmap to accelerate time-to-therapy and maximize ROI.</p>
+        <button class="cta-button" onclick="openContactModal()">Start a Conversation</button>
+    </section>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <h2 style="color: var(--teal); margin-bottom: 1.5rem;">Contact Axi Innovation</h2>
+            <form class="modal-form" onsubmit="handleContactSubmit(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Company / Organization" required>
+                <input type="tel" placeholder="Phone Number">
+                <textarea placeholder="Message"></textarea>
+                <button type="submit" class="modal-submit">Send Message</button>
             </form>
-        </div>
-        <div class="form-success" id="contactSuccess">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#e8f0fe"/><path d="M20 28.5l5.5 5.5L36 23" stroke="#1a56db" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <h4>Message sent</h4>
-            <p>Thanks for reaching out. We will get back to you within one business day.</p>
+            <p style="text-align: center; margin-top: 1rem; color: #4b5563; font-size: 0.9rem;">
+                Or email us directly at <strong>contact@axiinnovation.com</strong>
+            </p>
         </div>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-inner">
-            <div class="footer-logo">
-                <svg class="footer-logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
-                    <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
-                    <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
-                    <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
-                    <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="rgba(255,255,255,0.75)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                    <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="rgba(255,255,255,0.75)" font-weight="500">Navigation</text>
-                    <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#ffffff" font-weight="700">Axi</text>
-                </svg>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="gain.html">GAiN</a></li>
+                    <li><a href="hta-axi.html">HTA</a></li>
+                    <li><a href="patnav.html">PatNav</a></li>
+                    <li><a href="egov.html">eGov</a></li>
+                </ul>
             </div>
-            <ul class="footer-links">
-                <li><a href="gain.html">GAiN</a></li>
-                <li><a href="hta-axi.html">HTA-Axi</a></li>
-                <li><a href="patnav.html">PatNav</a></li>
-                <li><a href="egov.html">eGov</a></li>
-                <li><a href="reg-g2m.html">Regulatory &amp; G2M</a></li>
-                <li><a href="crossintell.html">CrossIntell</a></li>
-                <li><a href="#" class="open-contact">Contact</a></li>
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            </ul>
-            <div style="font-size:13px;">&copy; 2026 Axi Navigation. All rights reserved.</div>
+            <div class="footer-section">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="crossintell-public.html">CrossIntell Public</a></li>
+                    <li><a href="crossintell-private.html">CrossIntell Private</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><strong>Axi Innovation</strong></li>
+                    <li><a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a></li>
+                    <li><a href="https://axiinnovation.com" target="_blank">axiinnovation.com</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Axi Innovation. All rights reserved.</p>
+        </div>
+    </footer>
 
-<script src="axi-shared.js"></script>
+    <script src="axi-shared.js"></script>
+    <script>
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for reaching out. We will contact you soon at contact@axiinnovation.com.');
+            closeContactModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('contactModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeContactModal();
+            }
+        });
+
+        // Observe sections for fade-up animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>

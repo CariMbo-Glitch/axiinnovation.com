@@ -3,174 +3,1131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTA-Axi â HEOR &amp; HTA Analytics | Axi Navigation</title>
-    <meta name="description" content="HTA-Axi accelerates health-economics and outcomes research with systematic reviews, cost-effectiveness models and HTA-submission-ready value dossiers, delivered in weeks.">
-    <link rel="canonical" href="https://axinavigation.com/hta-axi.html">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="HTA-Axi â HEOR &amp; HTA Analytics | Axi Navigation">
-    <meta property="og:description" content="Evidence-based market-access value, delivered in weeks not quarters.">
-    <meta property="og:image" content="https://axinavigation.com/Axi_LinkedIn_Cover_1584x396.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>HTA-Axi — HEOR & Value Dossiers | Axi Innovation</title>
+    <meta name="description" content="HTA-Axi accelerates HEOR evidence synthesis, cost-effectiveness models, and HTA-submission-ready dossiers. Built for NICE, G-BA, HAS, CADTH, PBAC, CONITEC standards.">
     <link rel="stylesheet" href="axi-styles.css">
+    <style>
+        :root {
+            --purple: #7c3aed;
+            --purple-light: #ede9fe;
+            --dark-navy: #0f2a4a;
+            --gray-light: #f3f4f6;
+            --gray-medium: #6b7280;
+            --text-dark: #1f2937;
+            --border-light: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #ffffff;
+        }
+
+        /* NAVBAR */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-light);
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            width: 120px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gray-light) 100%);
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: var(--purple-light);
+            color: var(--purple);
+            border: 1px solid var(--purple);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.6s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+            animation: fadeUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeUp 0.6s ease-out 0.2s both;
+        }
+
+        /* STRATEGIC SECTION */
+        .strategic-section {
+            padding: 5rem 2rem;
+            background-color: var(--dark-navy);
+            color: #ffffff;
+        }
+
+        .strategic-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .strategic-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .strategic-section p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* SERVICE SECTION */
+        .service-section {
+            padding: 5rem 2rem;
+            background-color: #ffffff;
+        }
+
+        .service-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .service-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+        }
+
+        .service-header p {
+            font-size: 1.05rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background-color: var(--gray-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--purple);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--purple);
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--gray-medium);
+            line-height: 1.6;
+        }
+
+        /* SPEED BANNER */
+        .speed-banner {
+            background: linear-gradient(135deg, var(--purple) 0%, #9333ea 100%);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .speed-banner h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-item h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-item .duration {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        /* SEGMENT SECTION */
+        .segment-section {
+            padding: 5rem 2rem;
+            background-color: var(--gray-light);
+        }
+
+        .segment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .segment-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .segment-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .segments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .segment-card {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--purple);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .segment-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .segment-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .segment-card .market-size {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .segment-card p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* EVIDENCE SECTION */
+        .evidence-section {
+            padding: 5rem 2rem;
+            background-color: #ffffff;
+        }
+
+        .evidence-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .evidence-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .evidence-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .evidence-card {
+            background-color: var(--gray-light);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--purple);
+        }
+
+        .evidence-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+        }
+
+        .evidence-card p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .evidence-cite {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            font-style: italic;
+        }
+
+        /* REFERENCES SECTION */
+        .references-section {
+            padding: 5rem 2rem;
+            background-color: var(--gray-light);
+        }
+
+        .references-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .references-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .references-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .references-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .reference-item {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--purple);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .reference-item strong {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--purple) 0%, #9333ea 100%);
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ffffff;
+            color: var(--purple);
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: var(--gray-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 1rem;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body p {
+            font-size: 0.95rem;
+            color: var(--gray-medium);
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px var(--purple-light);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .modal-btn-primary {
+            background-color: var(--purple);
+            color: #ffffff;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: #6d28d9;
+        }
+
+        .modal-btn-secondary {
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+        }
+
+        .modal-btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-medium);
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--text-dark);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dark-navy);
+            color: #ffffff;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--purple-light);
+        }
+
+        .footer-logo {
+            width: 100px;
+            height: 26px;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .footer-contact a {
+            color: #d1d5db;
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover {
+            color: var(--purple-light);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .strategic-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .service-header h2,
+            .segment-header h2,
+            .evidence-header h2,
+            .references-header h2,
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .timeline-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-        <a href="index-v2.html" class="navbar-logo" aria-label="Axi Navigation â home">
-            <svg class="logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo-container">
+            <svg class="logo-img" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Innovation logo">
                 <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
                 <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
                 <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
                 <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#0f2a4a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="#4b5563" font-weight="500">Navigation</text>
-                <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
+                <text x="128" y="50" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
+                <text x="18" y="78" font-family="Georgia,serif" font-size="14" fill="#4b5563" font-weight="500">Innovation</text>
             </svg>
-        </a>
-        <ul class="navbar-links" id="navLinks">
-            <li><a href="index-v2.html#services">Solutions</a></li>
-            <li><a href="index-v2.html#team">Team</a></li>
-            <li><a href="index-v2.html#contact">Contact</a></li>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#team">Team</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
         </ul>
-        <div class="navbar-cta"><a href="#" class="btn btn-primary open-contact" data-interest="HTA-Axi - HEOR Analytics">Request a Sample Report</a></div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-    </div>
-</nav>
+    </nav>
 
-<section class="hero">
-    <div class="container">
-        <span class="section-label" style="background:var(--purple-light);color:var(--purple);border-color:var(--purple);">HTA-Axi &mdash; HEOR &amp; HTA Analytics</span>
-        <h1 class="section-title">Evidence-based market-access value &mdash; <span style="color:#a78bfa;">at startup speed.</span></h1>
-        <p class="section-subtitle">HTA-Axi accelerates health-economics and outcomes research with rigorous evidence synthesis, cost-effectiveness models and HTA-submission-ready deliverables &mdash; so your value story is airtight before it reaches the payer.</p>
-        <div class="hero-buttons">
-            <a href="#" class="btn btn-primary open-contact" data-interest="HTA-Axi - HEOR Analytics">Request an HTA-Axi Sample &rarr;</a>
-            <a href="index-v2.html#services" class="btn btn-outline">All Solutions</a>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-label">HTA-Axi Platform</div>
+        <h1>HEOR & Value Dossiers</h1>
+        <p>Accelerate market access with systematic evidence synthesis, health economic modeling, and submission-ready dossiers built for major HTA bodies.</p>
+    </section>
+
+    <!-- STRATEGIC SECTION -->
+    <section class="strategic-section">
+        <div class="strategic-content">
+            <h2>The Economics of Evidence</h2>
+            <p>
+                In today's competitive pharmaceutical landscape, the difference between rapid market access and extended delays often comes down to the quality, timeliness, and strategic framing of health economic evidence. HTA-Axi was designed to address a fundamental challenge: while global pharma R&D spending reached $288 billion in 2024, the time from regulatory approval to market reimbursement across major markets varies dramatically—from 6 to 17.7 months depending on jurisdiction and evidence readiness.
+            </p>
+            <p>
+                The economics are compelling: HTA submissions can cost $50,000 to $300,000+ per country, yet over 34% of product launches fail year-one forecasts, with more than half of failures attributed to market access challenges rather than clinical efficacy. For every month delayed in reimbursement, innovative therapies lose millions in potential revenue—making the velocity of evidence synthesis not just a regulatory concern, but a commercial imperative.
+            </p>
+            <p>
+                HTA-Axi transforms this equation by systematizing the creation of comprehensive, multi-HTA-body-compliant dossiers. We integrate rigorous literature synthesis, cost-effectiveness modeling, budget impact analysis, indirect treatment comparisons, and health outcome evidence into submission-ready documents architected for NICE, G-BA, HAS, CADTH, PBAC, and CONITEC specifications. The result: compressed timelines that preserve patent runway, reduced re-submission risk, and faster payer alignment.
+            </p>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="service-section section">
-    <div class="container">
-        <div class="service-header fade-up">
-            <div class="service-header-content">
-                <span class="section-label" style="background:var(--purple-light);color:var(--purple);">Capabilities</span>
-                <h2 class="section-title">Every deliverable an HTA body expects &mdash; <span style="color:var(--purple);">and none of the waste</span></h2>
-                <p class="section-subtitle">SLRs, cost-utility analyses, budget-impact models, indirect treatment comparisons and full value dossiers. Built to NICE, G-BA, HAS, CADTH, PBAC and CONITEC specifications.</p>
+    <!-- SERVICE SECTION -->
+    <section class="service-section">
+        <div class="service-container">
+            <div class="service-header">
+                <h2>HTA-Axi Core Services</h2>
+                <p>End-to-end HEOR evidence generation, analysis, and dossier development for market access across regulated markets.</p>
             </div>
-            <div style="background:var(--purple-light);border-radius:var(--radius-lg);padding:40px;text-align:center;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--purple);">SLR</div><div style="font-size:13px;color:var(--gray-500);">Systematic lit reviews</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--purple);">CUA</div><div style="font-size:13px;color:var(--gray-500);">Cost-utility analysis</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--purple);">BIA</div><div style="font-size:13px;color:var(--gray-500);">Budget impact analysis</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--purple);">ITC</div><div style="font-size:13px;color:var(--gray-500);">Indirect treatment comp.</div></div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Systematic Literature Review</h3>
+                    <p>Comprehensive evidence synthesis aligned with PRISMA standards, HTA body guidelines, and submission requirements across therapeutic areas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Cost-Effectiveness Models</h3>
+                    <p>Markov, decision tree, and state-transition models designed for payer transparency and aligned with country-specific cost-effectiveness thresholds.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Budget Impact Analysis</h3>
+                    <p>Multi-year budget projections accounting for epidemiology, uptake patterns, and real-world utilization to quantify healthcare system impact.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Indirect Treatment Comparison</h3>
+                    <p>Network meta-analysis and mixed-treatment comparison frameworks to establish relative effectiveness when head-to-head trials are unavailable.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Real-World Evidence Integration</h3>
+                    <p>Synthesis of registry data, claims databases, and observational studies to ground economic models in real-world utilization and outcomes.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>HTA-Ready Value Dossiers</h3>
+                    <p>Submission-ready dossiers pre-architected for NICE, G-BA, HAS, CADTH, PBAC, and CONITEC formats, reducing revision cycles and accelerating approval.</p>
+                </div>
+            </div>
+
+            <div class="speed-banner">
+                <h3>Compressed Timelines, Preserved Patent Value</h3>
+                <div class="timeline-comparison">
+                    <div class="timeline-item">
+                        <h4>Traditional HTA Dossier</h4>
+                        <div class="duration">3–6 months</div>
+                        <p style="font-size: 0.85rem; margin-top: 0.8rem;">Sequential evidence synthesis, model iteration, stakeholder review cycles</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>HTA-Axi Accelerated Path</h4>
+                        <div class="duration">3 weeks</div>
+                        <p style="font-size: 0.85rem; margin-top: 0.8rem;">Parallel evidence workflow, pre-aligned templates, rapid iteration</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="features-grid fade-up">
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Microscope">&#128300;</div><h4>Rapid evidence synthesis</h4><p>Technology-augmented systematic literature reviews and meta-analyses delivered in weeks, not months. Rigorous methodology, compressed timeline.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Ruler">&#128208;</div><h4>Economic modelling</h4><p>Cost-effectiveness, cost-utility and budget-impact models built to payer specifications. Transparent, auditable and submission-ready.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Document">&#128196;</div><h4>Value-dossier generation</h4><p>Comprehensive AMCP-format dossiers and global value frameworks. Every claim backed by evidence. Every number traceable.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Institution">&#127963;&#65039;</div><h4>HTA submission support</h4><p>Navigate NICE, G-BA, HAS, CADTH, PBAC, CONITEC and 20+ HTA bodies with agency-specific templates and evidence requirements.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Refresh">&#128260;</div><h4>Indirect treatment comparisons</h4><p>NMA, MAIC and STC analyses when head-to-head data does not exist. Robust methodologies that stand up to HTA scrutiny.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Bulb">&#128161;</div><h4>Strategic pricing guidance</h4><p>Reference-pricing analysis, willingness-to-pay thresholds and scenario modelling to optimize your price across markets and payers.</p></div>
-        </div>
-        <div class="speed-banner fade-up" style="background:linear-gradient(135deg, var(--purple-light), #e0d4fc);border-color:rgba(124,58,237,0.15);">
-            <div>
-                <h3 style="color:var(--purple);">HEOR deliverables in weeks, not quarters</h3>
-                <p>Traditional HEOR consulting typically takes 3&ndash;6 months per deliverable and requires dedicated analyst teams. HTA-Axi combines domain expertise, former HTA reviewers and parallelized workflows to compress timelines dramatically &mdash; without cutting corners on rigor.</p>
+    </section>
+
+    <!-- SEGMENT SECTION -->
+    <section class="segment-section">
+        <div class="segment-container">
+            <div class="segment-header">
+                <h2>Market Segments We Serve</h2>
             </div>
-            <div class="speed-comparison">
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:180px;background:var(--gray-300);color:var(--gray-700);">3&ndash;6 mo</div><div class="speed-bar-label">Traditional HEOR</div></div>
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:60px;background:var(--purple);">3 wk</div><div class="speed-bar-label">HTA-Axi delivery</div></div>
+
+            <div class="segments-grid">
+                <div class="segment-card">
+                    <h3>Pharmaceuticals</h3>
+                    <div class="market-size">$1.67T Global Market</div>
+                    <p>Every HTA submission shapes pricing ceilings across major markets. Delays cost millions per month. HTA-Axi ensures evidence readiness from regulatory approval to market launch, preventing reimbursement bottlenecks that compress commercial windows.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>MedTech Devices</h3>
+                    <div class="market-size">$640B Global Market</div>
+                    <p>Devices face increasing HTA evidence bar alongside FDA 510(k) pathways ($3.1M median cost, 140–175 days average). HTA-Axi bridges regulatory and reimbursement evidence, reducing dual-submission cycles and de-risking market access.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>Biotech / Rare Disease</h3>
+                    <div class="market-size">13% CAGR Growth</div>
+                    <p>Orphan and rare disease dossiers require specialized health outcome evidence, surrogate endpoint validation, and unmet need framing. HTA-Axi's rare disease module crafts compelling value narratives for payers with limited epidemiology.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>Generics</h3>
+                    <div class="market-size">$415–491B Global Market</div>
+                    <p>Pharmacoeconomic equivalence and therapeutic substitution dossiers require rapid evidence synthesis and cost-comparison modeling. HTA-Axi accelerates non-brand market access across both mature and emerging markets.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>Biosimilars</h3>
+                    <div class="market-size">$22–34B Market (Growing)</div>
+                    <p>Comparative effectiveness evidence is critical for formulary positioning and payer acceptance. HTA-Axi synthesizes pharmacovigilance, immunogenicity, and real-world comparative data for biosimilar dossier strength.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>Prosthetics & Orthotics</h3>
+                    <div class="market-size">$6.56B Global Market</div>
+                    <p>Cost-utility evidence is increasingly required for public reimbursement. HTA-Axi develops utility scores, quality-of-life evidence, and economic models to support prosthetic and orthotic access across countries.</p>
+                </div>
+                <div class="segment-card">
+                    <h3>Implantable Devices</h3>
+                    <div class="market-size">$97–133B Market</div>
+                    <p>CE marking MDR compliance demands device-level HEOR evidence. Timelines span 4–42 months. HTA-Axi embeds health economic evidence into device submissions, shortening access timelines across EU markets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVIDENCE SECTION -->
+    <section class="evidence-section">
+        <div class="evidence-container">
+            <div class="evidence-header">
+                <h2>Why Evidence Quality Matters</h2>
+            </div>
+
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <h3>Rigorous Synthesis Reduces Rejection Risk</h3>
+                    <p>Systematic literature review and meta-analytic rigor aligned with WHO HTA Framework and Analysis Group best practices dramatically reduce payer pushback and re-submission cycles.</p>
+                    <p class="evidence-cite">WHO HTA Framework; Analysis Group HTA Standards</p>
+                </div>
+                <div class="evidence-card">
+                    <h3>Compressed Timelines Preserve Patent Value</h3>
+                    <p>Every month of delayed reimbursement erodes patent exclusivity. HTA-Axi's 3-week acceleration preserves critical patent runway and maximizes market window for innovative therapies.</p>
+                    <p class="evidence-cite">IQVIA R&D Trends 2025</p>
+                </div>
+                <div class="evidence-card">
+                    <h3>Multi-HTA Expertise Prevents Costly Re-Submissions</h3>
+                    <p>Single-body-focused dossiers often fail to meet requirements in other jurisdictions. HTA-Axi's multi-HTA architecture (NICE, G-BA, HAS, CADTH, PBAC, CONITEC) ensures first-time compliance across markets.</p>
+                    <p class="evidence-cite">NICE, G-BA, HAS Guidelines</p>
+                </div>
+                <div class="evidence-card">
+                    <h3>Health Economic Models Quantify the Value Story</h3>
+                    <p>Payers demand transparent, country-specific cost-utility evidence. HTA-Axi's modeling framework translates clinical data into economic language payers understand and trust.</p>
+                    <p class="evidence-cite">ISPOR Standards; Deloitte HEOR Insights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REFERENCES SECTION -->
+    <section class="references-section">
+        <div class="references-container">
+            <div class="references-header">
+                <h2>References & Industry Sources</h2>
+            </div>
+
+            <div class="references-list">
+                <div class="reference-item">
+                    <strong>WHO HTA Framework (2015–2024)</strong><br>
+                    Guidelines for health technology assessment of medicines and medical devices. Establishes global standards for systematic evidence evaluation.
+                </div>
+                <div class="reference-item">
+                    <strong>IQVIA R&D Trends 2025</strong><br>
+                    Global pharma R&D spending: $288B (2024). Forecast $2.3T pharma market by 2030. Market access delays cited as primary cause of launch forecast misses.
+                </div>
+                <div class="reference-item">
+                    <strong>IQVIA Launch Performance Report</strong><br>
+                    34% of product launches fail year-1 forecasts. Over 50% of failures attributed to market access challenges rather than clinical efficacy.
+                </div>
+                <div class="reference-item">
+                    <strong>AJMC Reimbursement Study</strong><br>
+                    Time to reimbursement across major markets ranges 6–17.7 months (US: 6–12mo; EU: 8–17.7mo). Evidence readiness is primary driver of timeline variation.
+                </div>
+                <div class="reference-item">
+                    <strong>Analysis Group HTA Standards</strong><br>
+                    Best practices for cost-effectiveness modeling, evidence synthesis, and multi-jurisdiction dossier development. Industry-standard methodology for HTA submissions.
+                </div>
+                <div class="reference-item">
+                    <strong>IFPMA Facts & Figures 2024</strong><br>
+                    Pharma R&D investment: $288B globally. HTA submissions: $50K–$300K+ per country. Systematic evidence synthesis required for all major markets.
+                </div>
+                <div class="reference-item">
+                    <strong>Emergo / UL CE Marking Timelines</strong><br>
+                    Device CE marking ranges 4–42 months depending on classification and HTA evidence requirements. HEOR integration accelerates non-clinical evidence packages.
+                </div>
+                <div class="reference-item">
+                    <strong>FDA 510(k) Median Cost & Timeline</strong><br>
+                    Average cost: $3.1M. Median timeline: 140–175 days. Comparative effectiveness evidence (HTA-ready) reduces review cycles.
+                </div>
+                <div class="reference-item">
+                    <strong>Grand View Research RWE Market (2024)</strong><br>
+                    Real-world evidence market: ~$3–5B (2024). CAGR: 14%+. RWE increasingly required for payer dossiers across all jurisdictions.
+                </div>
+                <div class="reference-item">
+                    <strong>ISPOR Standards & Guidelines</strong><br>
+                    Health economic modeling, outcome research, and pharmacoeconomic evaluation best practices. Referenced by NICE, G-BA, HAS, CADTH, and PBAC.
+                </div>
+                <div class="reference-item">
+                    <strong>Deloitte HEOR Insights</strong><br>
+                    Health economic evidence increasingly tied to pricing power and formulary positioning. Integrated HEOR strategies reduce payer friction and accelerate access.
+                </div>
+                <div class="reference-item">
+                    <strong>Mordor Intelligence Global Pharma Market Forecast</strong><br>
+                    Global pharma: $1.67T (2024) → $2.3T (2030). MedTech: $640B. Biosimilars: $22–34B. Market access complexity rising across all segments.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Accelerate Your Market Access?</h2>
+            <p>Let HTA-Axi build your submission-ready value dossier. Contact our HEOR team to discuss your evidence strategy.</p>
+            <button class="cta-button" onclick="openModal()">Get Started</button>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal" id="interestModal" data-interest="HTA-Axi - HEOR Analytics">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-header">Let's Discuss Your HEOR Strategy</div>
+            <div class="modal-body">
+                <p>Tell us about your product, therapeutic area, and target markets. We'll outline how HTA-Axi can accelerate your value dossier development.</p>
+                <form id="interestForm">
+                    <div class="form-group">
+                        <label for="contactName">Full Name</label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" name="contactEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="therapeutic">Therapeutic Area / Product Type</label>
+                        <input type="text" id="therapeutic" name="therapeutic" placeholder="e.g., Oncology, Rare Disease, MedTech">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Tell us about your project</label>
+                        <textarea id="message" name="message" rows="4" placeholder="What stage are you at? What markets are you targeting?"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="submitForm()">Send Inquiry</button>
             </div>
         </div>
     </div>
-</section>
 
-<section class="cta-section" id="contact">
-    <div class="container">
-        <h2 class="section-title">Get your value story audit-ready</h2>
-        <p class="section-subtitle">Request a sample HTA-Axi deliverable or a 15-minute walkthrough. We reply within one business day.</p>
-        <div class="cta-buttons">
-            <a href="#" class="btn btn-white open-contact" data-interest="HTA-Axi - HEOR Analytics">Request a Sample Report &rarr;</a>
-            <a href="#" class="btn btn-outline open-contact" data-interest="Schedule a Walkthrough" style="color:#fff;border-color:rgba(255,255,255,0.4);">Book a 15-min Walkthrough</a>
-        </div>
-        <div class="cta-email">Or email us directly at <a href="mailto:contact@axinavigation.com">contact@axinavigation.com</a></div>
-    </div>
-</section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <svg class="footer-logo" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Innovation logo">
+                        <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#ffffff" opacity="0.8"/>
+                        <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#ffffff" opacity="0.8"/>
+                        <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#ffffff" opacity="0.8"/>
+                        <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#ffffff" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+                        <text x="128" y="50" font-family="Georgia,serif" font-size="24" fill="#ffffff" font-weight="700" opacity="0.8">Axi</text>
+                        <text x="18" y="78" font-family="Georgia,serif" font-size="14" fill="#ffffff" font-weight="500" opacity="0.8">Innovation</text>
+                    </svg>
+                    <p style="font-size: 0.9rem; color: #d1d5db; line-height: 1.6; margin-top: 0.5rem;">
+                        Accelerating HEOR evidence synthesis, health economic modeling, and market access for innovative therapies worldwide.
+                    </p>
+                </div>
 
-<!-- CONTACT MODAL (shared) -->
-<div class="modal-overlay" id="contactModal">
-    <div class="modal-box">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <div id="contactForm">
-            <h3>Get in touch</h3>
-            <p class="modal-subtitle">Fill out the form and a senior analyst will respond within one business day.</p>
-            <form id="contactFormEl" autocomplete="on">
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-name">Full name *</label><input type="text" id="cf-name" name="name" required placeholder="Jane Smith"></div>
-                    <div class="form-group"><label for="cf-company">Company *</label><input type="text" id="cf-company" name="company" required placeholder="Acme Pharma"></div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="gain.html">GAIN Analytics</a></li>
+                        <li><a href="hta-axi.html">HTA-Axi (HEOR)</a></li>
+                        <li><a href="patnav.html">PatNav (Patent Intelligence)</a></li>
+                        <li><a href="egov.html">eGov (Regulatory Intelligence)</a></li>
+                        <li><a href="crossintell-public.html">CrossIntell Public</a></li>
+                        <li><a href="crossintell-private.html">CrossIntell Private</a></li>
+                    </ul>
                 </div>
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-email">Work email *</label><input type="email" id="cf-email" name="email" required placeholder="jane@acmepharma.com"></div>
-                    <div class="form-group"><label for="cf-role">Your role</label><input type="text" id="cf-role" name="role" placeholder="VP Market Access"></div>
-                </div>
-                <div class="form-group"><label for="cf-interest">I'm interested in</label>
-                    <select id="cf-interest" name="interest">
-                        <option value="General Inquiry">General inquiry</option>
-                        <option value="Request a Sample Report">Request a sample report</option>
-                        <option value="Schedule a Walkthrough">Schedule a walkthrough</option>
-                        <option value="GAiN - Global Access Intelligence">GAiN &mdash; Global Access Intelligence</option>
-                        <option value="HTA-Axi - HEOR Analytics" selected>HTA-Axi &mdash; HEOR Analytics</option>
-                        <option value="PatNav - Patient Journey">PatNav &mdash; Patient Journey</option>
-                        <option value="eGov - Stakeholder Intelligence">eGov &mdash; Stakeholder Intelligence</option>
-                        <option value="Regulatory & G2M">Regulatory &amp; G2M</option>
-                        <option value="CrossIntell - Cross-Functional Intelligence">CrossIntell</option>
-                    </select>
-                </div>
-                <div class="form-group"><label for="cf-message">Message</label><textarea id="cf-message" name="message" placeholder="Tell us about your portfolio, markets of interest or the question you are trying to answerâ¦"></textarea></div>
-                <button type="submit" class="form-submit" id="cf-submit">Send message</button>
-                <p style="font-size:12px;color:var(--gray-500);margin-top:10px;text-align:center;">Your information is kept confidential and never shared with third parties.</p>
-            </form>
-        </div>
-        <div class="form-success" id="contactSuccess">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#e8f0fe"/><path d="M20 28.5l5.5 5.5L36 23" stroke="#1a56db" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <h4>Message sent</h4>
-            <p>Thanks for reaching out. We will get back to you within one business day.</p>
-        </div>
-    </div>
-</div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-inner">
-            <div class="footer-logo">
-                <svg class="footer-logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
-                    <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
-                    <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
-                    <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
-                    <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="rgba(255,255,255,0.75)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                    <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="rgba(255,255,255,0.75)" font-weight="500">Navigation</text>
-                    <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#ffffff" font-weight="700">Axi</text>
-                </svg>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#team">Team</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p style="font-size: 0.95rem; color: #d1d5db; margin-bottom: 1rem;">
+                        <strong>Email:</strong><br>
+                        <a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a>
+                    </p>
+                    <p style="font-size: 0.9rem; color: #9ca3af;">
+                        © 2026 Axi Innovation. All rights reserved.
+                    </p>
+                </div>
             </div>
-            <ul class="footer-links">
-                <li><a href="gain.html">GAiN</a></li>
-                <li><a href="hta-axi.html">HTA-Axi</a></li>
-                <li><a href="patnav.html">PatNav</a></li>
-                <li><a href="egov.html">eGov</a></li>
-                <li><a href="reg-g2m.html">Regulatory &amp; G2M</a></li>
-                <li><a href="crossintell.html">CrossIntell</a></li>
-                <li><a href="#" class="open-contact">Contact</a></li>
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            </ul>
-            <div style="font-size:13px;">&copy; 2026 Axi Navigation. All rights reserved.</div>
-        </div>
-    </div>
-</footer>
 
-<script src="axi-shared.js"></script>
+            <div class="footer-divider">
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Axi Innovation. All rights reserved.</p>
+                    <p style="text-align: right;">
+                        Made with care for health economic clarity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="axi-shared.js"></script>
+    <script>
+        function openModal() {
+            const modal = document.getElementById('interestModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('interestModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitForm() {
+            const form = document.getElementById('interestForm');
+            const formData = new FormData(form);
+            const modal = document.getElementById('interestModal');
+            const interest = modal.getAttribute('data-interest');
+
+            const data = {
+                name: formData.get('contactName'),
+                email: formData.get('contactEmail'),
+                company: formData.get('company'),
+                therapeutic: formData.get('therapeutic'),
+                message: formData.get('message'),
+                interest: interest,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Interest submission:', data);
+
+            // Reset form and close modal
+            form.reset();
+            closeModal();
+
+            // Show confirmation (simple alert - replace with proper toast/notification in production)
+            alert('Thank you! We will contact you shortly at ' + data.email);
+        }
+
+        // Close modal when clicking outside content
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('interestModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

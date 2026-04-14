@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRP/ERP Reference Pricing Flow</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0c10;
+      --bg2: #10141c;
+      --panel: rgba(16,20,28,0.92);
+      --border: rgba(255,255,255,0.07);
+      --text: #c8d0e0;
+      --text-dim: #5a6070;
+      --accent: #3af0b0;
+      --c-intl: #3af0b0;
+      --c-db: #f0a03a;
+      --c-major: #3a9ff0;
+      --c-erp-hi: #c03af0;
+      --c-erp-li: #f03a6a;
+      --c-americas: #f5c842;
+      --c-free: #8080a0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .top-bar {
+      background: linear-gradient(to bottom, rgba(58, 240, 176, 0.05), transparent);
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .top-bar h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .top-bar p {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .svg-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .legend-panel {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    .bottom-center {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      text-align: center;
+      z-index: 100;
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      z-index: 100;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+      z-index: 200;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .tooltip.visible {
+      opacity: 1;
+    }
+
+    .tooltip-row {
+      margin: 4px 0;
+    }
+
+    .tooltip-row:first-child {
+      margin-top: 0;
+    }
+
+    .tooltip-arrow {
+      color: var(--text-dim);
+      margin: 0 4px;
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node rect {
+      stroke-width: 1px;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .node text {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      fill: var(--text);
+      pointer-events: none;
+    }
+
+    .link {
+      fill: none;
+      cursor: pointer;
+      opacity: 0.25;
+      transition: opacity 0.2s ease;
+    }
+
+    .link:hover {
+      opacity: 0.55;
+    }
+
+    .node.dimmed rect {
+      opacity: 0.1;
+    }
+
+    .node.dimmed text {
+      opacity: 0.2;
+    }
+
+    .link.dimmed {
+      opacity: 0.05;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <h1>IRP/ERP Reference Pricing Flow — From Standard-Setters to Markets</h1>
+      <p>Tracing how pharmaceutical pricing influence flows across regulatory tiers · hover for details</p>
+    </div>
+    <div class="svg-container"></div>
+    <div class="legend-panel">
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-intl);"></div>
+        <span class="legend-label">International Standard-setters</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-db);"></div>
+        <span class="legend-label">Databases & Platforms</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-major);"></div>
+        <span class="legend-label">Major Reference Anchors</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-erp-hi);"></div>
+        <span class="legend-label">High-Income ERP Users</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-erp-li);"></div>
+        <span class="legend-label">LMIC/Emerging ERP</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--c-americas);"></div>
+        <span class="legend-label">Americas Regional</span>
+      </div>
+    </div>
+    <div class="bottom-center">ERP = External Reference Pricing · Data: WHO, EURIPID, PAHO, PMC, OECD · 2024</div>
+    <div class="bottom-right">Powered by Axi Innovation — GAiN</div>
+  </div>
+
+  <div class="tooltip"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-sankey/0.12.3/d3-sankey.min.js"></script>
+
+  <script>
+    const colorMap = {
+      intl: '#3af0b0',
+      db: '#f0a03a',
+      major: '#3a9ff0',
+      'erp-hi': '#c03af0',
+      'erp-li': '#f03a6a',
+      americas: '#f5c842',
+    };
+
+    const rawNodes = [
+      {name:"WHO",cat:"intl"},{name:"ICH",cat:"intl"},{name:"OECD",cat:"intl"},
+      {name:"EURIPID",cat:"db"},{name:"WHO/HAI",cat:"db"},{name:"IQVIA",cat:"db"},
+      {name:"France",cat:"major"},{name:"Germany",cat:"major"},{name:"UK",cat:"major"},
+      {name:"Austria",cat:"major"},{name:"Spain",cat:"major"},{name:"Italy",cat:"major"},
+      {name:"EMA",cat:"erp-hi"},{name:"Switzerland",cat:"erp-hi"},{name:"Netherlands",cat:"erp-hi"},
+      {name:"Belgium",cat:"erp-hi"},{name:"Sweden",cat:"erp-hi"},{name:"Canada",cat:"erp-hi"},
+      {name:"Australia",cat:"erp-hi"},{name:"Greece",cat:"erp-hi"},{name:"Portugal",cat:"erp-hi"},
+      {name:"South Korea",cat:"erp-hi"},{name:"Japan",cat:"erp-hi"},{name:"New Zealand",cat:"erp-hi"},
+      {name:"Turkey",cat:"erp-li"},{name:"India",cat:"erp-li"},{name:"South Africa",cat:"erp-li"},
+      {name:"Jordan",cat:"erp-li"},{name:"Thailand",cat:"erp-li"},
+      {name:"Poland",cat:"erp-li"},{name:"Hungary",cat:"erp-li"},{name:"Romania",cat:"erp-li"},
+      {name:"PAHO",cat:"americas"},{name:"Brazil",cat:"americas"},{name:"Mexico",cat:"americas"},
+      {name:"Colombia",cat:"americas"},{name:"Chile",cat:"americas"},{name:"Peru",cat:"americas"},
+      {name:"Pacific Alliance",cat:"americas"},
+    ];
+
+    const rawLinks = [
+      {source:"WHO",target:"WHO/HAI",value:3},
+      {source:"WHO",target:"France",value:2},
+      {source:"WHO",target:"PAHO",value:4},
+      {source:"WHO",target:"India",value:2},
+      {source:"WHO",target:"South Africa",value:2},
+      {source:"WHO",target:"Turkey",value:1},
+      {source:"ICH",target:"EMA",value:3},
+      {source:"ICH",target:"Japan",value:3},
+      {source:"ICH",target:"Canada",value:2},
+      {source:"OECD",target:"Canada",value:2},
+      {source:"OECD",target:"Australia",value:2},
+      {source:"OECD",target:"New Zealand",value:2},
+      {source:"OECD",target:"South Korea",value:2},
+      {source:"OECD",target:"Brazil",value:1},
+      {source:"EURIPID",target:"France",value:4},
+      {source:"EURIPID",target:"Germany",value:4},
+      {source:"EURIPID",target:"Austria",value:4},
+      {source:"EURIPID",target:"Spain",value:4},
+      {source:"EURIPID",target:"Italy",value:4},
+      {source:"EURIPID",target:"Belgium",value:3},
+      {source:"EURIPID",target:"Netherlands",value:3},
+      {source:"EURIPID",target:"Sweden",value:3},
+      {source:"EURIPID",target:"Greece",value:3},
+      {source:"EURIPID",target:"Portugal",value:3},
+      {source:"EURIPID",target:"Poland",value:3},
+      {source:"EURIPID",target:"Hungary",value:3},
+      {source:"EURIPID",target:"Romania",value:3},
+      {source:"EURIPID",target:"Switzerland",value:3},
+      {source:"WHO/HAI",target:"India",value:3},
+      {source:"WHO/HAI",target:"South Africa",value:3},
+      {source:"WHO/HAI",target:"Jordan",value:2},
+      {source:"WHO/HAI",target:"Thailand",value:2},
+      {source:"WHO/HAI",target:"PAHO",value:3},
+      {source:"IQVIA",target:"Canada",value:2},
+      {source:"IQVIA",target:"South Korea",value:2},
+      {source:"IQVIA",target:"Brazil",value:2},
+      {source:"France",target:"Greece",value:4},
+      {source:"France",target:"Portugal",value:4},
+      {source:"France",target:"Romania",value:3},
+      {source:"France",target:"Turkey",value:3},
+      {source:"France",target:"Brazil",value:3},
+      {source:"France",target:"Japan",value:3},
+      {source:"Germany",target:"Austria",value:4},
+      {source:"Germany",target:"Switzerland",value:4},
+      {source:"Germany",target:"Turkey",value:3},
+      {source:"Germany",target:"Brazil",value:3},
+      {source:"Germany",target:"South Korea",value:3},
+      {source:"Germany",target:"Japan",value:3},
+      {source:"UK",target:"New Zealand",value:3},
+      {source:"UK",target:"Australia",value:3},
+      {source:"UK",target:"South Africa",value:3},
+      {source:"UK",target:"Canada",value:3},
+      {source:"UK",target:"Japan",value:3},
+      {source:"Spain",target:"Turkey",value:4},
+      {source:"Spain",target:"Jordan",value:3},
+      {source:"Spain",target:"Greece",value:3},
+      {source:"Spain",target:"Colombia",value:3},
+      {source:"Spain",target:"Chile",value:2},
+      {source:"Italy",target:"Greece",value:3},
+      {source:"Italy",target:"Portugal",value:3},
+      {source:"Italy",target:"Romania",value:3},
+      {source:"Italy",target:"Turkey",value:3},
+      {source:"EMA",target:"France",value:3},
+      {source:"EMA",target:"Germany",value:3},
+      {source:"EMA",target:"Spain",value:3},
+      {source:"EMA",target:"Italy",value:3},
+      {source:"PAHO",target:"Brazil",value:3},
+      {source:"PAHO",target:"Mexico",value:3},
+      {source:"PAHO",target:"Colombia",value:3},
+      {source:"PAHO",target:"Chile",value:2},
+      {source:"PAHO",target:"Peru",value:2},
+      {source:"Brazil",target:"Colombia",value:2},
+      {source:"Brazil",target:"Peru",value:2},
+      {source:"Brazil",target:"Mexico",value:2},
+      {source:"Colombia",target:"Pacific Alliance",value:3},
+      {source:"Pacific Alliance",target:"Mexico",value:3},
+      {source:"Pacific Alliance",target:"Chile",value:3},
+      {source:"Pacific Alliance",target:"Peru",value:3},
+    ];
+
+    const nameToIndex = {};
+    rawNodes.forEach((node, i) => {
+      nameToIndex[node.name] = i;
+    });
+
+    const nodes = rawNodes.map(n => ({ name: n.name, cat: n.cat }));
+    const links = rawLinks.map(l => ({
+      source: nameToIndex[l.source],
+      target: nameToIndex[l.target],
+      value: l.value,
+      sourceName: l.source,
+      targetName: l.target,
+    }));
+
+    const container = d3.select('.svg-container');
+    const tooltip = d3.select('.tooltip');
+
+    const width = container.node().clientWidth;
+    const height = container.node().clientHeight;
+
+    const margin = { top: 100, right: 200, bottom: 80, left: 200 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const svg = container
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    const g = svg
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const sankey = d3.sankey()
+      .nodeWidth(20)
+      .nodePadding(14)
+      .extent([[0, 0], [innerWidth, innerHeight]]);
+
+    const data = { nodes, links };
+    const { nodes: layoutNodes, links: layoutLinks } = sankey(data);
+
+    const link = g.selectAll('.link')
+      .data(layoutLinks)
+      .enter()
+      .append('path')
+      .attr('class', 'link')
+      .attr('d', d3.sankeyLinkHorizontal())
+      .attr('stroke', d => {
+        const sourceColor = colorMap[nodes[d.source.index].cat];
+        return sourceColor;
+      })
+      .on('mouseenter', function(event, d) {
+        link.classed('dimmed', lk => lk !== d);
+        node.classed('dimmed', n =>
+          n.index !== d.source.index && n.index !== d.target.index
+        );
+
+        tooltip
+          .classed('visible', true)
+          .html(`
+            <div class="tooltip-row">${d.sourceName}<span class="tooltip-arrow">→</span>${d.targetName}</div>
+            <div class="tooltip-row">Flow weight: ${d.value}</div>
+          `)
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 28) + 'px');
+      })
+      .on('mouseleave', function() {
+        link.classed('dimmed', false);
+        node.classed('dimmed', false);
+        tooltip.classed('visible', false);
+      });
+
+    const node = g.selectAll('.node')
+      .data(layoutNodes)
+      .enter()
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', d => `translate(${d.x0},${d.y0})`)
+      .on('mouseenter', function(event, d) {
+        const connectedLinks = new Set();
+        layoutLinks.forEach(l => {
+          if (l.source.index === d.index || l.target.index === d.index) {
+            connectedLinks.add(l);
+          }
+        });
+
+        link.classed('dimmed', l => !connectedLinks.has(l));
+
+        const connectedNodeIndices = new Set([d.index]);
+        connectedLinks.forEach(l => {
+          connectedNodeIndices.add(l.source.index);
+          connectedNodeIndices.add(l.target.index);
+        });
+
+        node.classed('dimmed', n => !connectedNodeIndices.has(n.index));
+      })
+      .on('mouseleave', function() {
+        link.classed('dimmed', false);
+        node.classed('dimmed', false);
+      });
+
+    node.append('rect')
+      .attr('height', d => d.y1 - d.y0)
+      .attr('width', 20)
+      .attr('fill', d => colorMap[d.cat])
+      .attr('stroke', d => {
+        const baseColor = colorMap[d.cat];
+        return d3.color(baseColor).brighter(0.8).formatHex();
+      });
+
+    node.append('text')
+      .attr('x', d => d.x0 < innerWidth / 2 ? 28 : -8)
+      .attr('y', d => (d.y1 - d.y0) / 2)
+      .attr('dy', '0.35em')
+      .attr('text-anchor', d => d.x0 < innerWidth / 2 ? 'start' : 'end')
+      .text(d => d.name);
+
+    window.addEventListener('resize', () => {
+      // Responsive redraw could go here
+    });
+  </script>
+</body>
+</html>

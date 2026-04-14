@@ -1,675 +1,729 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pharma International Reference Pricing â Regulatory Network</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0c10;
-    --bg2: #10141c;
-    --panel: rgba(16,20,28,0.92);
-    --border: rgba(255,255,255,0.07);
-    --text: #c8d0e0;
-    --text-dim: #5a6070;
-    --accent: #3af0b0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharma Regulatory Network — IRP/ERP Reference Pricing</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --bg2: #10141c;
+      --panel: rgba(16,20,28,0.92);
+      --border: rgba(255,255,255,0.07);
+      --text: #c8d0e0;
+      --text-dim: #5a6070;
+      --accent: #3af0b0;
+      --c-intl: #3af0b0;
+      --c-db: #f0a03a;
+      --c-major: #3a9ff0;
+      --c-erp-hi: #c03af0;
+      --c-erp-li: #f03a6a;
+      --c-americas: #f5c842;
+      --c-free: #8080a0;
+    }
 
-    --c-intl:    #3af0b0;  /* International Standard-setters */
-    --c-db:      #f0a03a;  /* Price Databases & Platforms */
-    --c-major:   #3a9ff0;  /* Major Reference Anchors (EU core) */
-    --c-erp-hi:  #c03af0;  /* High-income ERP Users */
-    --c-erp-li:  #f03a6a;  /* LMIC / Emerging ERP Users */
-    --c-americas:#f5c842;  /* Americas Regional */
-    --c-free:    #8080a0;  /* Free-pricing / non-ERP */
-  }
-  html, body { width:100%; height:100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow: hidden; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  #canvas { position: absolute; inset: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
 
-  /* ---- TOP BAR ---- */
-  #topbar {
-    position: absolute; top: 0; left: 0; right: 0;
-    padding: 18px 28px 14px;
-    background: linear-gradient(180deg, rgba(10,12,16,0.98) 60%, transparent);
-    display: flex; align-items: flex-start; gap: 24px;
-    pointer-events: none;
-    z-index: 10;
-  }
-  #topbar h1 { font-size: 15px; font-weight: 600; letter-spacing: .03em; color: #fff; line-height: 1.3; pointer-events: none; }
-  #topbar p  { font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; margin-top: 3px; letter-spacing:.02em; }
-  .title-block { flex:1; }
+    #container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
 
-  /* ---- LEGEND ---- */
-  #legend {
-    position: absolute; bottom: 24px; left: 24px;
-    background: var(--panel); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px 18px;
-    backdrop-filter: blur(12px);
-    z-index: 10;
-    min-width: 220px;
-  }
-  #legend h2 { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text-dim); margin-bottom: 10px; }
-  .leg-row { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; font-size: 11.5px; cursor: pointer; user-select:none; transition: opacity .2s; }
-  .leg-row:hover { opacity:.75; }
-  .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink:0; }
-  .leg-row span { color: var(--text); }
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
 
-  /* ---- FILTERS ---- */
-  #filters {
-    position: absolute; bottom: 24px; right: 24px;
-    display: flex; flex-direction: column; gap: 7px;
-    z-index: 10;
-    align-items: flex-end;
-  }
-  #filters label { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); margin-bottom: 2px; text-align:right; }
-  .filter-btn {
-    background: var(--panel); border: 1px solid var(--border);
-    color: var(--text); font-family: 'DM Mono', monospace; font-size: 10.5px;
-    padding: 6px 13px; border-radius: 20px; cursor: pointer;
-    transition: all .18s; backdrop-filter: blur(8px);
-    letter-spacing:.04em;
-  }
-  .filter-btn:hover { border-color: rgba(255,255,255,0.2); color:#fff; }
-  .filter-btn.active { color: #000; font-weight: 600; border-color: transparent; }
-  .filter-btn[data-cat="all"].active         { background: rgba(255,255,255,0.85); }
-  .filter-btn[data-cat="intl"].active        { background: var(--c-intl); }
-  .filter-btn[data-cat="db"].active          { background: var(--c-db); }
-  .filter-btn[data-cat="major"].active       { background: var(--c-major); }
-  .filter-btn[data-cat="erp-hi"].active      { background: var(--c-erp-hi); }
-  .filter-btn[data-cat="erp-li"].active      { background: var(--c-erp-li); }
-  .filter-btn[data-cat="americas"].active    { background: var(--c-americas); }
-  .filter-btn[data-cat="free"].active        { background: var(--c-free); }
+    .node-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      font-weight: 500;
+      fill: var(--text);
+      text-anchor: middle;
+      pointer-events: none;
+      user-select: none;
+    }
 
-  /* ---- ZOOM CONTROLS ---- */
-  #zoom-controls {
-    position: absolute; top: 80px; right: 20px;
-    display: flex; flex-direction: column; gap: 5px; z-index: 10;
-  }
-  .zoom-btn {
-    width: 32px; height: 32px; background: var(--panel); border: 1px solid var(--border);
-    color: var(--text); font-size: 17px; border-radius: 7px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all .15s; backdrop-filter: blur(8px);
-  }
-  .zoom-btn:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
+    .link {
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-  /* ---- TOOLTIP ---- */
-  #tooltip {
-    position: absolute; pointer-events: none;
-    background: var(--panel); border: 1px solid var(--border);
-    border-radius: 10px; padding: 13px 16px;
-    backdrop-filter: blur(16px);
-    max-width: 260px; z-index: 20;
-    display: none;
-  }
-  #tooltip .tt-name { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-  #tooltip .tt-cat  { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; font-family: 'DM Mono', monospace; }
-  #tooltip .tt-body { font-size: 11.5px; color: var(--text); line-height: 1.55; }
-  #tooltip .tt-stat { display:flex; gap:8px; margin-top: 8px; }
-  #tooltip .tt-stat span { background: rgba(255,255,255,0.05); border-radius:5px; padding:3px 7px; font-size:10.5px; font-family:'DM Mono',monospace; }
+    /* Top bar */
+    #topBar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: linear-gradient(to bottom, rgba(10,12,16,0.8), transparent);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+    }
 
-  /* ---- SUBTITLE LINE ---- */
-  #subtitle {
-    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-    font-size:10px; color: var(--text-dim); font-family: 'DM Mono', monospace;
-    letter-spacing: .06em; pointer-events:none; white-space:nowrap;
-    z-index: 10;
-  }
-</style>
+    .bar-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .bar-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    /* Legend panel */
+    #legend {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      z-index: 20;
+      max-width: 280px;
+    }
+
+    .legend-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .legend-row:hover {
+      opacity: 0.8;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    /* Filter buttons */
+    #filters {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      max-width: 400px;
+      z-index: 20;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      border-color: currentColor;
+      color: white;
+      background: currentColor;
+    }
+
+    .filter-btn.active.intl { background: var(--c-intl); color: var(--bg); }
+    .filter-btn.active.db { background: var(--c-db); color: var(--bg); }
+    .filter-btn.active.major { background: var(--c-major); color: white; }
+    .filter-btn.active.erp-hi { background: var(--c-erp-hi); color: white; }
+    .filter-btn.active.erp-li { background: var(--c-erp-li); color: white; }
+    .filter-btn.active.americas { background: var(--c-americas); color: var(--bg); }
+    .filter-btn.active.free { background: var(--c-free); color: white; }
+
+    /* Zoom controls */
+    #zoomControls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .zoom-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .zoom-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(58, 240, 176, 0.1);
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: absolute;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--text);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 30;
+      max-width: 280px;
+      display: none;
+    }
+
+    .tooltip-name {
+      font-family: 'DM Mono', monospace;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .tooltip-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .tooltip-desc {
+      font-size: 11px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .tooltip-stats {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    .tooltip-stat-line {
+      margin: 2px 0;
+    }
+
+    /* Bottom center subtitle */
+    #bottomSubtitle {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    /* Watermark */
+    #watermark {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      z-index: 20;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-<svg id="canvas"></svg>
+  <div id="container">
+    <svg id="svg"></svg>
 
-<div id="topbar">
-  <div class="title-block">
-    <h1>Pharma Regulatory Network â International Reference Pricing (IRP/ERP)</h1>
-    <p>How regulatory bodies and price databases shape pharmaceutical pricing globally Â· drag Â· scroll to zoom Â· click to filter</p>
+    <div id="topBar">
+      <div class="bar-title">Pharma Regulatory Network — International Reference Pricing (IRP/ERP)</div>
+      <div class="bar-subtitle">Force-directed graph of global pharmaceutical pricing mechanisms</div>
+    </div>
+
+    <div id="legend">
+      <div class="legend-title">Categories</div>
+      <div class="legend-row" data-category="intl">
+        <div class="legend-dot" style="background: var(--c-intl);"></div>
+        <div class="legend-label">International (WHO/ICH/OECD)</div>
+      </div>
+      <div class="legend-row" data-category="db">
+        <div class="legend-dot" style="background: var(--c-db);"></div>
+        <div class="legend-label">Price Databases</div>
+      </div>
+      <div class="legend-row" data-category="major">
+        <div class="legend-dot" style="background: var(--c-major);"></div>
+        <div class="legend-label">Major ERP Reference (EU)</div>
+      </div>
+      <div class="legend-row" data-category="erp-hi">
+        <div class="legend-dot" style="background: var(--c-erp-hi);"></div>
+        <div class="legend-label">ERP Implementers (High Income)</div>
+      </div>
+      <div class="legend-row" data-category="erp-li">
+        <div class="legend-dot" style="background: var(--c-erp-li);"></div>
+        <div class="legend-label">ERP Implementers (Lower Income)</div>
+      </div>
+      <div class="legend-row" data-category="americas">
+        <div class="legend-dot" style="background: var(--c-americas);"></div>
+        <div class="legend-label">Americas</div>
+      </div>
+      <div class="legend-row" data-category="free">
+        <div class="legend-dot" style="background: var(--c-free);"></div>
+        <div class="legend-label">Free/Unregulated Pricing</div>
+      </div>
+    </div>
+
+    <div id="filters"></div>
+
+    <div id="zoomControls">
+      <button class="zoom-btn" id="zoomInBtn" title="Zoom In">+</button>
+      <button class="zoom-btn" id="zoomOutBtn" title="Zoom Out">−</button>
+      <button class="zoom-btn" id="resetBtn" title="Reset View">⟳</button>
+    </div>
+
+    <div id="tooltip"></div>
+
+    <div id="bottomSubtitle">ERP = External Reference Pricing · Data: WHO, EURIPID, PAHO, PMC, OECD · 2024</div>
+
+    <div id="watermark">Powered by Axi Innovation — GAiN</div>
   </div>
-</div>
 
-<div id="legend">
-  <h2>Node Categories</h2>
-  <div class="leg-row" data-cat="intl"><div class="leg-dot" style="background:var(--c-intl)"></div><span>International Standard-setters</span></div>
-  <div class="leg-row" data-cat="db"><div class="leg-dot" style="background:var(--c-db)"></div><span>Price Databases &amp; Platforms</span></div>
-  <div class="leg-row" data-cat="major"><div class="leg-dot" style="background:var(--c-major)"></div><span>Major Reference Anchors</span></div>
-  <div class="leg-row" data-cat="erp-hi"><div class="leg-dot" style="background:var(--c-erp-hi)"></div><span>High-Income ERP Users</span></div>
-  <div class="leg-row" data-cat="erp-li"><div class="leg-dot" style="background:var(--c-erp-li)"></div><span>LMIC / Emerging ERP Users</span></div>
-  <div class="leg-row" data-cat="americas"><div class="leg-dot" style="background:var(--c-americas)"></div><span>Americas Regional</span></div>
-  <div class="leg-row" data-cat="free"><div class="leg-dot" style="background:var(--c-free)"></div><span>Free-Pricing / Non-ERP</span></div>
-  <div style="margin-top:10px; border-top:1px solid var(--border); padding-top:10px;">
-    <div style="font-size:10px; color:var(--text-dim); margin-bottom:6px; text-transform:uppercase; letter-spacing:.1em;">Link Width</div>
-    <div style="font-size:11px; color:var(--text);">= frequency of reference use<br><span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim)">thicker = more countries reference</span></div>
-  </div>
-</div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const nodes = [
+      {id:"WHO",label:"WHO",cat:"intl",r:24,desc:"Sets global pharmaceutical pricing guidelines; recommends ERP as a cost-containment tool.",refs_in:0,refs_out:18},
+      {id:"ICH",label:"ICH",cat:"intl",r:18,desc:"International Council for Harmonisation: sets technical standards for drug registration.",refs_in:0,refs_out:5},
+      {id:"OECD",label:"OECD",cat:"intl",r:16,desc:"Produces comparative pharma pricing data and policy guidance for member states.",refs_in:0,refs_out:12},
+      {id:"EURIPID",label:"EURIPID",cat:"db",r:20,desc:"European Integrated Price Information Database used by ≥23 EU countries.",refs_in:5,refs_out:20},
+      {id:"WHOHAI",label:"WHO/HAI",cat:"db",r:15,desc:"WHO/Health Action International Medicine Prices database used by LMICs.",refs_in:3,refs_out:8},
+      {id:"IQVIA",label:"IQVIA",cat:"db",r:14,desc:"Global pharma data provider: MIDAS sales database.",refs_in:0,refs_out:6},
+      {id:"FR",label:"France",cat:"major",r:22,desc:"Most-referenced country in European ERP: referenced by 19 EU countries.",refs_in:19,refs_out:4},
+      {id:"DE",label:"Germany",cat:"major",r:21,desc:"Referenced by 17 EU countries. Free launch pricing then AMNOG assessment.",refs_in:17,refs_out:6},
+      {id:"UK",label:"United Kingdom",cat:"major",r:20,desc:"Referenced by 17 EU countries. NICE HTA and cost-effectiveness.",refs_in:17,refs_out:5},
+      {id:"AT",label:"Austria",cat:"major",r:17,desc:"Referenced by 16 EU countries. Average ERP across 27 EU countries.",refs_in:16,refs_out:27},
+      {id:"ES",label:"Spain",cat:"major",r:17,desc:"Referenced by 16 EU countries. Lowest price ERP method.",refs_in:16,refs_out:8},
+      {id:"IT",label:"Italy",cat:"major",r:16,desc:"Referenced by 15 EU countries. AIFA regulation and price negotiation.",refs_in:15,refs_out:8},
+      {id:"EMA",label:"EMA",cat:"erp-hi",r:19,desc:"European Medicines Agency: centralized EU drug authorisation.",refs_in:0,refs_out:30},
+      {id:"FDA",label:"FDA (USA)",cat:"erp-hi",r:18,desc:"U.S. FDA: approves drugs but does NOT set prices.",refs_in:0,refs_out:0},
+      {id:"PMDA",label:"PMDA (Japan)",cat:"erp-hi",r:17,desc:"Japan uses ERP with external price adjustment rule.",refs_in:0,refs_out:4},
+      {id:"CH",label:"Switzerland",cat:"erp-hi",r:15,desc:"Average ERP referencing 7 countries. Referenced by 12.",refs_in:12,refs_out:7},
+      {id:"NL",label:"Netherlands",cat:"erp-hi",r:14,desc:"Average ERP across Belgium, France, Germany, UK.",refs_in:15,refs_out:4},
+      {id:"BE",label:"Belgium",cat:"erp-hi",r:14,desc:"ERP as supportive criterion (26 EU member states).",refs_in:15,refs_out:26},
+      {id:"SE",label:"Sweden",cat:"erp-hi",r:13,desc:"HTA primary; ERP secondary. Referenced by ~14 countries.",refs_in:14,refs_out:5},
+      {id:"CA",label:"Canada",cat:"erp-hi",r:14,desc:"PMPRB caps launch prices referencing 11 OECD countries.",refs_in:0,refs_out:11},
+      {id:"AU",label:"Australia",cat:"erp-hi",r:14,desc:"PBAC cost-effectiveness; PBS prices medicines.",refs_in:0,refs_out:0},
+      {id:"GR",label:"Greece",cat:"erp-hi",r:12,desc:"Average of 3 lowest prices in ~25 EU country basket.",refs_in:6,refs_out:25},
+      {id:"PT",label:"Portugal",cat:"erp-hi",r:12,desc:"Average ERP. Basket: Spain, Italy, France.",refs_in:12,refs_out:3},
+      {id:"SK",label:"South Korea",cat:"erp-hi",r:13,desc:"HIRA sets prices using ERP referencing ~8 OECD countries.",refs_in:0,refs_out:8},
+      {id:"NZ",label:"New Zealand",cat:"erp-hi",r:12,desc:"PHARMAC: HTA + ERP comparisons with Australia and UK.",refs_in:2,refs_out:2},
+      {id:"TR",label:"Turkey",cat:"erp-li",r:13,desc:"Lowest-price ERP from France, Spain, Italy, Greece, Portugal.",refs_in:0,refs_out:5},
+      {id:"IN",label:"India",cat:"erp-li",r:12,desc:"Cost-plus + ERP hybrid pricing.",refs_in:2,refs_out:6},
+      {id:"ZA",label:"South Africa",cat:"erp-li",r:12,desc:"Single Exit Price; 14-country reference basket.",refs_in:0,refs_out:14},
+      {id:"JO",label:"Jordan",cat:"erp-li",r:11,desc:"ERP referencing country of origin price.",refs_in:0,refs_out:5},
+      {id:"TH",label:"Thailand",cat:"erp-li",r:11,desc:"ERP plus compulsory licensing.",refs_in:0,refs_out:4},
+      {id:"PL",label:"Poland",cat:"erp-li",r:12,desc:"One of Europe's largest baskets: 31 countries.",refs_in:8,refs_out:31},
+      {id:"HU",label:"Hungary",cat:"erp-li",r:12,desc:"31-country basket. Created EURIPID predecessor.",refs_in:8,refs_out:31},
+      {id:"RO",label:"Romania",cat:"erp-li",r:11,desc:"Lowest-price ERP from EU countries.",refs_in:5,refs_out:15},
+      {id:"PAHO",label:"PAHO",cat:"americas",r:20,desc:"WHO's Americas office. Runs Strategic Fund for procurement.",refs_in:0,refs_out:8},
+      {id:"ANVISA",label:"ANVISA (Brazil)",cat:"americas",r:18,desc:"Brazil's authority. IRP referencing ~12 countries.",refs_in:2,refs_out:12},
+      {id:"COFEPRIS",label:"COFEPRIS (Mexico)",cat:"americas",r:16,desc:"Mexico's drug regulatory authority.",refs_in:1,refs_out:4},
+      {id:"ANMAT",label:"ANMAT (Argentina)",cat:"americas",r:15,desc:"Argentina's regulatory authority.",refs_in:0,refs_out:3},
+      {id:"INVIMA",label:"INVIMA (Colombia)",cat:"americas",r:15,desc:"IRP with 17-country basket for high-impact drugs.",refs_in:0,refs_out:17},
+      {id:"ISP",label:"ISP (Chile)",cat:"americas",r:13,desc:"Chile's authority. Pacific Alliance member.",refs_in:2,refs_out:3},
+      {id:"DIGEMID",label:"DIGEMID (Peru)",cat:"americas",r:13,desc:"Peru uses IRP. Pacific Alliance member.",refs_in:1,refs_out:4},
+      {id:"PAC_ALL",label:"Pacific Alliance",cat:"americas",r:14,desc:"Mexico, Colombia, Peru, Chile: price data sharing.",refs_in:0,refs_out:4},
+      {id:"CECMED",label:"CECMED (Cuba)",cat:"americas",r:11,desc:"Cuba's drug regulatory authority.",refs_in:0,refs_out:0},
+      {id:"IFARHU",label:"ANAMED (Ecuador)",cat:"americas",r:10,desc:"Ecuador's health regulation agency.",refs_in:0,refs_out:4},
+      {id:"US_free",label:"USA (free pricing)",cat:"free",r:13,desc:"No federal ERP. Highest prices globally.",refs_in:0,refs_out:0},
+      {id:"DE_free",label:"Germany (free launch)",cat:"free",r:11,desc:"12-month free pricing before AMNOG.",refs_in:17,refs_out:0},
+      {id:"AR_free",label:"Argentina (free market)",cat:"free",r:10,desc:"Mostly free-market with periodic controls.",refs_in:2,refs_out:0},
+    ];
 
-<div id="filters">
-  <label>Filter by category</label>
-  <button class="filter-btn active" data-cat="all">All nodes</button>
-  <button class="filter-btn" data-cat="intl">Standard-setters</button>
-  <button class="filter-btn" data-cat="db">Databases</button>
-  <button class="filter-btn" data-cat="major">Reference Anchors</button>
-  <button class="filter-btn" data-cat="erp-hi">High-Income ERP</button>
-  <button class="filter-btn" data-cat="erp-li">LMIC ERP</button>
-  <button class="filter-btn" data-cat="americas">Americas</button>
-  <button class="filter-btn" data-cat="free">Free-Pricing</button>
-</div>
+    const links = [
+      {source:"WHO",target:"WHOHAI",weight:3},{source:"WHO",target:"FR",weight:2},{source:"WHO",target:"IN",weight:2},{source:"WHO",target:"ZA",weight:2},{source:"WHO",target:"JO",weight:2},{source:"WHO",target:"TH",weight:2},{source:"WHO",target:"ANVISA",weight:2},{source:"WHO",target:"TR",weight:1},{source:"WHO",target:"RO",weight:1},
+      {source:"ICH",target:"FDA",weight:3},{source:"ICH",target:"EMA",weight:3},{source:"ICH",target:"PMDA",weight:3},{source:"ICH",target:"CA",weight:2},
+      {source:"OECD",target:"CA",weight:2},{source:"OECD",target:"AU",weight:2},{source:"OECD",target:"NZ",weight:2},{source:"OECD",target:"SK",weight:2},{source:"OECD",target:"ANVISA",weight:1},{source:"OECD",target:"ZA",weight:1},
+      {source:"EURIPID",target:"AT",weight:4},{source:"EURIPID",target:"ES",weight:4},{source:"EURIPID",target:"IT",weight:4},{source:"EURIPID",target:"FR",weight:4},{source:"EURIPID",target:"DE",weight:4},{source:"EURIPID",target:"BE",weight:3},{source:"EURIPID",target:"NL",weight:3},{source:"EURIPID",target:"SE",weight:3},{source:"EURIPID",target:"GR",weight:3},{source:"EURIPID",target:"PT",weight:3},{source:"EURIPID",target:"PL",weight:3},{source:"EURIPID",target:"HU",weight:3},{source:"EURIPID",target:"RO",weight:3},{source:"EURIPID",target:"CH",weight:3},
+      {source:"EMA",target:"FR",weight:3},{source:"EMA",target:"DE",weight:3},{source:"EMA",target:"IT",weight:3},{source:"EMA",target:"ES",weight:3},{source:"EMA",target:"AT",weight:2},{source:"EMA",target:"BE",weight:2},{source:"EMA",target:"NL",weight:2},{source:"EMA",target:"SE",weight:2},{source:"EMA",target:"GR",weight:2},{source:"EMA",target:"PT",weight:2},{source:"EMA",target:"PL",weight:2},{source:"EMA",target:"HU",weight:2},{source:"EMA",target:"RO",weight:2},
+      {source:"FR",target:"GR",weight:4},{source:"FR",target:"PT",weight:4},{source:"FR",target:"RO",weight:3},{source:"FR",target:"TR",weight:3},{source:"FR",target:"ANVISA",weight:3},{source:"FR",target:"PMDA",weight:3},
+      {source:"DE",target:"AT",weight:4},{source:"DE",target:"CH",weight:4},{source:"DE",target:"TR",weight:3},{source:"DE",target:"ANVISA",weight:3},{source:"DE",target:"SK",weight:3},{source:"DE",target:"PMDA",weight:3},
+      {source:"UK",target:"NZ",weight:3},{source:"UK",target:"AU",weight:3},{source:"UK",target:"ZA",weight:3},{source:"UK",target:"CA",weight:3},{source:"UK",target:"PMDA",weight:3},
+      {source:"ES",target:"TR",weight:4},{source:"ES",target:"JO",weight:3},{source:"ES",target:"GR",weight:3},
+      {source:"IT",target:"GR",weight:3},{source:"IT",target:"PT",weight:3},{source:"IT",target:"RO",weight:3},{source:"IT",target:"TR",weight:3},
+      {source:"CH",target:"AT",weight:3},{source:"CH",target:"DE",weight:3},
+      {source:"CA",target:"ANVISA",weight:2},{source:"CA",target:"ZA",weight:2},
+      {source:"AU",target:"NZ",weight:3},{source:"AU",target:"ZA",weight:2},
+      {source:"WHOHAI",target:"IN",weight:3},{source:"WHOHAI",target:"ZA",weight:3},{source:"WHOHAI",target:"JO",weight:2},{source:"WHOHAI",target:"TH",weight:2},
+      {source:"IN",target:"JO",weight:2},{source:"IN",target:"TH",weight:2},
+      {source:"PL",target:"EURIPID",weight:3},{source:"HU",target:"EURIPID",weight:3},{source:"PL",target:"CH",weight:2},{source:"HU",target:"CH",weight:2},
+      {source:"FDA",target:"ICH",weight:2},{source:"FDA",target:"US_free",weight:1},
+      {source:"DE_free",target:"DE",weight:2},{source:"DE_free",target:"FR",weight:1},
+      {source:"ANVISA",target:"JO",weight:1},{source:"ZA",target:"JO",weight:1},
+      {source:"IQVIA",target:"CA",weight:2},{source:"IQVIA",target:"SK",weight:2},{source:"IQVIA",target:"ANVISA",weight:2},{source:"IQVIA",target:"EURIPID",weight:2},
+      {source:"WHO",target:"PAHO",weight:4},
+      {source:"PAHO",target:"ANVISA",weight:3},{source:"PAHO",target:"COFEPRIS",weight:3},{source:"PAHO",target:"ANMAT",weight:3},{source:"PAHO",target:"INVIMA",weight:3},{source:"PAHO",target:"ISP",weight:2},{source:"PAHO",target:"DIGEMID",weight:2},{source:"PAHO",target:"CECMED",weight:2},
+      {source:"ANVISA",target:"FR",weight:3},{source:"ANVISA",target:"DE",weight:3},{source:"ANVISA",target:"UK",weight:3},{source:"ANVISA",target:"CA",weight:2},{source:"ANVISA",target:"AU",weight:2},{source:"ANVISA",target:"US_free",weight:2},
+      {source:"INVIMA",target:"FR",weight:3},{source:"INVIMA",target:"DE",weight:3},{source:"INVIMA",target:"UK",weight:3},{source:"INVIMA",target:"ES",weight:3},{source:"INVIMA",target:"PT",weight:2},{source:"INVIMA",target:"AU",weight:2},{source:"INVIMA",target:"CA",weight:2},{source:"INVIMA",target:"US_free",weight:2},{source:"INVIMA",target:"ANVISA",weight:2},{source:"INVIMA",target:"PAC_ALL",weight:3},
+      {source:"PAC_ALL",target:"COFEPRIS",weight:3},{source:"PAC_ALL",target:"ISP",weight:3},{source:"PAC_ALL",target:"DIGEMID",weight:3},{source:"PAC_ALL",target:"INVIMA",weight:3},
+      {source:"COFEPRIS",target:"ANVISA",weight:2},{source:"COFEPRIS",target:"PAHO",weight:2},
+      {source:"ANMAT",target:"ANVISA",weight:2},{source:"ANMAT",target:"ISP",weight:2},{source:"ANMAT",target:"AR_free",weight:2},
+      {source:"ISP",target:"ES",weight:2},{source:"ISP",target:"DE",weight:2},
+      {source:"DIGEMID",target:"ANVISA",weight:2},{source:"DIGEMID",target:"ISP",weight:2},
+      {source:"IFARHU",target:"INVIMA",weight:3},{source:"IFARHU",target:"ANVISA",weight:2},{source:"IFARHU",target:"PAHO",weight:2},
+      {source:"WHOHAI",target:"PAHO",weight:3},{source:"WHOHAI",target:"INVIMA",weight:2},{source:"WHOHAI",target:"DIGEMID",weight:2},
+    ];
 
-<div id="zoom-controls">
-  <button class="zoom-btn" id="zoom-in">+</button>
-  <button class="zoom-btn" id="zoom-out">â</button>
-  <button class="zoom-btn" id="zoom-reset" style="font-size:11px;">â</button>
-</div>
+    const categoryColors = {
+      intl: '#3af0b0',
+      db: '#f0a03a',
+      major: '#3a9ff0',
+      'erp-hi': '#c03af0',
+      'erp-li': '#f03a6a',
+      americas: '#f5c842',
+      free: '#8080a0'
+    };
 
-<div id="tooltip"></div>
-<div id="subtitle">ERP = External Reference Pricing Â· Data: WHO, EURIPID, PAHO, PMC, OECD Â· 2024</div>
+    let filteredCategories = new Set(Object.keys(categoryColors));
+    let highlightedNodes = new Set();
+    let highlightedLinks = new Set();
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-<script>
-// ââ DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-const nodes = [
-  // International Standard-setters (center)
-  { id:"WHO",     label:"WHO",             cat:"intl",   r:24, desc:"Sets global pharmaceutical pricing guidelines; recommends ERP as a cost-containment tool; maintains WHO Essential Medicines List used as pricing reference. Prequalifies manufacturers.", refs_in:0, refs_out:18 },
-  { id:"ICH",     label:"ICH",             cat:"intl",   r:18, desc:"International Council for Harmonisation: sets technical standards for drug registration used by FDA, EMA, PMDA, Health Canada. Harmonises quality, safety, and efficacy requirements.", refs_in:0, refs_out:5 },
-  { id:"OECD",    label:"OECD",            cat:"intl",   r:16, desc:"Produces comparative pharma pricing data and policy guidance for member states. Central source for ERP basket country statistics and pharmaceutical expenditure benchmarks.", refs_in:0, refs_out:12 },
+    const svg = d3.select('#svg');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-  // Price Databases & Platforms
-  { id:"EURIPID", label:"EURIPID",         cat:"db",     r:20, desc:"European Integrated Price Information Database: voluntary collaboration of national pricing authorities. Standardised ex-factory price database used directly by â¥23 EU countries for ERP basket calculations.", refs_in:5, refs_out:20 },
-  { id:"WHOHAI",  label:"WHO/HAI",         cat:"db",     r:15, desc:"WHO/Health Action International Medicine Prices database: used by LMICs to benchmark prices vs. international standards. Key reference for low-income country ERP implementation.", refs_in:3, refs_out:8 },
-  { id:"IQVIA",   label:"IQVIA",           cat:"db",     r:14, desc:"Global pharma data provider: MIDAS sales database used by national authorities and pharmaceutical companies for pricing intelligence and ERP basket analysis.", refs_in:0, refs_out:6 },
+    // SVG defs for glow filter
+    const defs = svg.append('defs');
+    const filter = defs.append('filter')
+      .attr('id', 'glow')
+      .attr('x', '-50%')
+      .attr('y', '-50%')
+      .attr('width', '200%')
+      .attr('height', '200%');
+    filter.append('feGaussianBlur')
+      .attr('stdDeviation', 4)
+      .attr('result', 'coloredBlur');
+    filter.append('feMerge')
+      .append('feMergeNode')
+      .attr('in', 'coloredBlur');
+    filter.append('feMerge')
+      .append('feMergeNode')
+      .attr('in', 'SourceGraphic');
 
-  // Major Reference Anchors (most-referenced EU countries + key non-EU)
-  { id:"FR",      label:"France",          cat:"major",  r:22, desc:"Most-referenced country in European ERP: referenced by 19 EU countries. ANSM regulates approvals; ComitÃ© Ãconomique des Produits de SantÃ© (CEPS) sets negotiated prices. Uses own 4-country basket.", refs_in:19, refs_out:4 },
-  { id:"DE",      label:"Germany",         cat:"major",  r:21, desc:"Referenced by 17 EU countries. BfArM (regulatory) + IQWIG (HTA) + GKV-Spitzenverband (pricing). Free launch pricing for 12 months then AMNOG benefit assessment. Major ERP anchor globally.", refs_in:17, refs_out:6 },
-  { id:"UK",      label:"United Kingdom",  cat:"major",  r:20, desc:"Referenced by 17 EU countries. MHRA handles drug regulation post-Brexit; NICE performs HTA and cost-effectiveness analysis; NHS negotiates prices. VPAS scheme caps industry profits.", refs_in:17, refs_out:5 },
-  { id:"AT",      label:"Austria",         cat:"major",  r:17, desc:"Referenced by 16 EU countries. AGES Medicines (regulatory approval); Hauptverband sets reimbursement prices. Uses average ERP method across 27 EU reference countries.", refs_in:16, refs_out:27 },
-  { id:"ES",      label:"Spain",           cat:"major",  r:17, desc:"Referenced by 16 EU countries. AEMPS (regulatory); Inter-ministerial Commission on Medicinal Products Prices (CIPM) sets prices using ERP (lowest price method).", refs_in:16, refs_out:8 },
-  { id:"IT",      label:"Italy",           cat:"major",  r:16, desc:"Referenced by 15 EU countries. AIFA (Agenzia Italiana del Farmaco) handles both regulation and price negotiation. Uses lowest ERP price method. Significant price convergence impact.", refs_in:15, refs_out:8 },
+    // Tier mapping for distance calculation
+    const tierMap = {intl: 0, db: 1, major: 2, 'erp-hi': 3, 'erp-li': 3, americas: 3, free: 4};
 
-  // High-income ERP users
-  { id:"EMA",     label:"EMA",             cat:"erp-hi", r:19, desc:"European Medicines Agency: centralized EU drug authorisation. Scientific opinions adopted by European Commission. Coordinates national agencies. Supports ERP indirectly via price transparency initiatives.", refs_in:0, refs_out:30 },
-  { id:"FDA",     label:"FDA (USA)",        cat:"erp-hi", r:18, desc:"U.S. Food and Drug Administration: approves drugs but does NOT set prices (free-pricing system). Proposed ERP for Medicare 2019â2021 (MFN rule) but not implemented. WHO Listed Authority.", refs_in:0, refs_out:0 },
-  { id:"PMDA",    label:"PMDA (Japan)",     cat:"erp-hi", r:17, desc:"Pharmaceuticals and Medical Devices Agency: Japan uses ERP with an 'external price adjustment' rule â if foreign price drops below 75% of Japanese price, adjustment is triggered. References US, UK, Germany, France.", refs_in:0, refs_out:4 },
-  { id:"CH",      label:"Switzerland",      cat:"erp-hi", r:15, desc:"Swissmedic (regulatory); Federal Office of Public Health sets prices using average ERP method referencing Germany, Denmark, UK, Netherlands, France, Austria, Belgium. Included in many EU country baskets.", refs_in:12, refs_out:7 },
-  { id:"NL",      label:"Netherlands",      cat:"erp-hi", r:14, desc:"CBG (regulatory); ZiN (Zorginstituut) performs HTA; NZa sets tariffs. Uses average ERP across Belgium, France, Germany, UK. Referenced by 15 other countries.", refs_in:15, refs_out:4 },
-  { id:"BE",      label:"Belgium",          cat:"erp-hi", r:14, desc:"FAMHP (regulatory); INAMI-RIZIV sets reimbursement. Uses ERP as supportive criterion only (average of 26 EU member states). Deliberate launch-delay strategy to avoid being lowest-price anchor.", refs_in:15, refs_out:26 },
-  { id:"SE",      label:"Sweden",           cat:"erp-hi", r:13, desc:"MPA (Medical Products Agency); TLV (TandvÃ¥rds- och lÃ¤kemedelsfÃ¶rmÃ¥nsverket) performs HTA for reimbursement. Pharmacoeconomic evaluation primary; ERP secondary. Referenced by ~14 countries.", refs_in:14, refs_out:5 },
-  { id:"CA",      label:"Canada",           cat:"erp-hi", r:14, desc:"Health Canada (regulatory); PMPRB (Patented Medicine Prices Review Board) caps launch prices by referencing 11 OECD countries including France, Germany, Italy, Sweden, Switzerland, UK, US, Australia. Reformed 2022.", refs_in:0, refs_out:11 },
-  { id:"AU",      label:"Australia",        cat:"erp-hi", r:14, desc:"TGA (Therapeutic Goods Administration) for regulatory; PBAC (Pharmaceutical Benefits Advisory Committee) for cost-effectiveness; PBS (Pharmaceutical Benefits Scheme) lists and prices medicines. Full price transparency.", refs_in:0, refs_out:0 },
-  { id:"GR",      label:"Greece",           cat:"erp-hi", r:12, desc:"EOF (National Organisation for Medicines); uses average of 3 lowest prices in a basket of ~25 EU countries. Used as reference by countries like Iran and Turkey.", refs_in:6, refs_out:25 },
-  { id:"PT",      label:"Portugal",         cat:"erp-hi", r:12, desc:"INFARMED; uses average ERP method. Basket includes Spain, Italy, France. Included in baskets of several Eastern European and Southern European countries.", refs_in:12, refs_out:3 },
-  { id:"SK",      label:"South Korea",      cat:"erp-hi", r:13, desc:"MFDS (regulatory); HIRA (Health Insurance Review & Assessment Service) sets drug prices using ERP referencing ~8 high-income OECD countries. One of Asia's most systematic ERP users.", refs_in:0, refs_out:8 },
-  { id:"NZ",      label:"New Zealand",      cat:"erp-hi", r:12, desc:"Medsafe (regulatory); PHARMAC (Pharmaceutical Management Agency) negotiates prices using HTA plus ERP comparisons with Australia and UK. Known for aggressive tendering. Used as ERP reference by some countries.", refs_in:2, refs_out:2 },
-
-  // LMIC / Emerging ERP users
-  { id:"TR",      label:"Turkey",           cat:"erp-li", r:13, desc:"TITCK (Turkish Medicines and Medical Devices Agency) uses lowest-price ERP from a basket of EU countries: France, Spain, Italy, Greece, Portugal. Saw significant price decreases post-ERP adoption.", refs_in:0, refs_out:5 },
-  { id:"IN",      label:"India",            cat:"erp-li", r:12, desc:"CDSCO (Central Drugs Standard Control Organisation) for regulation; NPPA (National Pharmaceutical Pricing Authority) sets prices using cost-plus + ERP hybrid. Referenced by Pakistan and neighbouring LMICs.", refs_in:2, refs_out:6 },
-  { id:"ZA",      label:"South Africa",     cat:"erp-li", r:12, desc:"SAHPRA (regulatory); Single Exit Price system uses ERP referencing basket of 14 comparator countries including Canada, Australia, New Zealand, Spain, Portugal. One of Africa's most developed ERP frameworks.", refs_in:0, refs_out:14 },
-  { id:"JO",      label:"Jordan",           cat:"erp-li", r:11, desc:"Jordan Food and Drug Administration (JFDA): uses ERP referencing country of origin price. Major pharmaceutical exporter in MENA region. ERP system established in 1999.", refs_in:0, refs_out:5 },
-  { id:"TH",      label:"Thailand",         cat:"erp-li", r:11, desc:"FDA Thailand (regulatory); NHSO (National Health Security Office) negotiates prices. Uses ERP plus compulsory licensing. Notable for CL on HIV/AIDS and cancer medicines (2006â2008).", refs_in:0, refs_out:4 },
-  { id:"PL",      label:"Poland",           cat:"erp-li", r:12, desc:"URPL (regulatory); Ministry of Health sets reimbursement using one of Europe's largest baskets: 31 countries including non-EU (Iceland, Norway, Switzerland, Liechtenstein). One of highest basket-count users.", refs_in:8, refs_out:31 },
-  { id:"HU",      label:"Hungary",          cat:"erp-li", r:12, desc:"OGYÃI (regulatory); NEAK sets reimbursement prices using basket of 31 countries â same as Poland. Hungary created the Common European Drug Database (2008) predecessor to EURIPID.", refs_in:8, refs_out:31 },
-  { id:"RO",      label:"Romania",          cat:"erp-li", r:11, desc:"ANMDM (regulatory); CNAS sets prices using lowest-price ERP from EU countries. Country of origin used when basket data unavailable. One of lowest-priced EU markets.", refs_in:5, refs_out:15 },
-
-  // Americas Regional
-  { id:"PAHO",    label:"PAHO",              cat:"americas", r:20, desc:"Pan American Health Organization: WHO's regional office for the Americas. Runs the Strategic Fund for vaccines and medicines procurement â used as a regional reference price by several Latin American countries. Key facilitator of price transparency and information exchange.", refs_in:0, refs_out:8 },
-  { id:"ANVISA",  label:"ANVISA (Brazil)",   cat:"americas", r:18, desc:"AgÃªncia Nacional de VigilÃ¢ncia SanitÃ¡ria: Brazil's regulatory authority AND CMED pricing body. Uses IRP referencing ~12 countries (USA, UK, Germany, France, Canada, Australia, etc.) to set maximum factory prices (PF). PAHO/WHO National Regulatory Authority of Regional Reference.", refs_in:2, refs_out:12 },
-  { id:"COFEPRIS",label:"COFEPRIS (Mexico)", cat:"americas", r:16, desc:"Federal Commission for Protection against Sanitary Risks: Mexico's primary drug regulatory authority. Pricing mostly set by market forces in private sector; IMSS/ISSSTE public sector use competitive tenders. PAHO/WHO National Regulatory Authority of Regional Reference. Member of Pacific Alliance price exchange.", refs_in:1, refs_out:4 },
-  { id:"ANMAT",   label:"ANMAT (Argentina)", cat:"americas", r:15, desc:"National Administration of Drugs, Food and Medical Technology: Argentina's regulatory authority. Pricing largely free-market but government intervenes with price controls during economic crises. PAHO/WHO National Regulatory Authority of Regional Reference.", refs_in:0, refs_out:3 },
-  { id:"INVIMA",  label:"INVIMA (Colombia)", cat:"americas", r:15, desc:"National Institute for Food and Drug Monitoring: Colombia's regulatory authority. Pricing: CNPMDM uses IRP (Circular 03/2013) with a basket of 17 countries for high-budget-impact drugs. Colombia joined Pacific Alliance price exchange in 2014. PAHO Regional Reference Authority.", refs_in:0, refs_out:17 },
-  { id:"ISP",     label:"ISP (Chile)",       cat:"americas", r:13, desc:"Instituto de Salud PÃºblica: Chile's pharmaceutical regulatory authority. Pricing largely free-market; CENABAST (central procurement) negotiates prices. Member of Pacific Alliance price exchange. PAHO Regional Reference Authority.", refs_in:2, refs_out:3 },
-  { id:"DIGEMID", label:"DIGEMID (Peru)",    cat:"americas", r:13, desc:"DirecciÃ³n General de Medicamentos, Insumos y Drogas: Peru's regulatory authority. Peru uses IRP with a small basket of reference countries. Participates in Pacific Alliance pharmaceutical price observatory. Publishes national price observatory data online.", refs_in:1, refs_out:4 },
-  { id:"PAC_ALL", label:"Pacific Alliance",  cat:"americas", r:14, desc:"Pacific Alliance price exchange (Mexico, Colombia, Peru, Chile): 2014 agreement to share pharmaceutical pricing data across member states to jointly lower costs. Supported by IDB pharma price observatory. A key intra-regional ERP mechanism in Latin America.", refs_in:0, refs_out:4 },
-  { id:"CECMED",  label:"CECMED (Cuba)",     cat:"americas", r:11, desc:"Centro para el Control Estatal de Medicamentos: Cuba's drug regulatory authority and one of PAHO's National Regulatory Authorities of Regional Reference. Cuba produces significant generic medicines and vaccines. Pricing is state-controlled.", refs_in:0, refs_out:0 },
-  { id:"IFARHU",  label:"ANAMED (Ecuador)",  cat:"americas", r:10, desc:"Ecuador's Agency for Health Regulation and Control (ARCSA). Uses IRP; Colombia was included in Ecuador's reference basket. Part of broader Andean price monitoring initiatives.", refs_in:0, refs_out:4 },
-
-  // Free-pricing / non-ERP (peripheral)
-  { id:"US_free",  label:"USA (free pricing)", cat:"free", r:13, desc:"No federal ERP mechanism as of 2024. Medicare previously prohibited from negotiating prices (Non-Interference Clause). Inflation Reduction Act (2022) introduced limited negotiation for Medicare drugs. Highest drug prices globally.", refs_in:0, refs_out:0 },
-  { id:"DE_free",  label:"Germany (free launch)", cat:"free", r:11, desc:"12-month free pricing at launch before AMNOG benefit assessment kicks in. Manufactures use this window to set global reference prices, knowing Germany will be in other countries' baskets.", refs_in:17, refs_out:0 },
-  { id:"AR_free",  label:"Argentina (free market)", cat:"free", r:10, desc:"Argentina uses mostly free-market pricing for pharmaceuticals, with periodic government price freeze interventions during economic crises. No systematic ERP framework. ANMAT handles regulation only.", refs_in:2, refs_out:0 },
-];
-
-const links = [
-  // WHO â downstream
-  { source:"WHO",     target:"WHOHAI",  weight:3 },
-  { source:"WHO",     target:"FR",      weight:2 },
-  { source:"WHO",     target:"IN",      weight:2 },
-  { source:"WHO",     target:"ZA",      weight:2 },
-  { source:"WHO",     target:"JO",      weight:2 },
-  { source:"WHO",     target:"TH",      weight:2 },
-  { source:"WHO",     target:"ANVISA",  weight:2 },
-  { source:"WHO",     target:"TR",      weight:1 },
-  { source:"WHO",     target:"RO",      weight:1 },
-
-  // ICH â regulatory agencies
-  { source:"ICH",     target:"FDA",     weight:3 },
-  { source:"ICH",     target:"EMA",     weight:3 },
-  { source:"ICH",     target:"PMDA",    weight:3 },
-  { source:"ICH",     target:"CA",        weight:2 },
-
-  // OECD â ERP users
-  { source:"OECD",    target:"CA",      weight:2 },
-  { source:"OECD",    target:"AU",      weight:2 },
-  { source:"OECD",    target:"NZ",      weight:2 },
-  { source:"OECD",    target:"SK",      weight:2 },
-  { source:"OECD",    target:"ANVISA",  weight:1 },
-  { source:"OECD",    target:"ZA",      weight:1 },
-
-  // EURIPID â EU member states (central database)
-  { source:"EURIPID", target:"AT",      weight:4 },
-  { source:"EURIPID", target:"ES",      weight:4 },
-  { source:"EURIPID", target:"IT",      weight:4 },
-  { source:"EURIPID", target:"FR",      weight:4 },
-  { source:"EURIPID", target:"DE",      weight:4 },
-  { source:"EURIPID", target:"BE",      weight:3 },
-  { source:"EURIPID", target:"NL",      weight:3 },
-  { source:"EURIPID", target:"SE",      weight:3 },
-  { source:"EURIPID", target:"GR",      weight:3 },
-  { source:"EURIPID", target:"PT",      weight:3 },
-  { source:"EURIPID", target:"PL",      weight:3 },
-  { source:"EURIPID", target:"HU",      weight:3 },
-  { source:"EURIPID", target:"RO",      weight:3 },
-  { source:"EURIPID", target:"CH",      weight:3 },
-
-  // EMA â EU member states
-  { source:"EMA",     target:"FR",      weight:3 },
-  { source:"EMA",     target:"DE",      weight:3 },
-  { source:"EMA",     target:"IT",      weight:3 },
-  { source:"EMA",     target:"ES",      weight:3 },
-  { source:"EMA",     target:"AT",      weight:2 },
-  { source:"EMA",     target:"BE",      weight:2 },
-  { source:"EMA",     target:"NL",      weight:2 },
-  { source:"EMA",     target:"SE",      weight:2 },
-  { source:"EMA",     target:"GR",      weight:2 },
-  { source:"EMA",     target:"PT",      weight:2 },
-  { source:"EMA",     target:"PL",      weight:2 },
-  { source:"EMA",     target:"HU",      weight:2 },
-  { source:"EMA",     target:"RO",      weight:2 },
-
-  // France as reference source â others
-  { source:"FR",      target:"GR",      weight:4 },
-  { source:"FR",      target:"PT",      weight:4 },
-  { source:"FR",      target:"RO",      weight:3 },
-  { source:"FR",      target:"TR",      weight:3 },
-  { source:"FR",      target:"ANVISA",  weight:3 },
-  { source:"FR",      target:"PMDA",    weight:3 },
-
-  // Germany as reference source
-  { source:"DE",      target:"AT",      weight:4 },
-  { source:"DE",      target:"CH",      weight:4 },
-  { source:"DE",      target:"TR",      weight:3 },
-  { source:"DE",      target:"ANVISA",  weight:3 },
-  { source:"DE",      target:"SK",      weight:3 },
-  { source:"DE",      target:"PMDA",    weight:3 },
-
-  // UK as reference source
-  { source:"UK",      target:"NZ",      weight:3 },
-  { source:"UK",      target:"AU",      weight:3 },
-  { source:"UK",      target:"ZA",      weight:3 },
-  { source:"UK",      target:"CA",      weight:3 },
-  { source:"UK",      target:"PMDA",    weight:3 },
-
-  // Spain
-  { source:"ES",      target:"TR",      weight:4 },
-  { source:"ES",      target:"JO",      weight:3 },
-  { source:"ES",      target:"GR",      weight:3 },
-
-  // Italy
-  { source:"IT",      target:"GR",      weight:3 },
-  { source:"IT",      target:"PT",      weight:3 },
-  { source:"IT",      target:"RO",      weight:3 },
-  { source:"IT",      target:"TR",      weight:3 },
-
-  // Switzerland
-  { source:"CH",      target:"AT",      weight:3 },
-  { source:"CH",      target:"DE",      weight:3 },
-
-  // Canada
-  { source:"CA",      target:"ANVISA",  weight:2 },
-  { source:"CA",      target:"ZA",      weight:2 },
-
-  // Australia
-  { source:"AU",      target:"NZ",      weight:3 },
-  { source:"AU",      target:"ZA",      weight:2 },
-
-  // WHOHAI â LMICs
-  { source:"WHOHAI",  target:"IN",      weight:3 },
-  { source:"WHOHAI",  target:"ZA",      weight:3 },
-  { source:"WHOHAI",  target:"JO",      weight:2 },
-  { source:"WHOHAI",  target:"TH",      weight:2 },
-
-  // India â neighbours
-  { source:"IN",      target:"JO",      weight:2 },
-  { source:"IN",      target:"TH",      weight:2 },
-
-  // Poland / Hungary (large baskets)
-  { source:"PL",      target:"EURIPID", weight:3 },
-  { source:"HU",      target:"EURIPID", weight:3 },
-  { source:"PL",      target:"CH",      weight:2 },
-  { source:"HU",      target:"CH",      weight:2 },
-
-  // FDA â ICH (upward influence)
-  { source:"FDA",     target:"ICH",     weight:2 },
-  { source:"FDA",     target:"US_free", weight:1 },
-
-  // Germany free-pricing connection
-  { source:"DE_free", target:"DE",      weight:2 },
-  { source:"DE_free", target:"FR",      weight:1 },
-
-  // Brazil â ANVISA referenced by neighbours
-  { source:"ANVISA",  target:"JO",      weight:1 },
-  { source:"ZA",      target:"JO",      weight:1 },
-
-  // IQVIA data flows
-  { source:"IQVIA",   target:"CA",      weight:2 },
-  { source:"IQVIA",   target:"SK",      weight:2 },
-  { source:"IQVIA",   target:"ANVISA",  weight:2 },
-  { source:"IQVIA",   target:"EURIPID", weight:2 },
-
-  // ââ AMERICAS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-  // PAHO as regional hub
-  { source:"WHO",     target:"PAHO",    weight:4 },
-  { source:"PAHO",    target:"ANVISA",  weight:3 },
-  { source:"PAHO",    target:"COFEPRIS",weight:3 },
-  { source:"PAHO",    target:"ANMAT",   weight:3 },
-  { source:"PAHO",    target:"INVIMA",  weight:3 },
-  { source:"PAHO",    target:"ISP",     weight:2 },
-  { source:"PAHO",    target:"DIGEMID", weight:2 },
-  { source:"PAHO",    target:"CECMED",  weight:2 },
-
-  // ANVISA / Brazil IRP basket â anchors
-  { source:"ANVISA",  target:"FR",      weight:3 },
-  { source:"ANVISA",  target:"DE",      weight:3 },
-  { source:"ANVISA",  target:"UK",      weight:3 },
-  { source:"ANVISA",  target:"CA",      weight:2 },
-  { source:"ANVISA",  target:"AU",      weight:2 },
-  { source:"ANVISA",  target:"US_free", weight:2 },
-
-  // INVIMA / Colombia basket (17 countries)
-  { source:"INVIMA",  target:"FR",      weight:3 },
-  { source:"INVIMA",  target:"DE",      weight:3 },
-  { source:"INVIMA",  target:"UK",      weight:3 },
-  { source:"INVIMA",  target:"ES",      weight:3 },
-  { source:"INVIMA",  target:"PT",      weight:2 },
-  { source:"INVIMA",  target:"AU",      weight:2 },
-  { source:"INVIMA",  target:"CA",      weight:2 },
-  { source:"INVIMA",  target:"US_free", weight:2 },
-  { source:"INVIMA",  target:"ANVISA",  weight:2 },
-  { source:"INVIMA",  target:"PAC_ALL", weight:3 },
-
-  // Pacific Alliance
-  { source:"PAC_ALL", target:"COFEPRIS",weight:3 },
-  { source:"PAC_ALL", target:"ISP",     weight:3 },
-  { source:"PAC_ALL", target:"DIGEMID", weight:3 },
-  { source:"PAC_ALL", target:"INVIMA",  weight:3 },
-
-  // Mexico / COFEPRIS pricing references
-  { source:"COFEPRIS",target:"ANVISA",  weight:2 },
-  { source:"COFEPRIS",target:"PAHO",    weight:2 },
-
-  // ANMAT Argentina
-  { source:"ANMAT",   target:"ANVISA",  weight:2 },
-  { source:"ANMAT",   target:"ISP",     weight:2 },
-  { source:"ANMAT",   target:"AR_free", weight:2 },
-
-  // Chile ISP
-  { source:"ISP",     target:"ES",      weight:2 },
-  { source:"ISP",     target:"DE",      weight:2 },
-
-  // Peru DIGEMID
-  { source:"DIGEMID", target:"ANVISA",  weight:2 },
-  { source:"DIGEMID", target:"ISP",     weight:2 },
-
-  // Ecuador ARCSA
-  { source:"IFARHU",  target:"INVIMA",  weight:3 },
-  { source:"IFARHU",  target:"ANVISA",  weight:2 },
-  { source:"IFARHU",  target:"PAHO",    weight:2 },
-
-  // WHOHAI â Americas
-  { source:"WHOHAI",  target:"PAHO",    weight:3 },
-  { source:"WHOHAI",  target:"INVIMA",  weight:2 },
-  { source:"WHOHAI",  target:"DIGEMID", weight:2 },
-];
-
-// ââ SETUP âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-const catColor = {
-  "intl":   "#3af0b0",
-  "db":     "#f0a03a",
-  "major":  "#3a9ff0",
-  "erp-hi": "#c03af0",
-  "erp-li": "#f03a6a",
-  "americas":"#f5c842",
-  "free":   "#8080a0",
-};
-
-const catLabel = {
-  "intl":   "International Standard-setter",
-  "db":     "Price Database / Platform",
-  "major":  "Major Reference Anchor",
-  "erp-hi": "High-Income ERP User",
-  "erp-li": "LMIC / Emerging ERP User",
-  "americas":"Americas Regional Authority",
-  "free":   "Free-Pricing / Non-ERP",
-};
-
-const svg = d3.select("#canvas");
-const W = () => window.innerWidth, H = () => window.innerHeight;
-const g = svg.append("g");
-
-// Radial tier assignment
-const tier = { "intl":0, "db":1, "major":2, "americas":2, "erp-hi":3, "erp-li":3, "free":4 };
-
-function radialInit(nodes, cx, cy) {
-  const byTier = {};
-  nodes.forEach(n => {
-    const t = tier[n.cat] ?? 3;
-    if (!byTier[t]) byTier[t] = [];
-    byTier[t].push(n);
-  });
-  const radii = [0, 160, 310, 500, 640];
-  Object.entries(byTier).forEach(([t, ns]) => {
-    const r = radii[+t] || 500;
-    ns.forEach((n, i) => {
-      const angle = (2*Math.PI * i / ns.length) - Math.PI/2;
-      n.x = cx + r * Math.cos(angle);
-      n.y = cy + r * Math.sin(angle);
-    });
-  });
-}
-
-function init() {
-  const cx = W()/2, cy = H()/2;
-  radialInit(nodes, cx, cy);
-
-  const sim = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d=>d.id).distance(d => {
-      const sT = tier[d.source.cat ?? nodes.find(n=>n.id===d.source)?.cat] ?? 3;
-      const tT = tier[d.target.cat ?? nodes.find(n=>n.id===d.target)?.cat] ?? 3;
-      return 80 + Math.abs(sT-tT)*80 + (5-d.weight)*15;
-    }).strength(0.35))
-    .force("charge", d3.forceManyBody().strength(d => -600 - d.r*20))
-    .force("center", d3.forceCenter(cx, cy).strength(0.05))
-    .force("radial", d3.forceRadial(d => {
-      const radii = [0,160,310,500,640];
-      return radii[tier[d.cat]??3] || 500;
-    }, cx, cy).strength(0.55))
-    .force("collision", d3.forceCollide(d=>d.r+14).strength(0.9))
-    .alphaDecay(0.028);
-
-  // Defs: glow filters
-  const defs = svg.append("defs");
-  Object.entries(catColor).forEach(([cat, col]) => {
-    const f = defs.append("filter").attr("id","glow-"+cat).attr("x","-50%").attr("y","-50%").attr("width","200%").attr("height","200%");
-    f.append("feGaussianBlur").attr("stdDeviation","4").attr("result","blur");
-    const merge = f.append("feMerge");
-    merge.append("feMergeNode").attr("in","blur");
-    merge.append("feMergeNode").attr("in","SourceGraphic");
-  });
-
-  // Links
-  const linkSel = g.append("g").attr("class","links").selectAll("line")
-    .data(links).enter().append("line")
-    .attr("stroke", d => {
-      const srcNode = nodes.find(n=>n.id===(d.source.id||d.source));
-      return srcNode ? catColor[srcNode.cat] : "#fff";
-    })
-    .attr("stroke-width", d => Math.max(0.5, d.weight*0.7))
-    .attr("stroke-opacity", d => 0.1 + d.weight*0.06)
-    .attr("stroke-dasharray", d => d.weight >= 3 ? "none" : "4,4");
-
-  // Arrow markers
-  Object.entries(catColor).forEach(([cat,col]) => {
-    defs.append("marker").attr("id","arrow-"+cat).attr("viewBox","0 -5 10 10").attr("refX",12).attr("refY",0).attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto")
-      .append("path").attr("d","M0,-5L10,0L0,5").attr("fill",col).attr("opacity",0.6);
-  });
-
-  // Node groups
-  const nodeG = g.append("g").attr("class","nodes").selectAll("g")
-    .data(nodes).enter().append("g")
-    .attr("class","node-g")
-    .style("cursor","grab")
-    .call(d3.drag()
-      .on("start", (ev,d) => { if(!ev.active) sim.alphaTarget(0.15).restart(); d.fx=d.x; d.fy=d.y; })
-      .on("drag",  (ev,d) => { d.fx=ev.x; d.fy=ev.y; })
-      .on("end",   (ev,d) => { if(!ev.active) sim.alphaTarget(0); })
-    );
-
-  // Outer glow ring
-  nodeG.append("circle")
-    .attr("r", d=>d.r+6)
-    .attr("fill","none")
-    .attr("stroke", d=>catColor[d.cat])
-    .attr("stroke-width",1)
-    .attr("stroke-opacity",0.18);
-
-  // Main circle
-  nodeG.append("circle")
-    .attr("r", d=>d.r)
-    .attr("fill", d=>{
-      const c = d3.color(catColor[d.cat]);
-      if(c){c.opacity=0.18; return c.formatRgb();}
-      return catColor[d.cat];
-    })
-    .attr("stroke", d=>catColor[d.cat])
-    .attr("stroke-width", d=>d.cat==="intl"||d.cat==="db"?2:1.5)
-    .attr("filter", d=>"url(#glow-"+d.cat+")");
-
-  // Labels (constant screen size via zoom-aware foreignObject trick; use transform scale)
-  nodeG.append("text")
-    .attr("text-anchor","middle")
-    .attr("dominant-baseline","central")
-    .attr("font-family","DM Mono, monospace")
-    .attr("font-size", d=>d.r>18?10:9)
-    .attr("font-weight","500")
-    .attr("fill","#fff")
-    .attr("fill-opacity",0.92)
-    .attr("pointer-events","none")
-    .text(d=>d.label);
-
-  // Tooltip
-  const tt = document.getElementById("tooltip");
-  nodeG.on("mouseover", (ev,d)=>{
-    tt.innerHTML = `
-      <div class="tt-name">${d.label}</div>
-      <div class="tt-cat" style="color:${catColor[d.cat]}">${catLabel[d.cat]}</div>
-      <div class="tt-body">${d.desc}</div>
-      <div class="tt-stat">
-        ${d.refs_in>0?`<span>Referenced by: ${d.refs_in} countries</span>`:""}
-        ${d.refs_out>0?`<span>References: ${d.refs_out} countries</span>`:""}
-      </div>`;
-    tt.style.display="block";
-    // highlight
-    nodeG.attr("opacity", n => {
-      const linked = links.some(l=>(l.source.id||l.source)===d.id||(l.target.id||l.target)===d.id);
-      return n===d || linked ? 1 : 0.2;
-    });
-    linkSel.attr("stroke-opacity", l=>{
-      const s=l.source.id||l.source, t=l.target.id||l.target;
-      return (s===d.id||t===d.id) ? 0.7 : 0.04;
-    });
-  }).on("mousemove", ev=>{
-    const x=ev.clientX, y=ev.clientY;
-    const ttW=260, ttH=tt.offsetHeight||120;
-    tt.style.left=(x+16+ttW>W()?x-ttW-16:x+16)+"px";
-    tt.style.top=(y-20+ttH>H()?H()-ttH-10:Math.max(10,y-20))+"px";
-  }).on("mouseout", ()=>{
-    tt.style.display="none";
-    nodeG.attr("opacity",1);
-    linkSel.attr("stroke-opacity", d=>0.1+d.weight*0.06);
-  });
-
-  sim.on("tick", ()=>{
-    linkSel
-      .attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
-      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
-    nodeG.attr("transform",d=>`translate(${d.x},${d.y})`);
-  });
-
-  // ââ ZOOM ââ
-  const zoom = d3.zoom().scaleExtent([0.25,4]).on("zoom", ev=>{
-    g.attr("transform", ev.transform);
-    // Keep labels constant screen size
-    const k = ev.transform.k;
-    g.selectAll(".node-g text").attr("font-size", d=>(d.r>18?10:9)/k);
-  });
-  svg.call(zoom);
-  // After simulation warms up, re-center properly
-  sim.on("end.center", () => {
-    svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
-  });
-
-  document.getElementById("zoom-in").onclick  = ()=> svg.transition().duration(300).call(zoom.scaleBy, 1.4);
-  document.getElementById("zoom-out").onclick = ()=> svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-  document.getElementById("zoom-reset").onclick= ()=> svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity);
-
-  // ââ FILTER BUTTONS ââ
-  document.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      const cat = btn.dataset.cat;
-      if(cat==="all"){
-        nodeG.attr("opacity",1);
-        linkSel.attr("stroke-opacity", d=>0.1+d.weight*0.06);
-      } else {
-        nodeG.attr("opacity", d=>d.cat===cat?1:0.1);
-        linkSel.attr("stroke-opacity", l=>{
-          const s=nodes.find(n=>n.id===(l.source.id||l.source));
-          const t=nodes.find(n=>n.id===(l.target.id||l.target));
-          return (s?.cat===cat||t?.cat===cat)?0.5:0.03;
-        });
-      }
-    });
-  });
-
-  // Legend row filter
-  document.querySelectorAll(".leg-row").forEach(row=>{
-    row.addEventListener("click",()=>{
-      const cat=row.dataset.cat;
-      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-      const btn=document.querySelector(`.filter-btn[data-cat="${cat}"]`);
-      if(btn) btn.classList.add("active");
-      nodeG.attr("opacity", d=>d.cat===cat?1:0.1);
-      linkSel.attr("stroke-opacity", l=>{
-        const s=nodes.find(n=>n.id===(l.source.id||l.source));
-        const t=nodes.find(n=>n.id===(l.target.id||l.target));
-        return (s?.cat===cat||t?.cat===cat)?0.5:0.03;
+    // Radial initial positioning
+    const radii = {intl: 0, db: 200, major: 400, 'erp-hi': 620, 'erp-li': 620, americas: 620, free: 800};
+    const byTier = {};
+    nodes.forEach(n => { const t = n.cat; if(!byTier[t]) byTier[t]=[]; byTier[t].push(n); });
+    Object.entries(byTier).forEach(([cat, ns]) => {
+      const r = radii[cat] || 400;
+      ns.forEach((n, i) => {
+        const angle = (2 * Math.PI * i / ns.length) - Math.PI / 2;
+        n.x = width/2 + r * Math.cos(angle);
+        n.y = height/2 + r * Math.sin(angle);
       });
     });
-  });
 
-  // Resize
-  window.addEventListener("resize",()=>{
-    svg.attr("width",W()).attr("height",H());
-    sim.force("center",d3.forceCenter(W()/2,H()/2).strength(0.05));
-    sim.alpha(0.1).restart();
-  });
+    // Simulation setup with radial tiers
+    const simulation = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
+        const sT = tierMap[d.source.cat || d.source] || 3;
+        const tT = tierMap[d.target.cat || d.target] || 3;
+        return 120 + Math.abs(sT - tT) * 90 + (5 - d.weight) * 15;
+      }).strength(0.3))
+      .force('charge', d3.forceManyBody().strength(d => -600 - d.r * 22).distanceMax(900))
+      .force('center', d3.forceCenter(width / 2, height / 2).strength(0.04))
+      .force('collision', d3.forceCollide(d => d.r + 18).strength(0.9))
+      .force('radial', d3.forceRadial(d => {
+        const tiers = {intl: 0, db: 200, major: 400, 'erp-hi': 620, 'erp-li': 620, americas: 620, free: 800};
+        return tiers[d.cat] || 400;
+      }).strength(0.55))
+      .on('tick', tick);
 
-  svg.attr("width",W()).attr("height",H());
-}
+    const g = svg.append('g');
 
-init();
-</script>
+    // Zoom behavior
+    const zoom = d3.zoom().scaleExtent([0.25, 4]).on('zoom', (event) => {
+      g.attr('transform', event.transform);
+    });
+    svg.call(zoom);
+
+    // Links
+    const link = g.append('g')
+      .selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('class', 'link')
+      .attr('stroke', d => categoryColors[nodes.find(n => n.id === d.source.id).cat])
+      .attr('stroke-width', d => d.weight * 0.7)
+      .attr('opacity', d => 0.1 + d.weight * 0.06)
+      .attr('stroke-dasharray', d => d.weight < 3 ? '3,3' : 'none');
+
+    // Nodes with glow
+    const nodeGroup = g.append('g')
+      .selectAll('g')
+      .data(nodes)
+      .join('g')
+      .attr('class', 'node-group');
+
+    nodeGroup.append('circle')
+      .attr('r', d => d.r + 3)
+      .attr('fill', 'none')
+      .attr('stroke', d => categoryColors[d.cat])
+      .attr('stroke-width', 1)
+      .attr('opacity', 0.3)
+      .attr('class', 'glow-ring');
+
+    nodeGroup.append('circle')
+      .attr('r', d => d.r)
+      .attr('fill', d => categoryColors[d.cat])
+      .attr('fill-opacity', 0.15)
+      .attr('stroke', d => categoryColors[d.cat])
+      .attr('stroke-width', 1.5)
+      .attr('filter', 'url(#glow)');
+
+    nodeGroup.append('text')
+      .attr('class', 'node-label')
+      .text(d => d.label)
+      .attr('dy', '0.35em');
+
+    // Drag behavior
+    nodeGroup.call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended));
+
+    // Interactivity
+    nodeGroup.on('mouseenter', (event, d) => {
+      highlightedNodes.clear();
+      highlightedLinks.clear();
+      highlightedNodes.add(d.id);
+      links.forEach(link => {
+        if (link.source.id === d.id || link.target.id === d.id) {
+          highlightedLinks.add(link);
+          highlightedNodes.add(link.source.id);
+          highlightedNodes.add(link.target.id);
+        }
+      });
+      updateVisibility();
+      showTooltip(event, d);
+    }).on('mouseleave', () => {
+      highlightedNodes.clear();
+      highlightedLinks.clear();
+      updateVisibility();
+      hideTooltip();
+    }).on('mousemove', (event) => {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.style.left = (event.clientX + 12) + 'px';
+      tooltip.style.top = (event.clientY + 12) + 'px';
+    });
+
+    function updateVisibility() {
+      link.style('opacity', d => {
+        if (highlightedNodes.size === 0) return 0.1 + d.weight * 0.06;
+        return highlightedLinks.has(d) ? 0.5 + d.weight * 0.1 : 0.03;
+      }).style('stroke-width', d => {
+        if (highlightedNodes.size === 0) return d.weight * 0.7;
+        return highlightedLinks.has(d) ? d.weight * 1.2 : d.weight * 0.7;
+      });
+
+      nodeGroup.style('opacity', d => {
+        if (highlightedNodes.size === 0) return 1;
+        return highlightedNodes.has(d.id) ? 1 : 0.2;
+      });
+    }
+
+    function showTooltip(event, d) {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.innerHTML = `
+        <div class="tooltip-name">${d.label}</div>
+        <div class="tooltip-cat">${d.cat.toUpperCase()}</div>
+        <div class="tooltip-desc">${d.desc}</div>
+        <div class="tooltip-stats">
+          <div class="tooltip-stat-line">References In: ${d.refs_in}</div>
+          <div class="tooltip-stat-line">References Out: ${d.refs_out}</div>
+        </div>
+      `;
+      tooltip.style.display = 'block';
+      tooltip.style.opacity = '1';
+      tooltip.style.left = (event.clientX + 12) + 'px';
+      tooltip.style.top = (event.clientY + 12) + 'px';
+    }
+
+    function hideTooltip() {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.style.opacity = '0';
+      setTimeout(() => tooltip.style.display = 'none', 200);
+    }
+
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+
+    function tick() {
+      link
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+
+      nodeGroup
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+    }
+
+    // Filter buttons
+    const filterContainer = document.getElementById('filters');
+    const categories = ['intl', 'db', 'major', 'erp-hi', 'erp-li', 'americas', 'free'];
+    const categoryLabels = {
+      intl: 'International',
+      db: 'Databases',
+      major: 'Major ERP',
+      'erp-hi': 'ERP-Hi',
+      'erp-li': 'ERP-Li',
+      americas: 'Americas',
+      free: 'Free Pricing'
+    };
+
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn active ' + cat;
+      btn.textContent = categoryLabels[cat];
+      btn.onclick = () => {
+        btn.classList.toggle('active');
+        if (btn.classList.contains('active')) {
+          filteredCategories.add(cat);
+        } else {
+          filteredCategories.delete(cat);
+        }
+        updateNodeVisibility();
+      };
+      filterContainer.appendChild(btn);
+    });
+
+    // Legend filtering
+    document.querySelectorAll('.legend-row').forEach(row => {
+      row.onclick = () => {
+        const cat = row.dataset.category;
+        const btn = document.querySelector('.filter-btn.' + cat);
+        btn.click();
+      };
+    });
+
+    function updateNodeVisibility() {
+      nodeGroup.style('display', d => {
+        if (filteredCategories.has(d.cat)) {
+          return 'block';
+        } else {
+          return 'none';
+        }
+      });
+
+      link.style('display', d => {
+        const sourceVisible = filteredCategories.has(nodes.find(n => n.id === d.source.id).cat);
+        const targetVisible = filteredCategories.has(nodes.find(n => n.id === d.target.id).cat);
+        return sourceVisible && targetVisible ? 'block' : 'none';
+      });
+    }
+
+    // Zoom controls
+    document.getElementById('zoomInBtn').onclick = () => {
+      svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+    };
+    document.getElementById('zoomOutBtn').onclick = () => {
+      svg.transition().duration(300).call(zoom.scaleBy, 0.77);
+    };
+    document.getElementById('resetBtn').onclick = () => {
+      svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity.translate(0, 0));
+    };
+
+    // Responsive resize
+    window.addEventListener('resize', () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      svg.attr('width', newWidth).attr('height', newHeight);
+      simulation.force('center', d3.forceCenter(newWidth / 2, newHeight / 2));
+    });
+  </script>
 </body>
 </html>

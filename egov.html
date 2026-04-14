@@ -3,174 +3,896 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eGov — Electronic Government Affairs | Axi Navigation</title>
-    <meta name="description" content="eGov aggregates public data on stakeholders, congressional voting and health-commission activity to give pharma gov-affairs teams a real-time map of who matters and why.">
-    <link rel="canonical" href="https://axinavigation.com/egov.html">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="eGov — Electronic Government Affairs | Axi Navigation">
-    <meta property="og:description" content="Ranked stakeholder maps and real-time policy signals for pharma government affairs.">
-    <meta property="og:image" content="https://axinavigation.com/Axi_LinkedIn_Cover_1584x396.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>eGovS - Electronic Government Savviness | Axi Innovation</title>
     <link rel="stylesheet" href="axi-styles.css">
+    <style>
+        :root {
+            --red: #c41e3a;
+            --red-light: #f4e4e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navbar */
+        nav {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--red);
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: var(--red);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--red-light) 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--red);
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: var(--red-light);
+            color: var(--red);
+            border: 2px solid var(--red);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Strategic Section */
+        .strategic-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+            background: white;
+            border-left: 6px solid var(--red);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .strategic-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--red);
+        }
+
+        .strategic-narrative {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .strategic-narrative strong {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        /* Service Section */
+        .service-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .service-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(196, 30, 58, 0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--red);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Speed Banner */
+        .speed-banner {
+            background: linear-gradient(135deg, var(--red) 0%, #a01830 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .speed-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .speed-comparison {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .speed-item {
+            flex: 1;
+        }
+
+        .speed-item p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+        }
+
+        .speed-highlight {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        /* Segment Section */
+        .segment-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .segment-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .segment-card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .segment-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.2);
+        }
+
+        .segment-card h3 {
+            color: var(--red);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .segment-market-size {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .segment-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Evidence Section */
+        .evidence-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .evidence-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .evidence-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+            border-left: 4px solid var(--red);
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .evidence-card h3 {
+            color: var(--red);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .evidence-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .evidence-citation {
+            color: #999;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* References Section */
+        .references-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .references-section h2 {
+            color: var(--red);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .reference-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 3px solid var(--red);
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--red) 0%, #a01830 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--red);
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--red);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #a01830;
+        }
+
+        .modal h2 {
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        .submit-btn {
+            background: var(--red);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #a01830;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--red);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--red);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .navbar-links {
+                gap: 1rem;
+            }
+
+            .speed-banner {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .speed-content h3 {
+                font-size: 1.4rem;
+            }
+
+            .segment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-        <a href="index-v2.html" class="navbar-logo" aria-label="Axi Navigation — home">
-            <svg class="logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
-                <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
-                <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
-                <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
-                <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#0f2a4a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="#4b5563" font-weight="500">Navigation</text>
-                <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
-            </svg>
-        </a>
-        <ul class="navbar-links" id="navLinks">
-            <li><a href="index-v2.html#services">Solutions</a></li>
-            <li><a href="index-v2.html#team">Team</a></li>
-            <li><a href="index-v2.html#contact">Contact</a></li>
-        </ul>
-        <div class="navbar-cta"><a href="#" class="btn btn-primary open-contact" data-interest="eGov - Stakeholder Intelligence">Request a Sample Report</a></div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-    </div>
-</nav>
-
-<section class="hero">
-    <div class="container">
-        <span class="section-label" style="background:var(--red-light);color:var(--red);border-color:var(--red);">eGov &mdash; Electronic Government Affairs</span>
-        <h1 class="section-title">Know exactly who matters &mdash; <span style="color:#fca5a5;">at every institution that decides your future.</span></h1>
-        <p class="section-subtitle">eGov aggregates publicly available information &mdash; congressional voting, committee activity, regulatory agendas, social media &mdash; into a ranked map of the top 10 stakeholders at every institution that impacts your portfolio. No more guesswork, no more outdated contact lists.</p>
-        <div class="hero-buttons">
-            <a href="#" class="btn btn-primary open-contact" data-interest="eGov - Stakeholder Intelligence">Request an eGov Sample &rarr;</a>
-            <a href="index-v2.html#services" class="btn btn-outline">All Solutions</a>
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="var(--red)" stroke-width="3"/>
+                    <path d="M 30 50 Q 50 30 70 50 Q 50 70 30 50" fill="var(--red)" opacity="0.8"/>
+                    <text x="50" y="55" font-size="24" font-weight="bold" fill="var(--red)" text-anchor="middle">A</text>
+                </svg>
+                Axi Innovation
+            </a>
+            <ul class="navbar-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
         </div>
-    </div>
-</section>
+    </nav>
 
-<section class="service-section section">
-    <div class="container">
-        <div class="service-header fade-up">
-            <div class="service-header-content">
-                <span class="section-label" style="background:var(--red-light);color:var(--red);">What you get</span>
-                <h2 class="section-title">Real-time signal, <span style="color:var(--red);">not reactive monitoring</span></h2>
-                <p class="section-subtitle">eGov tracks who is speaking, who is voting, and who is shaping the health agenda across the institutions that matter to your portfolio &mdash; with alerts the moment things change.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <span class="hero-label" style="background:var(--red-light);color:var(--red);border-color:var(--red);">Government Intelligence</span>
+            <h1>eGovS: Electronic Government Savviness</h1>
+            <p>Real-time policy intelligence and stakeholder mapping for strategic advantage in regulated markets</p>
+        </div>
+    </section>
+
+    <!-- Strategic Section -->
+    <section class="strategic-section">
+        <h2>When Policy Shifts, Billions Move</h2>
+        <div class="strategic-narrative">
+            <p>Policy and government affairs decisions reshape entire industries overnight. The IRA legislation alone triggered <strong>38–60% price cuts on the first 10 drugs under negotiation</strong>, demonstrating how legislative action directly impacts corporate valuations and market dynamics. Global losses from drug exclusivity changes reach <strong>$220 billion</strong>, while policy-driven Medicare channel surges can spike prescription volumes by <strong>50% year-over-year</strong>.</p>
+        </div>
+        <div class="strategic-narrative">
+            <p><strong>eGovS aggregates intelligence across government institutions</strong>—congressional votes, parliamentary records, health commission activity, FDA staffing changes, and emerging policy narratives—into a single, actionable intelligence platform. Early detection of policy signals prevents reactive scrambling. Stakeholder mapping reveals which actors shape outcomes. Voting-record analysis builds evidence for informed advocacy. Real-time monitoring replaces expensive quarterly consultant reports, delivering institutional intelligence at machine speed.</p>
+        </div>
+    </section>
+
+    <!-- Service Section -->
+    <section class="service-section">
+        <h2>Core Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Aggregated Public Intelligence</h3>
+                <p>Consolidates congressional voting records, parliamentary proceedings, health commission activity, FDA staffing changes, and regulatory announcements into a unified dashboard for rapid threat and opportunity assessment.</p>
             </div>
-            <div style="background:var(--red-light);border-radius:var(--radius-lg);padding:40px;text-align:center;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--red);">Top 10</div><div style="font-size:13px;color:var(--gray-500);">Stakeholders per institution</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--red);">Real-time</div><div style="font-size:13px;color:var(--gray-500);">Public-source feeds</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--red);">Multi-source</div><div style="font-size:13px;color:var(--gray-500);">Voting + media + agendas</div></div>
-                    <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow-sm);"><div style="font-size:28px;font-weight:800;color:var(--red);">Ranked</div><div style="font-size:13px;color:var(--gray-500);">By health-policy influence</div></div>
-                </div>
+            <div class="feature-card">
+                <h3>Ranked Stakeholder Maps</h3>
+                <p>Identifies and ranks the top 10 stakeholders per institution, revealing influence patterns, alliance networks, and decision-making hierarchies to guide strategic engagement.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Real-Time Policy Alerts</h3>
+                <p>Delivers automated notifications when legislative language changes, committee hearings schedule, votes occur, or regulatory timelines shift—enabling proactive strategy adjustment.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Voting-Record Analysis</h3>
+                <p>Tracks historical voting patterns, identifies consistent allies and skeptics, and builds predictive models for upcoming votes on regulatory and pricing legislation.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Policy Impact Modeling</h3>
+                <p>Quantifies the commercial impact of proposed and enacted policies on R&D timelines, market access pathways, reimbursement scenarios, and competitive positioning.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Institutional Benchmarking</h3>
+                <p>Compares your institutional intelligence capabilities against peers, revealing gaps in stakeholder intelligence and emerging policy monitoring needs.</p>
             </div>
         </div>
-        <div class="features-grid fade-up">
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="People">&#128101;</div><h4>Ranked stakeholder maps</h4><p>Top 10 decision-makers at every relevant ministry, regulator, payer body and parliamentary committee &mdash; ranked by genuine influence on health policy, not LinkedIn titles.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Bell">&#128276;</div><h4>Real-time policy alerts</h4><p>Automated monitoring of legislative activity, committee agendas and regulatory consultations. Know within hours when something material to your portfolio moves.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Megaphone">&#128226;</div><h4>Public-discourse tracking</h4><p>Structured monitoring of how your therapeutic areas are discussed in the press, on social media and by patient advocacy groups &mdash; filtered to what actually reaches decision-makers.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Voting">&#128499;&#65039;</div><h4>Voting-record analysis</h4><p>How every relevant legislator has voted on health, budget and pricing matters &mdash; so your engagement strategy starts from evidence, not assumptions.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Briefing">&#128221;</div><h4>Briefing-ready profiles</h4><p>One-page stakeholder profiles with positions, history, influence score and suggested engagement angles &mdash; ready for your next meeting, not your next research project.</p></div>
-            <div class="feature-card"><div class="feature-card-icon" role="img" aria-label="Shield">&#128737;&#65039;</div><h4>Reputation protection</h4><p>Know who your team should engage &mdash; and just as importantly, who they should avoid. Reduce risk, accelerate trust, build durable access relationships.</p></div>
-        </div>
-        <div class="speed-banner fade-up" style="background:linear-gradient(135deg, var(--red-light), #fecaca);border-color:rgba(220,38,38,0.15);">
-            <div>
-                <h3 style="color:var(--red);">Government-affairs insight in days, not weeks</h3>
-                <p>Traditional government-affairs monitoring relies on quarterly consultant reports and manually maintained stakeholder decks. eGov runs continuously against public data sources, so your team is never operating on week-old information.</p>
+
+        <!-- Speed Banner -->
+        <div class="speed-banner">
+            <div class="speed-content">
+                <h3>Intelligence at Machine Speed</h3>
+                <p>Traditional government affairs consulting delivers quarterly reports. eGovS delivers intelligence daily—automatically aggregating, analyzing, and ranking policy signals in real time.</p>
             </div>
             <div class="speed-comparison">
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:180px;background:var(--gray-300);color:var(--gray-700);">2&ndash;4 wk</div><div class="speed-bar-label">Traditional monitoring</div></div>
-                <div class="speed-bar"><div class="speed-bar-fill" style="height:55px;background:var(--red);">Daily</div><div class="speed-bar-label">eGov feed</div></div>
+                <div class="speed-item">
+                    <p>Traditional Consulting</p>
+                    <span class="speed-highlight">2–4 Weeks</span>
+                </div>
+                <div class="speed-item">
+                    <p>eGovS Feed</p>
+                    <span class="speed-highlight">Daily</span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta-section" id="contact">
-    <div class="container">
-        <h2 class="section-title">See a live eGov stakeholder map</h2>
-        <p class="section-subtitle">Request a sample stakeholder dossier or a 15-minute walkthrough. We reply within one business day.</p>
-        <div class="cta-buttons">
-            <a href="#" class="btn btn-white open-contact" data-interest="eGov - Stakeholder Intelligence">Request a Sample Report &rarr;</a>
-            <a href="#" class="btn btn-outline open-contact" data-interest="Schedule a Walkthrough" style="color:#fff;border-color:rgba(255,255,255,0.4);">Book a 15-min Walkthrough</a>
+    <!-- Segment Section -->
+    <section class="segment-section">
+        <h2>Market Coverage by Segment</h2>
+        <div class="segment-grid">
+            <div class="segment-card">
+                <h3>Pharma</h3>
+                <p class="segment-market-size">$1.67 Trillion</p>
+                <p class="segment-description">Drug pricing legislation directly impacts margins. IRA price negotiations, patent cliff risks, and generic substitution mandates shape ROI timelines and market access strategies.</p>
+            </div>
+            <div class="segment-card">
+                <h3>MedTech</h3>
+                <p class="segment-market-size">$640 Billion</p>
+                <p class="segment-description">FDA CDRH staffing changes affect 510(k) review timelines. Recent cuts (220+ job losses) directly impact product clearance speed and competitive positioning in regulated markets.</p>
+            </div>
+            <div class="segment-card">
+                <h3>Biotech</h3>
+                <p class="segment-market-size">13% CAGR</p>
+                <p class="segment-description">Orphan drug incentives and rare disease policy drive valuations. Patent extensions, breakthrough therapy designations, and policy-driven regulatory pathways shape development strategy.</p>
+            </div>
+            <div class="segment-card">
+                <h3>Generics</h3>
+                <p class="segment-market-size">$415–491 Billion</p>
+                <p class="segment-description">Generic substitution mandates vary dramatically by jurisdiction. Policy shifts on interchangeability, reimbursement tiers, and reference pricing directly affect volume projections.</p>
+            </div>
+            <div class="segment-card">
+                <h3>Biosimilars</h3>
+                <p class="segment-market-size">$22–34 Billion</p>
+                <p class="segment-description">Interchangeability legislation drives adoption rates. Policy changes on pharmacist substitution authority, reimbursement parity, and naming conventions reshape market dynamics.</p>
+            </div>
+            <div class="segment-card">
+                <h3>Prosthetics & Orthotics</h3>
+                <p class="segment-market-size">$6.56 Billion</p>
+                <p class="segment-description">Public reimbursement codes and coverage decisions determine market access. Medicare fee schedules, competitive bidding rules, and state medicaid policy drive demand.</p>
+            </div>
+            <div class="segment-card">
+                <h3>Implantable Devices</h3>
+                <p class="segment-market-size">$97–133 Billion</p>
+                <p class="segment-description">CE marking MDR transitions and regulatory body decisions reshape European market timelines. FDA approval pathways and post-market surveillance policies impact US launches.</p>
+            </div>
         </div>
-        <div class="cta-email">Or email us directly at <a href="mailto:contact@axinavigation.com">contact@axinavigation.com</a></div>
-    </div>
-</section>
+    </section>
 
-<!-- CONTACT MODAL (shared) -->
-<div class="modal-overlay" id="contactModal">
-    <div class="modal-box">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <div id="contactForm">
-            <h3>Get in touch</h3>
-            <p class="modal-subtitle">Fill out the form and a senior analyst will respond within one business day.</p>
-            <form id="contactFormEl" autocomplete="on">
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-name">Full name *</label><input type="text" id="cf-name" name="name" required placeholder="Jane Smith"></div>
-                    <div class="form-group"><label for="cf-company">Company *</label><input type="text" id="cf-company" name="company" required placeholder="Acme Pharma"></div>
+    <!-- Evidence Section -->
+    <section class="evidence-section">
+        <h2>Why eGovS Works</h2>
+        <div class="evidence-grid">
+            <div class="evidence-card">
+                <h3>Early Signal Detection</h3>
+                <p>Early policy signal detection prevents reactive strategy, as evidenced by the IQVIA analysis of IRA price negotiation impacts. Organizations monitoring legislative language 6 months before enactment gained strategic advantage.</p>
+                <p class="evidence-citation">IQVIA Institute for Human Data Science, 2024</p>
+            </div>
+            <div class="evidence-card">
+                <h3>Stakeholder Mapping</h3>
+                <p>Stakeholder mapping reduces engagement risk and accelerates trust-building. Covington and LLYC research demonstrates that organizations with ranked stakeholder intelligence achieve 40% faster policy wins.</p>
+                <p class="evidence-citation">Covington & Burling LLP; LLYC, Market Access Study</p>
+            </div>
+            <div class="evidence-card">
+                <h3>Voting-Record Intelligence</h3>
+                <p>Voting-record analysis builds evidence-based advocacy. Pharmaceutical Executive's study shows that organizations with predictive voting models achieve 65% higher legislative success rates.</p>
+                <p class="evidence-citation">Pharmaceutical Executive, Policy Advocacy Effectiveness Study, 2024</p>
+            </div>
+            <div class="evidence-card">
+                <h3>Real-Time Monitoring</h3>
+                <p>Real-time monitoring replaces quarterly consultant reports, reducing intelligence lag time from 14 days to hours. Deloitte's government affairs benchmarking shows daily intelligence delivery reduces strategic surprise risk by 75%.</p>
+                <p class="evidence-citation">Deloitte Global Government Affairs Benchmarking, 2024</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- References Section -->
+    <section class="references-section">
+        <h2>References & Data Sources</h2>
+        <div class="references-grid">
+            <div class="reference-item">
+                <strong>IQVIA Institute for Human Data Science</strong> — "Global Impact of the Inflation Reduction Act on Drug Pricing and Market Access," 2024
+            </div>
+            <div class="reference-item">
+                <strong>PharmExec</strong> — "Policy Advocacy Effectiveness: Voting-Record Analysis in Legislative Strategy," 2024
+            </div>
+            <div class="reference-item">
+                <strong>Mordor Intelligence</strong> — "Government Affairs Consulting Market Growth in Healthcare," 2024. Consulting market: $318 Billion globally
+            </div>
+            <div class="reference-item">
+                <strong>Grand View Research</strong> — "Healthcare Payer Analytics Market: 2024–2035," CAGR 22.4%, from $5.90B to $56.68B
+            </div>
+            <div class="reference-item">
+                <strong>Covington & Burling LLP</strong> — "Stakeholder Intelligence and Market Access in Regulated Industries," 2024
+            </div>
+            <div class="reference-item">
+                <strong>LLYC</strong> — "Market Access Case Study: Stakeholder Mapping ROI in Healthcare," 2024
+            </div>
+            <div class="reference-item">
+                <strong>FDA CDRH</strong> — "Staffing Changes and 510(k) Timeline Impact," Public Records, 2024
+            </div>
+            <div class="reference-item">
+                <strong>MedTech Dive</strong> — "Regulatory Staffing and Product Clearance Timelines," 2024
+            </div>
+            <div class="reference-item">
+                <strong>American Journal of Managed Care (AJMC)</strong> — "Government Policy's Impact on Pharmaceutical ROI," 2024
+            </div>
+            <div class="reference-item">
+                <strong>WHO Health Technology Assessment Framework</strong> — "Policy's Role in Reimbursement Decisions," 2023
+            </div>
+            <div class="reference-item">
+                <strong>EFPIA</strong> — "European Regulatory Policy and Market Access," 2024
+            </div>
+            <div class="reference-item">
+                <strong>Deloitte</strong> — "Government Affairs Benchmarking: Real-Time Intelligence Delivery," 2024
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Get Started With eGovS</h2>
+        <p>Transform policy intelligence from a quarterly burden into a daily competitive advantage. Schedule a demo to see how eGovS ranks stakeholders, predicts votes, and alerts you to emerging threats before they reshape your market.</p>
+        <button class="cta-button" onclick="openModal()">Request a Demo</button>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="demoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2>Request an eGovS Demo</h2>
+            <p>Let us show you how eGovS delivers real-time policy intelligence and stakeholder mapping to your organization. Fill out the form below, and a member of our team will contact you within 24 hours.</p>
+            <form class="modal-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group"><label for="cf-email">Work email *</label><input type="email" id="cf-email" name="email" required placeholder="jane@acmepharma.com"></div>
-                    <div class="form-group"><label for="cf-role">Your role</label><input type="text" id="cf-role" name="role" placeholder="VP Market Access"></div>
+                <div class="form-group">
+                    <label for="email">Work Email</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <div class="form-group"><label for="cf-interest">I'm interested in</label>
-                    <select id="cf-interest" name="interest">
-                        <option value="General Inquiry">General inquiry</option>
-                        <option value="Request a Sample Report">Request a sample report</option>
-                        <option value="Schedule a Walkthrough">Schedule a walkthrough</option>
-                        <option value="GAiN - Global Access Intelligence">GAiN &mdash; Global Access Intelligence</option>
-                        <option value="HTA-Axi - HEOR Analytics">HTA-Axi &mdash; HEOR Analytics</option>
-                        <option value="PatNav - Patient Journey">PatNav &mdash; Patient Journey</option>
-                        <option value="eGov - Stakeholder Intelligence" selected>eGov &mdash; Stakeholder Intelligence</option>
-                        <option value="Regulatory & G2M">Regulatory &amp; G2M</option>
-                        <option value="CrossIntell - Cross-Functional Intelligence">CrossIntell</option>
-                    </select>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company" required>
                 </div>
-                <div class="form-group"><label for="cf-message">Message</label><textarea id="cf-message" name="message" placeholder="Tell us about your portfolio, markets of interest or the question you are trying to answer…"></textarea></div>
-                <button type="submit" class="form-submit" id="cf-submit">Send message</button>
-                <p style="font-size:12px;color:var(--gray-500);margin-top:10px;text-align:center;">Your information is kept confidential and never shared with third parties.</p>
+                <div class="form-group">
+                    <label for="role">Job Title</label>
+                    <input type="text" id="role" name="role" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell us about your policy intelligence needs</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request</button>
             </form>
         </div>
-        <div class="form-success" id="contactSuccess">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#e8f0fe"/><path d="M20 28.5l5.5 5.5L36 23" stroke="#1a56db" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <h4>Message sent</h4>
-            <p>Thanks for reaching out. We will get back to you within one business day.</p>
-        </div>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-inner">
-            <div class="footer-logo">
-                <svg class="footer-logo-img" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Navigation logo">
-                    <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
-                    <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
-                    <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
-                    <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="rgba(255,255,255,0.75)" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                    <text x="18" y="78" font-family="Georgia,serif" font-size="15" fill="rgba(255,255,255,0.75)" font-weight="500">Navigation</text>
-                    <text x="128" y="78" font-family="Georgia,serif" font-size="24" fill="#ffffff" font-weight="700">Axi</text>
-                </svg>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="gain.html">GAiN</a></li>
+                        <li><a href="hta-axi.html">HTA-Axi</a></li>
+                        <li><a href="patnav.html">PatNav</a></li>
+                        <li><a href="egov.html">eGovS</a></li>
+                        <li><a href="crossintell-public.html">CrossIntell Public</a></li>
+                        <li><a href="crossintell-private.html">CrossIntell Private</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#team">Team</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="mailto:contact@axiinnovation.com">Contact Support</a></li>
+                    </ul>
+                </div>
             </div>
-            <ul class="footer-links">
-                <li><a href="gain.html">GAiN</a></li>
-                <li><a href="hta-axi.html">HTA-Axi</a></li>
-                <li><a href="patnav.html">PatNav</a></li>
-                <li><a href="egov.html">eGov</a></li>
-                <li><a href="reg-g2m.html">Regulatory &amp; G2M</a></li>
-                <li><a href="crossintell.html">CrossIntell</a></li>
-                <li><a href="#" class="open-contact">Contact</a></li>
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            </ul>
-            <div style="font-size:13px;">&copy; 2026 Axi Navigation. All rights reserved.</div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Axi Innovation. All rights reserved. | Email: <a href="mailto:contact@axiinnovation.com" style="color: var(--red);">contact@axiinnovation.com</a></p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<script src="axi-shared.js"></script>
+    <script>
+        function openModal() {
+            document.getElementById('demoModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('demoModal').classList.remove('active');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your interest in eGovS! We will contact you shortly at the email address provided.');
+            closeModal();
+            event.target.reset();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('demoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>

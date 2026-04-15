@@ -13,7 +13,7 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar">
+<nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
     <li><a href="index.html#experience">Experience</a></li>
@@ -23,11 +23,11 @@
   </ul>
 </nav>
 
-<!-- PRODUCT HERO -->
+<!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back" style="margin-bottom:32px;display:inline-flex;">Back to modules</a>
-    <div class="eyebrow" style="margin-bottom:14px;">Module 01</div>
+    <a href="index.html#experience" class="btn-back">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 01 &nbsp;·&nbsp; Live</div>
     <h1>GAiN — <em>G2M &amp; Access</em><br>Intelligence Navigator</h1>
     <p class="product-hero-sub">Navigate IRP/ERP reference pricing networks across 40+ countries. Map how pharmaceutical pricing flows between regulatory bodies and forecast the impact of every launch decision before you commit.</p>
     <div class="product-hero-meta">
@@ -51,26 +51,26 @@
   </div>
 </div>
 
-<!-- HAVE A TASTE -->
-<div class="preview-section" style="background:rgba(200,175,100,0.06);border-top:1px solid var(--gold-dim);border-bottom:1px solid var(--gold-dim);">
-  <div class="preview-inner" style="padding:64px 60px;">
+<!-- LIVE DEMOS -->
+<div class="preview-section">
+  <div class="preview-inner">
     <div class="preview-label">
-      <div class="eyebrow" style="margin-bottom:12px;">Live Demos</div>
-      <h3 style="font-size:32px;margin-bottom:8px;">Have a taste of what GAiN can do</h3>
-      <p style="font-size:14px;color:var(--text-dim);">Two interactive visualisations — no login required. Click and explore.</p>
+      <div class="eyebrow">Live Demos</div>
+      <h3>Have a taste of what GAiN can do</h3>
+      <p>Two interactive visualisations — no login required. Click and explore.</p>
     </div>
     <div class="preview-btns">
-      <a href="erp-network.html" class="preview-btn" style="min-width:260px;padding:20px 28px;border-color:var(--gold-dim);">
-        <div class="preview-btn-icon" style="font-size:30px;">🕸</div>
+      <a href="erp-network.html" class="preview-btn">
+        <div class="preview-btn-icon">🕸</div>
         <div class="preview-btn-text">
-          <strong style="font-size:14px;">IRP Network nodes</strong>
+          <strong>IRP Network nodes</strong>
           <span>Interactive force-directed graph</span>
         </div>
       </a>
-      <a href="erp-sankey.html" class="preview-btn" style="min-width:260px;padding:20px 28px;border-color:var(--gold-dim);">
-        <div class="preview-btn-icon" style="font-size:30px;">📊</div>
+      <a href="erp-sankey.html" class="preview-btn">
+        <div class="preview-btn-icon">📊</div>
         <div class="preview-btn-text">
-          <strong style="font-size:14px;">IRP Sankey model</strong>
+          <strong>IRP Sankey model</strong>
           <span>Pricing flow visualisation</span>
         </div>
       </a>
@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<!-- WHAT YOU GET -->
+<!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
@@ -86,28 +86,32 @@
       <h2>Complete reimbursement visibility</h2>
       <p>GAiN delivers real-time intelligence across your portfolio — from IRP/ERP network effects to competitive white space and access trajectory forecasting.</p>
     </div>
-
     <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Pricing Intelligence</div>
-        <div class="card-name" style="font-size:22px;">IRP / ERP Network Analysis</div>
+        <div class="card-name">IRP / ERP Network Analysis</div>
         <p class="card-desc">Understand how a pricing decision in one market ripples across reference pricing networks. Identify cascade risks before launch sequencing locks you in.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Market Mapping</div>
-        <div class="card-name" style="font-size:22px;">Reimbursement Status Dashboard</div>
+        <div class="card-name">Reimbursement Status Dashboard</div>
         <p class="card-desc">Track reimbursement status for 202+ innovative drugs across 100+ markets. Five status tiers — from positive national coverage to white space opportunity.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Launch Strategy</div>
-        <div class="card-name" style="font-size:22px;">Sequencing Optimisation</div>
+        <div class="card-name">Sequencing Optimisation</div>
         <p class="card-desc">Simulate launch sequences across markets. Identify which order maximises revenue while minimising IRP-driven price erosion across your global portfolio.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Benchmarking</div>
-        <div class="card-name" style="font-size:22px;">Approval-to-Reimbursement Timelines</div>
+        <div class="card-name">Approval-to-Reimbursement Timelines</div>
         <p class="card-desc">Benchmark price approval timelines country by country — from Switzerland's 6 months to France's 12.9 months — and forecast access trajectories with precision.</p>
       </div>
+
     </div>
   </div>
 </section>
@@ -156,5 +160,12 @@
   </div>
 </footer>
 
+<script>
+  const nb = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nb.style.background = window.scrollY > 60
+      ? 'rgba(6,17,31,0.98)' : 'rgba(6,17,31,0.94)';
+  });
+</script>
 </body>
 </html>

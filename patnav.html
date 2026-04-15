@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
     <li><a href="index.html#experience">Experience</a></li>
@@ -22,10 +23,11 @@
   </ul>
 </nav>
 
+<!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back" style="margin-bottom:32px;display:inline-flex;">Back to modules</a>
-    <div class="eyebrow" style="margin-bottom:14px;">Module 02</div>
+    <a href="index.html#experience" class="btn-back">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 02 &nbsp;·&nbsp; Coming Soon</div>
     <h1>PatNav — <em>Patient</em><br>Navigation Suite</h1>
     <p class="product-hero-sub">Map every patient touchpoint from prescription to long-term adherence. Identify prior authorisation barriers, co-pay friction, and drop-off points that erode therapy uptake and revenue.</p>
     <div class="product-hero-meta">
@@ -45,6 +47,7 @@
   </div>
 </div>
 
+<!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
@@ -53,30 +56,60 @@
       <p>PatNav visualises the full patient journey, revealing where access breaks down and where intervention has the greatest impact.</p>
     </div>
     <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Journey Mapping</div>
-        <div class="card-name" style="font-size:22px;">End-to-End Patient Pathway</div>
+        <div class="card-name">End-to-End Patient Pathway</div>
         <p class="card-desc">Visualise the complete journey — diagnosis, prescribing, dispensing, and adherence — with quantified drop-off rates at each touchpoint.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Access Barriers</div>
-        <div class="card-name" style="font-size:22px;">Prior Authorisation Workflows</div>
+        <div class="card-name">Prior Authorisation Workflows</div>
         <p class="card-desc">Map prior authorisation requirements across payers and markets. Identify where administrative burden is blocking patient access to therapy.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Financial Toxicity</div>
-        <div class="card-name" style="font-size:22px;">Co-pay &amp; OOP Barrier Analysis</div>
+        <div class="card-name">Co-pay &amp; OOP Barrier Analysis</div>
         <p class="card-desc">Quantify the financial burden patients face. Identify co-pay barrier thresholds by therapeutic area and market to optimise patient support programmes.</p>
       </div>
-      <div class="product-card" style="display:block;">
+
+      <div class="product-card">
         <div class="card-module">Adherence</div>
-        <div class="card-name" style="font-size:22px;">Persistence &amp; Dropout Intelligence</div>
+        <div class="card-name">Persistence &amp; Dropout Intelligence</div>
         <p class="card-desc">Understand when and why patients discontinue therapy. Design targeted interventions at the exact drop-off points with the greatest commercial impact.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">The Challenge</div>
+      <h2>Why patient navigation matters</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">50%</div>
+        <div class="stat-label">Of patients with complex conditions fail to start or persist on prescribed therapy</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">30%</div>
+        <div class="stat-label">Of prescriptions are abandoned at the pharmacy due to cost or coverage barriers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">$500B+</div>
+        <div class="stat-label">Lost annually in the US alone due to medication non-adherence</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <section class="section">
   <div class="section-inner" style="text-align:center;">
     <div class="eyebrow">Coming Soon</div>
@@ -86,6 +119,7 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand">Axi <span>Navigation</span></div>
   <div class="footer-copy">&copy; 2026 Axi Navigation</div>
@@ -94,5 +128,13 @@
     <a href="privacy-policy.html">Privacy Policy</a>
   </div>
 </footer>
+
+<script>
+  const nb = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nb.style.background = window.scrollY > 60
+      ? 'rgba(6,17,31,0.98)' : 'rgba(6,17,31,0.94)';
+  });
+</script>
 </body>
 </html>

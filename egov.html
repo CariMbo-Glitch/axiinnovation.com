@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>eGovS — Electronic Government Savviness | Axi Navigation</title>
+  <meta name="description" content="Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="axi.css">
 </head>
 <body>
-<nav class="navbar">
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
     <li><a href="index.html#experience">Experience</a></li>
@@ -19,35 +22,119 @@
     <li><a href="index.html#early-access" class="nav-cta">Early Access</a></li>
   </ul>
 </nav>
+
+<!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back" style="margin-bottom:32px;display:inline-flex;">Back to modules</a>
-    <div class="eyebrow" style="margin-bottom:14px;">Module 03</div>
+    <a href="index.html#experience" class="btn-back">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 03 &nbsp;·&nbsp; Coming Soon</div>
     <h1>eGovS — <em>Electronic</em><br>Government Savviness</h1>
     <p class="product-hero-sub">Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows so your government affairs team is always one step ahead.</p>
     <div class="product-hero-meta">
-      <div class="meta-item"><div class="meta-value">80+</div><div class="meta-label">Global health authorities monitored</div></div>
-      <div class="meta-item"><div class="meta-value">Real-time</div><div class="meta-label">Legislative alert system</div></div>
-      <div class="meta-item"><div class="meta-value">AI</div><div class="meta-label">Powered policy analysis</div></div>
+      <div class="meta-item">
+        <div class="meta-value">80+</div>
+        <div class="meta-label">Global health authorities monitored</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-value">Real-time</div>
+        <div class="meta-label">Legislative alert system</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-value">AI</div>
+        <div class="meta-label">Powered policy analysis</div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
       <div class="eyebrow">Capabilities</div>
       <h2>Never miss a policy shift</h2>
-      <p>eGovS tracks every health authority, committee, and legislative body that shapes your access environment.</p>
+      <p>eGovS tracks every health authority, committee, and legislative body that shapes your access environment — and translates signals into actionable intelligence.</p>
     </div>
-    <div class="cards-grid" style="grid-template-columns:repeat(2,1fr);">
-      <div class="product-card" style="display:block;"><div class="card-module">Monitoring</div><div class="card-name" style="font-size:22px;">Health Authority Intelligence</div><p class="card-desc">Continuous monitoring of 80+ global health authorities including EMA, FDA, NICE, HAS, and regional bodies. Never miss a relevant publication or committee decision.</p></div>
-      <div class="product-card" style="display:block;"><div class="card-module">Policy Alerts</div><div class="card-name" style="font-size:22px;">Legislative Shift Detection</div><p class="card-desc">AI-powered detection of regulatory and reimbursement policy changes — delivered as prioritised alerts with impact assessments for your portfolio.</p></div>
-      <div class="product-card" style="display:block;"><div class="card-module">Advocacy</div><div class="card-name" style="font-size:22px;">Advocacy Window Identification</div><p class="card-desc">Identify the precise moments when advocacy and stakeholder engagement will have the greatest impact on policy outcomes in your target markets.</p></div>
-      <div class="product-card" style="display:block;"><div class="card-module">Stakeholder Intel</div><div class="card-name" style="font-size:22px;">Decision-Maker Mapping</div><p class="card-desc">Rank and track key decision-makers across government health institutions. Monitor their legislative activity and public positions in real time.</p></div>
+    <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
+
+      <div class="product-card">
+        <div class="card-module">Monitoring</div>
+        <div class="card-name">Health Authority Intelligence</div>
+        <p class="card-desc">Continuous monitoring of 80+ global health authorities including EMA, FDA, NICE, HAS, and regional bodies. Never miss a relevant publication or committee decision.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="card-module">Policy Alerts</div>
+        <div class="card-name">Legislative Shift Detection</div>
+        <p class="card-desc">AI-powered detection of regulatory and reimbursement policy changes — delivered as prioritised alerts with impact assessments for your portfolio.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="card-module">Advocacy</div>
+        <div class="card-name">Advocacy Window Identification</div>
+        <p class="card-desc">Identify the precise moments when advocacy and stakeholder engagement will have the greatest impact on policy outcomes in your target markets.</p>
+      </div>
+
+      <div class="product-card">
+        <div class="card-module">Stakeholder Intelligence</div>
+        <div class="card-name">Decision-Maker Mapping</div>
+        <p class="card-desc">Rank and track key decision-makers across government health institutions. Monitor their legislative activity and public positions in real time.</p>
+      </div>
+
     </div>
   </div>
 </section>
-<section class="section"><div class="section-inner" style="text-align:center;"><div class="eyebrow">Coming Soon</div><h2 style="margin-bottom:16px;">eGovS is in development</h2><p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Be among the first government affairs teams to access real-time legislative intelligence at this depth.</p><a href="index.html#early-access" class="btn-primary">Request Early Access</a></div></section>
-<footer class="footer"><div class="footer-brand">Axi <span>Navigation</span></div><div class="footer-copy">&copy; 2026 Axi Navigation</div><div class="footer-links"><a href="index.html#experience">All Modules</a><a href="privacy-policy.html">Privacy Policy</a></div></footer>
+
+<!-- STATS -->
+<section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">The Challenge</div>
+      <h2>Why government intelligence matters</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">6–18<span style="font-size:20px;color:var(--text-dim)">mo</span></div>
+        <div class="stat-label">Time to detect competitive shifts and legislative changes manually</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">80+</div>
+        <div class="stat-label">Global health authorities producing policy outputs relevant to market access</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">40%</div>
+        <div class="stat-label">Of executives lack real-time visibility into shifting reimbursement policies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner" style="text-align:center;">
+    <div class="eyebrow">Coming Soon</div>
+    <h2 style="margin-bottom:16px;">eGovS is in development</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Be among the first government affairs teams to access real-time legislative intelligence at this depth.</p>
+    <a href="index.html#early-access" class="btn-primary">Request Early Access</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Axi <span>Navigation</span></div>
+  <div class="footer-copy">&copy; 2026 Axi Navigation</div>
+  <div class="footer-links">
+    <a href="index.html#experience">All Modules</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const nb = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nb.style.background = window.scrollY > 60
+      ? 'rgba(6,17,31,0.98)' : 'rgba(6,17,31,0.94)';
+  });
+</script>
 </body>
 </html>

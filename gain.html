@@ -534,6 +534,49 @@
             font-weight: 600;
         }
 
+        /* PREVIEW SECTION */
+        .preview-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .preview-section h2 {
+            font-size: 36px;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .preview-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .preview-btn {
+            background: linear-gradient(135deg, #d4a574 0%, #c9985f 100%);
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 240px;
+        }
+
+        .preview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+        }
+
         /* EVIDENCE SECTION */
         .evidence-section {
             padding: 80px 40px;
@@ -1106,6 +1149,15 @@
                 <p>$97–133B today, projected $189B by 2030. Complex reimbursement involving hospital budgets, physician networks, and health economic evidence. Reference pricing and tender competitiveness require continuous market intelligence and launch-sequence optimization.</p>
                 <span class="segment-stat">$189B by 2030</span>
             </div>
+        </div>
+    </section>
+
+    <!-- PREVIEW SECTION -->
+    <section class="preview-section fade-up">
+        <h2>Have a taste of what GAiN can do</h2>
+        <div class="preview-buttons">
+            <a href="erp-network.html" class="preview-btn">IRP Network nodes</a>
+            <a href="erp-sankey.html" class="preview-btn">IRP Sankey model</a>
         </div>
     </section>
 

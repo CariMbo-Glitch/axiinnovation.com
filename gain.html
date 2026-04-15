@@ -1,1362 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAiN - G2M & Access Intelligence Navigator | Axi Innovation</title>
-    <meta name="description" content="GAiN maps reimbursement status of 202+ innovative drugs across 100+ global pharma markets with interactive dashboards and real-time intelligence.">
-    <link rel="stylesheet" href="axi-styles.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: #1a1a1a;
-            background-color: #ffffff;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .navbar-left {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .navbar-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .logo-img {
-            width: 48px;
-            height: 48px;
-        }
-
-        .navbar-brand {
-            font-family: 'Georgia', serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f2a4a;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .navbar-nav a {
-            text-decoration: none;
-            color: #4b5563;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .navbar-nav a:hover {
-            color: #d4a574;
-        }
-
-        .navbar-right {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .btn-cta {
-            background: linear-gradient(135deg, #d4a574 0%, #c9985f 100%);
-            color: white;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.3);
-        }
-
-        /* HERO */
-        .hero {
-            margin-top: 70px;
-            padding: 80px 40px;
-            background: linear-gradient(135deg, #0f2a4a 0%, #1a3f5a 100%);
-            color: white;
-            text-align: center;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .section-label {
-            display: inline-block;
-            background: rgba(212, 165, 116, 0.2);
-            color: #d4a574;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            line-height: 1.2;
-        }
-
-        .hero h1 .gold-span {
-            color: #d4a574;
-        }
-
-        .hero .subtitle {
-            font-size: 18px;
-            color: #cbd5e1;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: #d4a574;
-            color: #0f2a4a;
-            padding: 14px 32px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background: #c9985f;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(212, 165, 116, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #d4a574;
-            padding: 14px 32px;
-            border: 2px solid #d4a574;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(212, 165, 116, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-            margin-top: 60px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: #d4a574;
-            margin-bottom: 8px;
-        }
-
-        .hero-stat-label {
-            font-size: 13px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* FADE UP */
-        .fade-up {
-            animation: fadeUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* STRATEGIC SECTION */
-        .strategic-section {
-            padding: 80px 40px;
-            background: linear-gradient(135deg, #0f2a4a 0%, #1a3f5a 100%);
-            color: white;
-        }
-
-        .strategic-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 48px;
-            text-align: center;
-        }
-
-        .strategic-narrative {
-            max-width: 900px;
-            margin: 0 auto 60px;
-            font-size: 16px;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
-
-        .strategic-narrative p {
-            margin-bottom: 20px;
-        }
-
-        .data-highlights {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .data-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            border-radius: 12px;
-            padding: 32px 24px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .data-card .number {
-            font-size: 36px;
-            font-weight: 700;
-            color: #d4a574;
-            margin-bottom: 12px;
-        }
-
-        .data-card .label {
-            font-size: 14px;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-
-        /* SERVICE SECTION */
-        .service-section {
-            padding: 80px 40px;
-            background: #f8f9fa;
-        }
-
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #0f2a4a;
-        }
-
-        .service-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 80px;
-            align-items: start;
-        }
-
-        .service-header-content h3 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f2a4a;
-            margin-bottom: 24px;
-            line-height: 1.3;
-        }
-
-        .service-header-content p {
-            font-size: 16px;
-            color: #4b5563;
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .stat-item {
-            background: white;
-            padding: 24px;
-            border-radius: 8px;
-            border-left: 4px solid #d4a574;
-        }
-
-        .stat-item .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #d4a574;
-            margin-bottom: 8px;
-        }
-
-        .stat-item .label {
-            font-size: 13px;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-bottom: 60px;
-        }
-
-        .feature-card {
-            background: white;
-            border-radius: 12px;
-            padding: 32px 24px;
-            text-align: center;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-        }
-
-        .feature-icon {
-            font-size: 42px;
-            margin-bottom: 16px;
-        }
-
-        .feature-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f2a4a;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        .speed-banner {
-            background: linear-gradient(135deg, #0f2a4a 0%, #1a3f5a 100%);
-            color: white;
-            padding: 48px 40px;
-            border-radius: 12px;
-            text-align: center;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .speed-banner h3 {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .speed-banner p {
-            font-size: 15px;
-            color: #cbd5e1;
-            line-height: 1.7;
-            text-align: left;
-        }
-
-        .speed-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            text-align: center;
-        }
-
-        .speed-metric {
-            background: rgba(212, 165, 116, 0.15);
-            padding: 24px;
-            border-radius: 8px;
-            border: 1px solid rgba(212, 165, 116, 0.3);
-        }
-
-        .speed-metric .metric-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #d4a574;
-            margin-bottom: 8px;
-        }
-
-        .speed-metric .metric-label {
-            font-size: 12px;
-            color: #cbd5e1;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* SEGMENT SECTION */
-        .segment-section {
-            padding: 80px 40px;
-            background: white;
-        }
-
-        .segment-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #0f2a4a;
-        }
-
-        .segment-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .segment-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 32px;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .segment-card:hover {
-            border-color: #d4a574;
-            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .segment-card:nth-child(7) {
-            grid-column: 1 / 2;
-        }
-
-        .segment-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .segment-emoji {
-            font-size: 32px;
-        }
-
-        .segment-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0f2a4a;
-        }
-
-        .segment-card p {
-            font-size: 14px;
-            color: #4b5563;
-            line-height: 1.7;
-            margin-bottom: 16px;
-        }
-
-        .segment-stat {
-            display: inline-block;
-            background: #d4a574;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* PREVIEW SECTION */
-        .preview-section {
-            padding: 80px 40px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            text-align: center;
-        }
-
-        .preview-section h2 {
-            font-size: 36px;
-            color: #1a1a1a;
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-
-        .preview-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .preview-btn {
-            background: linear-gradient(135deg, #d4a574 0%, #c9985f 100%);
-            color: white;
-            padding: 14px 32px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            min-width: 240px;
-        }
-
-        .preview-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
-        }
-
-        /* EVIDENCE SECTION */
-        .evidence-section {
-            padding: 80px 40px;
-            background: #f8f9fa;
-        }
-
-        .evidence-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #0f2a4a;
-        }
-
-        .evidence-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .evidence-card {
-            background: white;
-            border-radius: 12px;
-            padding: 32px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        }
-
-        .evidence-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f2a4a;
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-
-        .evidence-card p {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-
-        .evidence-source {
-            font-size: 12px;
-            color: #9ca3af;
-            font-style: italic;
-        }
-
-        /* REFERENCES SECTION */
-        .references-section {
-            padding: 80px 40px;
-            background: white;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .references-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 48px;
-            text-align: center;
-            color: #0f2a4a;
-        }
-
-        .references-list {
-            list-style: none;
-        }
-
-        .references-list li {
-            font-size: 13px;
-            color: #4b5563;
-            line-height: 1.8;
-            margin-bottom: 16px;
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .references-list li:before {
-            content: attr(data-number);
-            position: absolute;
-            left: 0;
-            font-weight: 600;
-            color: #d4a574;
-        }
-
-        /* CTA SECTION */
-        .cta-section {
-            padding: 80px 40px;
-            background: linear-gradient(135deg, #0f2a4a 0%, #1a3f5a 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .cta-section p {
-            font-size: 18px;
-            color: #cbd5e1;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-
-        /* CONTACT MODAL */
-        .contact-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            padding: 48px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #6b7280;
-            transition: color 0.2s ease;
-        }
-
-        .modal-close:hover {
-            color: #0f2a4a;
-        }
-
-        .modal-content h3 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f2a4a;
-            margin-bottom: 8px;
-        }
-
-        .modal-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #0f2a4a;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: border-color 0.2s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #d4a574;
-            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-submit {
-            width: 100%;
-            background: #d4a574;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-submit:hover {
-            background: #c9985f;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(212, 165, 116, 0.3);
-        }
-
-        /* FOOTER */
-        .footer {
-            background: #0f2a4a;
-            color: #cbd5e1;
-            padding: 60px 40px 24px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto 40px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-        }
-
-        .footer-col h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-col a {
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-col a:hover {
-            color: #d4a574;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(212, 165, 116, 0.3);
-            padding-top: 24px;
-            text-align: center;
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0 20px;
-                height: 60px;
-            }
-
-            .navbar-nav {
-                gap: 16px;
-            }
-
-            .navbar-nav a {
-                font-size: 12px;
-            }
-
-            .hero {
-                padding: 60px 20px;
-                min-height: auto;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 24px;
-            }
-
-            .strategic-section {
-                padding: 60px 20px;
-            }
-
-            .data-highlights {
-                grid-template-columns: 1fr;
-            }
-
-            .service-header {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .speed-banner {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .segment-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .segment-card:nth-child(7) {
-                grid-column: 1 / -1;
-            }
-
-            .evidence-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .section h2,
-            .strategic-section h2,
-            .evidence-section h2 {
-                font-size: 32px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAiN — G2M &amp; Access Intelligence Navigator | Axi Navigation</title>
+  <meta name="description" content="Navigate IRP/ERP reference pricing networks across 40+ countries with interactive force-directed graphs and real-time market access intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="axi.css">
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="navbar-left">
-            <a href="portfolio.html" class="navbar-logo">
-                <svg class="logo-img" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Axi Innovation logo">
-                    <path d="M22 48c0-12 4-22 10-22s10 10 10 22c0 6-4 10-10 10s-10-4-10-10z" fill="#9ca3af"/>
-                    <path d="M48 40c0-14 5-28 12-28s12 14 12 28c0 7-5 12-12 12s-12-5-12-12z" fill="#7bb3e0"/>
-                    <path d="M80 32c0-16 7-32 16-32s16 16 16 32c0 9-7 16-16 16s-16-7-16-16z" fill="#2a5f8f"/>
-                    <path d="M18 62 Q60 52 110 60 Q160 70 200 58" stroke="#0f2a4a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                    <text x="128" y="50" font-family="Georgia,serif" font-size="24" fill="#0f2a4a" font-weight="700">Axi</text>
-                    <text x="18" y="78" font-family="Georgia,serif" font-size="14" fill="#4b5563" font-weight="500">Innovation</text>
-                </svg>
-                <span class="navbar-brand">Axi Innovation</span>
-            </a>
-            <ul class="navbar-nav">
-                <li><a href="portfolio.html">Back to Portfolio</a></li>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </div>
-        <div class="navbar-right">
-            <button class="btn-cta" id="nav-cta">Get Started</button>
-        </div>
-    </nav>
 
-    <!-- HERO -->
-    <section class="hero fade-up">
-        <span class="section-label">Access Intelligence</span>
-        <h1>Map Your <span class="gold-span">Global Access</span> Strategy</h1>
-        <p class="subtitle">GAiN intelligently navigates reimbursement pathways for 202+ innovative drugs across 100+ pharma markets. Real-time dashboards, IRP/ERP network analysis, and launch sequencing optimization to maximize market access and revenue.</p>
-        <div class="hero-buttons">
-            <button class="btn-primary" id="hero-cta">Request Demo</button>
-            <button class="btn-secondary" onclick="document.querySelector('.evidence-section').scrollIntoView({behavior: 'smooth'})">Learn More</button>
-        </div>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-value">202+</div>
-                <div class="hero-stat-label">Drugs Mapped</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">100+</div>
-                <div class="hero-stat-label">Global Markets</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">20,200</div>
-                <div class="hero-stat-label">Drug-Market Pairs</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-value">5</div>
-                <div class="hero-stat-label">Reimbursement Statuses</div>
-            </div>
-        </div>
-    </section>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="index.html#why-now">Why Now</a></li>
+    <li><a href="index.html#plans">Plans</a></li>
+    <li><a href="index.html#early-access" class="nav-cta">Early Access</a></li>
+  </ul>
+</nav>
 
-    <!-- STRATEGIC SECTION -->
-    <section class="strategic-section fade-up">
-        <h2>The Strategic Imperative</h2>
-        <div class="strategic-narrative">
-            <p>The global pharmaceutical market is expanding rapidly—from $1.67 trillion in 2024 to a projected $2.3 trillion by 2030, according to IQVIA. Yet this growth masks a fundamental challenge: 34% of new pharma launches fail to meet year-one sales forecasts, largely due to reimbursement miscalculation and access barriers. Reference pricing mistakes alone can erode more than $20 million annually per market.</p>
-            <p>Launch sequencing errors create cascading consequences. A misstep in a single market can trigger unintended international reference price reductions across markets 15 times larger. The medtech sector ($640B in 2024, rising to $717B by 2030) and the exploding biotech market (growing at 13% CAGR) face parallel pressures. Generics and biosimilars—representing $415–491B and $22–34B respectively—are competing for increasingly constrained access budgets, with $217–236B in branded drugs losing exclusivity between 2025 and 2030. Implantable devices ($97–133B today, projected to reach $189B by 2030) and prosthetics/orthotics ($6.56B→$8.48B) demand precision navigation across heterogeneous regulatory and pricing regimes.</p>
-            <p>Time-to-reimbursement variance is dramatic: Switzerland achieves approval-to-reimbursement in 6 months, while the UK requires 17.7 months. Germany averages 7.4 months, the US 9.2 months, and France 12.9 months. Each month of delay compounds revenue loss and market share erosion. Smart access strategy requires real-time visibility into market-by-market reimbursement status, IRP/ERP network effects, and competitive white space.</p>
-        </div>
-        <div class="data-highlights">
-            <div class="data-card fade-up">
-                <div class="number">$2.3T</div>
-                <div class="label">Global pharma market projection 2030 (IQVIA)</div>
-            </div>
-            <div class="data-card fade-up">
-                <div class="number">34%</div>
-                <div class="label">New launches failing year-1 forecasts (IQVIA)</div>
-            </div>
-            <div class="data-card fade-up">
-                <div class="number">$20M+</div>
-                <div class="label">Annual erosion per market from pricing errors</div>
-            </div>
-        </div>
-    </section>
+<!-- PRODUCT HERO -->
+<div class="product-hero">
+  <div class="product-hero-inner">
+    <a href="index.html#experience" class="btn-back" style="margin-bottom:32px;display:inline-flex;">Back to modules</a>
+    <div class="eyebrow" style="margin-bottom:14px;">Module 01</div>
+    <h1>GAiN — <em>G2M &amp; Access</em><br>Intelligence Navigator</h1>
+    <p class="product-hero-sub">Navigate IRP/ERP reference pricing networks across 40+ countries. Map how pharmaceutical pricing flows between regulatory bodies and forecast the impact of every launch decision before you commit.</p>
+    <div class="product-hero-meta">
+      <div class="meta-item">
+        <div class="meta-value">202+</div>
+        <div class="meta-label">Innovative drugs mapped</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-value">100+</div>
+        <div class="meta-label">Global pharma markets</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-value">40+</div>
+        <div class="meta-label">IRP/ERP countries covered</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-value">5</div>
+        <div class="meta-label">Reimbursement status tiers</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- SERVICE SECTION -->
-    <section class="service-section fade-up">
-        <div class="section">
-            <h2>What You Get</h2>
-            <div class="service-header">
-                <div class="service-header-content">
-                    <h3>Complete Reimbursement Visibility</h3>
-                    <p>GAiN delivers an interactive, real-time intelligence dashboard mapping reimbursement status across your portfolio. Track 202+ innovative drugs and their market-by-market access profiles, from positive national coverage to conditional listing to white space opportunity.</p>
-                    <p>Identify IRP/ERP network dependencies, benchmark price approval timelines against regional peers, and forecast access trajectories based on competitive and regulatory signals. Built on 20,200 verified drug-market pairs spanning 5 reimbursement statuses, GAiN turns access complexity into actionable insight.</p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="value">20,200</div>
-                            <div class="label">Drug-Market Pairs</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="value">Real-Time</div>
-                            <div class="label">Data Updates</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="value">100+</div>
-                            <div class="label">Markets Covered</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="value">5</div>
-                            <div class="label">Reimbursement Statuses</div>
-                        </div>
-                    </div>
-                </div>
-                <div></div>
-            </div>
-            <div class="features-grid fade-up">
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h4>Interactive Dashboards</h4>
-                    <p>Visualize reimbursement status across regions, therapeutic areas, and launch timelines. Filter, sort, and drill down to uncover market-specific barriers and opportunities.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔗</div>
-                    <h4>IRP/ERP Network Analysis</h4>
-                    <p>Map international reference price (IRP) and external reference price (ERP) dependencies. Forecast spillover risk and sequencing optimization to protect premium pricing.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h4>Launch Sequencing Intelligence</h4>
-                    <p>Optimize market entry order to minimize unintended reference price anchoring. Identify white-space opportunities before competitor moves erode margin.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⏱️</div>
-                    <h4>Time-to-Reimbursement Analytics</h4>
-                    <p>Compare approval-to-reimbursement timelines across 100+ markets. Benchmark against regulatory best practices and identify acceleration levers by jurisdiction.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏥</div>
-                    <h4>Competitive Landscape Tracking</h4>
-                    <p>Monitor competitor reimbursement decisions and pricing moves in real time. Anticipate market shifts and adjust strategy proactively.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h4>Portfolio Visibility & Forecasting</h4>
-                    <p>Model access outcomes across your full pipeline. Stress-test launch sequences against market scenarios and regulatory changes.</p>
-                </div>
-            </div>
-            <div class="speed-banner fade-up">
-                <div>
-                    <h3>Decision Speed That Matters</h3>
-                    <p>Move from scattered access intelligence to unified, real-time insight. Cut decision latency from months to days, enabling proactive white-space capture and IRP risk mitigation.</p>
-                </div>
-                <div class="speed-metrics">
-                    <div class="speed-metric">
-                        <div class="metric-value">12x</div>
-                        <div class="metric-label">Faster decisions with real-time data</div>
-                    </div>
-                    <div class="speed-metric">
-                        <div class="metric-value">$15M+</div>
-                        <div class="metric-label">Avg annual revenue protected</div>
-                    </div>
-                </div>
-            </div>
+<!-- HAVE A TASTE -->
+<div class="preview-section">
+  <div class="preview-inner">
+    <div class="preview-label">
+      <h3>Have a taste of what GAiN can do</h3>
+      <p>Try two interactive visualisations — no login required.</p>
+    </div>
+    <div class="preview-btns">
+      <a href="erp-network.html" class="preview-btn">
+        <div class="preview-btn-icon">🕸</div>
+        <div class="preview-btn-text">
+          <strong>IRP Network nodes</strong>
+          <span>Interactive force-directed graph</span>
         </div>
-    </section>
-
-    <!-- SEGMENT SECTION -->
-    <section class="segment-section fade-up">
-        <h2>Why It Matters Across Segments</h2>
-        <div class="segment-grid">
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">💊</span>
-                    <h3 class="segment-title">Innovative Pharma</h3>
-                </div>
-                <p>Global pharmaceutical market reaching $2.3 trillion by 2030. Premium-priced small molecules and biologics navigate increasingly fragmented reimbursement requirements. Reference pricing mistakes erode margins; launch sequencing missteps cascade across IRP-linked markets.</p>
-                <span class="segment-stat">$2.3T by 2030</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">🔬</span>
-                    <h3 class="segment-title">Medtech</h3>
-                </div>
-                <p>Growing from $640B (2024) to $717B (2030). Diagnostic equipment, surgical instruments, and implant manufacturers face distinct reimbursement criteria and evidence thresholds per market. White-space strategy requires granular access mapping.</p>
-                <span class="segment-stat">$717B by 2030</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">🧬</span>
-                    <h3 class="segment-title">Biotech</h3>
-                </div>
-                <p>Rapidly expanding at 13% CAGR (Grand View Research). Early-stage therapies and precision medicines demand sophisticated access planning before launch. Portfolio visibility enables risk stratification and market selection optimization.</p>
-                <span class="segment-stat">13% CAGR</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">💰</span>
-                    <h3 class="segment-title">Generics</h3>
-                </div>
-                <p>$415–491B market with $217–236B in branded exclusivity cliffs (2025–2030). Pricing pressure and rapid reference-based reimbursement require agile market sequencing. GAiN identifies lowest-cost-of-acquisition markets and competitive white space.</p>
-                <span class="segment-stat">$217–236B at risk</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">🔄</span>
-                    <h3 class="segment-title">Biosimilars</h3>
-                </div>
-                <p>$22–34B today, exploding to $61–97B by 2030. $400B in reference product sales exposed to substitution. Market access requires navigating reference pricing, interchangeability designations, and tender processes across 100+ jurisdictions.</p>
-                <span class="segment-stat">$61–97B by 2030</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">🦴</span>
-                    <h3 class="segment-title">Prosthetics & Orthotics</h3>
-                </div>
-                <p>Growing from $6.56B (2024) to $8.48B (2030). Custom devices and advanced materials face patient reimbursement limits and supply-chain pressures. Access mapping prevents margin erosion from unanticipated coverage restrictions.</p>
-                <span class="segment-stat">$8.48B by 2030</span>
-            </div>
-            <div class="segment-card fade-up">
-                <div class="segment-header">
-                    <span class="segment-emoji">⚕️</span>
-                    <h3 class="segment-title">Implantable Devices</h3>
-                </div>
-                <p>$97–133B today, projected $189B by 2030. Complex reimbursement involving hospital budgets, physician networks, and health economic evidence. Reference pricing and tender competitiveness require continuous market intelligence and launch-sequence optimization.</p>
-                <span class="segment-stat">$189B by 2030</span>
-            </div>
+      </a>
+      <a href="erp-sankey.html" class="preview-btn">
+        <div class="preview-btn-icon">📊</div>
+        <div class="preview-btn-text">
+          <strong>IRP Sankey model</strong>
+          <span>Pricing flow visualisation</span>
         </div>
-    </section>
+      </a>
+    </div>
+  </div>
+</div>
 
-    <!-- PREVIEW SECTION -->
-    <section class="preview-section fade-up">
-        <h2>Have a taste of what GAiN can do</h2>
-        <div class="preview-buttons">
-            <a href="erp-network.html" class="preview-btn">IRP Network nodes</a>
-            <a href="erp-sankey.html" class="preview-btn">IRP Sankey model</a>
-        </div>
-    </section>
-
-    <!-- EVIDENCE SECTION -->
-    <section class="evidence-section fade-up">
-        <h2>The Evidence for Investing in Access Intelligence</h2>
-        <div class="evidence-grid">
-            <div class="evidence-card fade-up">
-                <h4>Launch Sequencing Optimization Reduces Permanent Revenue Erosion</h4>
-                <p>Market entry sequence directly impacts reference pricing anchors in downstream markets. Optimizing launch order to delay high-price markets prevents 15x market premiums from collapsing due to IRP spillover. Portfolio-wide savings exceed $50 million for mid-cap launches.</p>
-                <p class="evidence-source">Simon-Kucher Market Access Group, National Bureau of Economic Research (NBER) Bargaining and Reference Pricing Studies</p>
-            </div>
-            <div class="evidence-card fade-up">
-                <h4>Real-Time Access Intelligence Cuts Decision Latency from Months to Days</h4>
-                <p>Centralized reimbursement tracking eliminates manual dashboard scraping and email chains. Commercial and market access teams move from quarterly reviews to daily situational awareness. Competitive response times improve by 12x, enabling proactive white-space capture.</p>
-                <p class="evidence-source">IQVIA Global Use of Medicines Report 2025, IQVIA Launch Performance Analysis</p>
-            </div>
-            <div class="evidence-card fade-up">
-                <h4>ERP/IRP Intelligence Prevents Pricing Spillover and Unintended Margin Collapse</h4>
-                <p>External and international reference price networks create hidden pricing dependencies across regions. Real-time visibility into reference pricing chains prevents surprises. Healthcare economics teams anticipate spillover 6–12 months in advance and adjust strategy preemptively.</p>
-                <p class="evidence-source">Commonwealth Fund European Pharmaceutical Pricing, Frontiers in Pharmacology International Reference Pricing Impact Studies</p>
-            </div>
-            <div class="evidence-card fade-up">
-                <h4>Portfolio Visibility Enables Proactive White-Space Strategy</h4>
-                <p>Understanding reimbursement status across 100+ markets for 202+ drugs reveals market combinations competitors may overlook. Strategic sequencing captures premium pricing before competitive entry erodes margins. Portfolio-wide access upside: 15–25% revenue uplift in year two.</p>
-                <p class="evidence-source">Deloitte Market Access Excellence, Lifescience Leader Global Launch Benchmarking</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- REFERENCES SECTION -->
-    <section class="references-section fade-up">
-        <h2>References</h2>
-        <ul class="references-list">
-            <li data-number="1">IQVIA Global Use of Medicines 2025. Market sizing and forecast 2024–2030.</li>
-            <li data-number="2">IQVIA Launch Performance Benchmarking. Analysis of year-one sales forecast vs. actual outcomes across 500+ global launches.</li>
-            <li data-number="3">American Journal of Managed Care (AJMC). "Approval to Reimbursement: Geographic Variation and Time-to-Market." 2024.</li>
-            <li data-number="4">National Bureau of Economic Research (NBER). "Bargaining and Reference Pricing in Pharmaceutical Markets." 2023.</li>
-            <li data-number="5">Commonwealth Fund. "European Pharmaceutical Pricing and Reimbursement Policy: Lessons for Access and Equity." 2024.</li>
-            <li data-number="6">Frontiers in Pharmacology. "International Reference Pricing and Its Spillover Effects on Manufacturer Revenue." 2023.</li>
-            <li data-number="7">Simon-Kucher Market Access Group. "Launch Sequencing Strategy: Revenue Impact of Market Entry Order on IRP/ERP Networks." 2024.</li>
-            <li data-number="8">Deloitte. "Market Access Excellence: Emerging Best Practices in Global Reimbursement Strategy." 2024.</li>
-            <li data-number="9">Fortune Business Insights. "Medical Device Market: Global Medtech Forecast 2024–2030." 2024.</li>
-            <li data-number="10">Grand View Research. "Biotechnology Market: Segment and Forecast 2025–2032." 2024.</li>
-            <li data-number="11">Mordor Intelligence. "Global Generic Pharmaceuticals Market: Competitive Landscape and Forecast 2024–2030." 2024.</li>
-        </ul>
-    </section>
-
-    <!-- CTA SECTION -->
-    <section class="cta-section fade-up">
-        <h2>Transform Your Access Strategy</h2>
-        <p>Let GAiN guide your go-to-market decisions with real-time reimbursement intelligence across 100+ markets. Schedule a personalized demo and see how pharma and medtech leaders optimize launch sequences and protect pricing.</p>
-        <button class="btn-primary" id="cta-section-btn">Request a Demo</button>
-    </section>
-
-    <!-- CONTACT MODAL -->
-    <div class="contact-modal" id="contactModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <h3>Get Started with GAiN</h3>
-            <p class="modal-subtitle">Schedule your personalized demo today</p>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="company">Company</label>
-                    <input type="text" id="company" name="company" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone (optional)</label>
-                    <input type="tel" id="phone" name="phone">
-                </div>
-                <div class="form-group">
-                    <label for="message">How can we help?</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="form-submit">Send Request</button>
-            </form>
-        </div>
+<!-- WHAT YOU GET -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Capabilities</div>
+      <h2>Complete reimbursement visibility</h2>
+      <p>GAiN delivers real-time intelligence across your portfolio — from IRP/ERP network effects to competitive white space and access trajectory forecasting.</p>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer fade-up">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="gain.html">GAiN</a></li>
-                    <li><a href="hta-axi.html">HTA-Axi</a></li>
-                    <li><a href="patnav.html">PatNav</a></li>
-                    <li><a href="egov.html">eGov</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Intelligence</h4>
-                <ul>
-                    <li><a href="crossintell-public.html">Public Market Intelligence</a></li>
-                    <li><a href="crossintell-private.html">Private Transactions</a></li>
-                    <li><a href="erp-network.html">ERP Network Analysis</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="index.html#team">Team</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contact</h4>
-                <ul>
-                    <li><a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a></li>
-                    <li><a href="#">axiinnovation.com</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Axi Innovation. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
+      <div class="product-card" style="display:block;">
+        <div class="card-module">Pricing Intelligence</div>
+        <div class="card-name" style="font-size:22px;">IRP / ERP Network Analysis</div>
+        <p class="card-desc">Understand how a pricing decision in one market ripples across reference pricing networks. Identify cascade risks before launch sequencing locks you in.</p>
+      </div>
+      <div class="product-card" style="display:block;">
+        <div class="card-module">Market Mapping</div>
+        <div class="card-name" style="font-size:22px;">Reimbursement Status Dashboard</div>
+        <p class="card-desc">Track reimbursement status for 202+ innovative drugs across 100+ markets. Five status tiers — from positive national coverage to white space opportunity.</p>
+      </div>
+      <div class="product-card" style="display:block;">
+        <div class="card-module">Launch Strategy</div>
+        <div class="card-name" style="font-size:22px;">Sequencing Optimisation</div>
+        <p class="card-desc">Simulate launch sequences across markets. Identify which order maximises revenue while minimising IRP-driven price erosion across your global portfolio.</p>
+      </div>
+      <div class="product-card" style="display:block;">
+        <div class="card-module">Benchmarking</div>
+        <div class="card-name" style="font-size:22px;">Approval-to-Reimbursement Timelines</div>
+        <p class="card-desc">Benchmark price approval timelines country by country — from Switzerland's 6 months to France's 12.9 months — and forecast access trajectories with precision.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- MODAL CONTROLS -->
-    <script>
-        const contactModal = document.getElementById('contactModal');
-        const modalClose = document.getElementById('modalClose');
-        const contactForm = document.getElementById('contactForm');
-        const navCta = document.getElementById('nav-cta');
-        const heroCta = document.getElementById('hero-cta');
-        const ctaSectionBtn = document.getElementById('cta-section-btn');
+<!-- THE STRATEGIC CASE -->
+<section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">The Strategic Imperative</div>
+      <h2>Why GAiN exists</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">$20M+</div>
+        <div class="stat-label">Annual revenue erosion per market from a single pricing sequencing error</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">15×</div>
+        <div class="stat-label">Market size amplification when IRP cascades from a mispriced reference country</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">$2.3T</div>
+        <div class="stat-label">Global pharma market by 2030 — with 34% of launches missing year-one forecasts</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Open modal
-        [navCta, heroCta, ctaSectionBtn].forEach(btn => {
-            btn.addEventListener('click', () => {
-                contactModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner" style="text-align:center;">
+    <div class="eyebrow">Get Started</div>
+    <h2 style="margin-bottom:16px;">Request access to GAiN</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Join pharma and medtech teams already using GAiN to eliminate IRP blind spots and launch with precision.</p>
+    <a href="index.html#early-access" class="btn-primary">Request Early Access</a>
+  </div>
+</section>
 
-        // Close modal
-        modalClose.addEventListener('click', () => {
-            contactModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Axi <span>Navigation</span></div>
+  <div class="footer-copy">&copy; 2026 Axi Navigation</div>
+  <div class="footer-links">
+    <a href="index.html#experience">All Modules</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
 
-        contactModal.addEventListener('click', (e) => {
-            if (e.target === contactModal) {
-                contactModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Handle form submission
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const data = {
-                name: formData.get('name'),
-                company: formData.get('company'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                message: formData.get('message')
-            };
-
-            try {
-                // Try Formspree endpoint
-                const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.ok) {
-                    alert('Thank you! We will contact you shortly.');
-                    contactForm.reset();
-                    contactModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                } else {
-                    // Fallback: mailto
-                    const mailto = `mailto:contact@axiinnovation.com?subject=GAiN Demo Request from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(`Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone}\n\nMessage:\n${data.message}`)}`;
-                    window.location.href = mailto;
-                }
-            } catch (error) {
-                // Fallback to mailto
-                const mailto = `mailto:contact@axiinnovation.com?subject=GAiN Demo Request from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(`Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone}\n\nMessage:\n${data.message}`)}`;
-                window.location.href = mailto;
-            }
-        });
-    </script>
-
-    <!-- SHARED SCRIPTS -->
-    <script src="axi-shared.js" defer></script>
 </body>
 </html>

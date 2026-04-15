@@ -1,1371 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axi Innovation - Global Health Intelligence Platform</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --navy: #0a1428;
-            --gold: #c8af64;
-            --cream: #f9f7f2;
-            --dark-gray: #1a1a1a;
-            --light-gray: #f5f5f5;
-            --border-light: #e0dbd0;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            color: var(--dark-gray);
-            background: white;
-            line-height: 1.6;
-        }
-
-        /* ==================== NAVBAR ==================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            background: var(--navy);
-            backdrop-filter: blur(8px);
-            background-color: rgba(10, 20, 40, 0.95);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(200, 175, 100, 0.1);
-        }
-
-        .navbar-brand {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            font-weight: 600;
-            color: white;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar-brand span {
-            color: var(--gold);
-        }
-
-        .navbar-links {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .navbar-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .navbar-links a:hover {
-            color: var(--gold);
-        }
-
-        .nav-cta {
-            background: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 10px 24px;
-            border-radius: 2px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .nav-cta:hover {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        /* ==================== HERO SECTION ==================== */
-        .hero {
-            margin-top: 72px;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--navy) 0%, #1a2f4f 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(200, 175, 100, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(200, 175, 100, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 900px;
-        }
-
-        .hero-eyebrow {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 72px;
-            font-weight: 600;
-            color: white;
-            line-height: 1.2;
-            margin-bottom: 30px;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .hero-subtitle {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 700px;
-            margin: 0 auto 50px;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 100px;
-            flex-wrap: wrap;
-        }
-
-        .btn-gold {
-            background: var(--gold);
-            color: var(--navy);
-            padding: 14px 36px;
-            border: none;
-            border-radius: 2px;
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-gold:hover {
-            background: #dcc98e;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-w {
-            background: transparent;
-            color: white;
-            padding: 14px 36px;
-            border: 1px solid white;
-            border-radius: 2px;
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-outline-w:hover {
-            background: white;
-            color: var(--navy);
-        }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            padding: 40px;
-            background: rgba(200, 175, 100, 0.08);
-            border-top: 1px solid rgba(200, 175, 100, 0.2);
-            border-bottom: 1px solid rgba(200, 175, 100, 0.2);
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.4;
-        }
-
-        @media (max-width: 768px) {
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-        }
-
-        /* ==================== PORTFOLIO SECTION ==================== */
-        #portfolio {
-            background: var(--cream);
-            padding: 100px 40px;
-        }
-
-        .portfolio-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-eyebrow {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 56px;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 20px;
-        }
-
-        .section-subtitle {
-            font-size: 16px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        @media (max-width: 1024px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-
-        .portfolio-card {
-            background: white;
-            border: 1px solid var(--border-light);
-            border-radius: 4px;
-            padding: 40px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--gold);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.4s ease;
-        }
-
-        .portfolio-card:hover {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            transform: translateY(-10px);
-        }
-
-        .portfolio-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .card-tag {
-            display: inline-block;
-            background: var(--navy);
-            color: var(--gold);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 6px 12px;
-            border-radius: 2px;
-            margin-bottom: 20px;
-        }
-
-        .portfolio-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        .card-product-name {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .portfolio-card p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .portfolio-btn {
-            display: inline-block;
-            background: var(--navy);
-            color: var(--gold);
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 12px 28px;
-            border: 1px solid var(--gold);
-            border-radius: 2px;
-            transition: all 0.25s;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .portfolio-btn:hover {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        .portfolio-btn.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        /* ==================== WHY NOW / COST OF INACTION ==================== */
-        #cost-of-inaction {
-            background: white;
-            padding: 100px 40px;
-        }
-
-        .coi-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .coi-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 50px;
-            margin-top: 60px;
-        }
-
-        @media (max-width: 1024px) {
-            .coi-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .coi-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-
-        .coi-item {
-            display: flex;
-            gap: 25px;
-            align-items: flex-start;
-        }
-
-        .coi-icon {
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .coi-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--gold);
-            fill: none;
-            stroke-width: 1.5;
-        }
-
-        .coi-text h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 10px;
-        }
-
-        .coi-text p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* ==================== SERVICES SECTION ==================== */
-        #services {
-            background: var(--cream);
-            padding: 100px 40px;
-        }
-
-        .services-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        @media (max-width: 1024px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-        }
-
-        .service-card {
-            background: white;
-            border: 1px solid var(--border-light);
-            border-radius: 4px;
-            padding: 40px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--gold);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.4s ease;
-        }
-
-        .service-card:hover {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            transform: translateY(-10px);
-        }
-
-        .service-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .svc-tag {
-            display: inline-block;
-            background: var(--navy);
-            color: var(--gold);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 6px 12px;
-            border-radius: 2px;
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .pain-box {
-            background: #f9f7f2;
-            border-left: 3px solid var(--gold);
-            padding: 16px 20px;
-            margin-bottom: 25px;
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .solution-text {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .service-card .btn-sneak {
-            display: inline-block;
-            background: var(--navy);
-            color: var(--gold);
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 12px 28px;
-            border: 1px solid var(--gold);
-            border-radius: 2px;
-            transition: all 0.25s;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .service-card .btn-sneak:hover {
-            background: var(--gold);
-            color: var(--navy);
-        }
-
-        /* ==================== ABOUT SECTION ==================== */
-        #about {
-            background: white;
-            padding: 100px 40px;
-        }
-
-        .about-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-text {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        /* ==================== CONTACT SECTION ==================== */
-        #contact {
-            background: var(--navy);
-            padding: 100px 40px;
-        }
-
-        .contact-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .contact-header h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 56px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .contact-header p {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            font-family: 'Lato', sans-serif;
-            padding: 14px 16px;
-            border: 1px solid rgba(200, 175, 100, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 14px;
-            border-radius: 2px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .btn-submit {
-            background: var(--gold);
-            color: var(--navy);
-            padding: 14px 36px;
-            border: none;
-            border-radius: 2px;
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            align-self: center;
-        }
-
-        .btn-submit:hover {
-            background: #dcc98e;
-            transform: translateY(-2px);
-        }
-
-        /* ==================== FOOTER ==================== */
-        footer {
-            background: #0a0f20;
-            padding: 50px 40px;
-            text-align: center;
-            border-top: 1px solid rgba(200, 175, 100, 0.1);
-        }
-
-        .footer-brand {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 25px;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-brand span {
-            color: var(--gold);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
-        .footer-copyright {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 25px;
-        }
-
-        /* ==================== PRICING MODAL ==================== */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow: auto;
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 40px;
-            border: 1px solid var(--border-light);
-            border-radius: 4px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 40px;
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        .close-modal {
-            color: #666;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-modal:hover {
-            color: var(--gold);
-        }
-
-        .pricing-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .pricing-table th,
-        .pricing-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .pricing-table th {
-            background: var(--navy);
-            color: var(--gold);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .pricing-table td {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .pricing-note {
-            font-size: 13px;
-            color: #999;
-            margin-top: 20px;
-            font-style: italic;
-        }
-
-        /* Navbar scroll effect */
-        .navbar.scrolled {
-            background-color: rgba(10, 20, 40, 0.98);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axi Navigation — Global Health Intelligence Platform</title>
+  <meta name="description" content="Axi Navigation delivers real-time intelligence for pharmaceutical and medtech market access, reimbursement strategy, and regulatory navigation across 100+ global markets.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="axi.css">
+  <style>
+    /* ---- Landing-page specific ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 80px) 60px 80px;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, rgba(200,175,100,0.08) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 45% at 10% 90%, rgba(29,78,180,0.07) 0%, transparent 60%),
+        var(--bg);
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(200,175,100,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 5.5vw, 70px);
+      margin-bottom: 26px;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+    }
+    .hero-scroll span {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--gold-dim), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ---- Why Now ---- */
+    .why-now-bg {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ---- Plans ---- */
+    .plans-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 32px;
+    }
+
+    /* ---- Early Access form ---- */
+    .access-bg {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .access-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .form-submit {
+      text-align: center;
+      margin-top: 28px;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-top: 24px;
+    }
+    .form-success p { color: var(--text); margin-top: 12px; }
+  </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="#" class="navbar-brand">Axi <span>Innovation</span></a>
-        <ul class="navbar-links">
-            <li><a href="portfolio.html">Portfolio</a></li>
-            <li><a href="#cost-of-inaction">Why Now</a></li>
-            <li><a href="#plans">Plans</a></li>
-            <li><a href="#contact" class="nav-cta">Request Access</a></li>
-        </ul>
-    </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-eyebrow">Global Health Intelligence Platform</div>
-            <h1>The intelligence layer between <em>approval</em> and <em>access</em></h1>
-            <p class="hero-subtitle">Pharma and medtech executives need real-time intelligence to navigate global regulatory landscapes, reimbursement decisions, and market access barriers. Without it, launch delays compound into revenue losses.</p>
-            <div class="hero-buttons">
-                <button class="btn-gold" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Request Early Access</button>
-                <a href="portfolio.html" class="btn-outline-w">Dive into our portfolio</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">Intelligence<br>Modules</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">578</div>
-                    <div class="stat-label">Days Avg.<br>Access Delay</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">$24M</div>
-                    <div class="stat-label">Revenue<br>Lost</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">80+</div>
-                    <div class="stat-label">Global<br>Agencies</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#why-now">Why Now</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#early-access" class="nav-cta">Early Access</a></li>
+  </ul>
+</nav>
 
-    <!-- PORTFOLIO SECTION -->
-    <section id="portfolio">
-        <div class="portfolio-content">
-            <div class="section-header">
-                <div class="section-eyebrow">Our Portfolio</div>
-                <h2 class="section-title">Experience the intelligence firsthand</h2>
-                <p class="section-subtitle">Each module addresses a specific intelligence gap. Try an interactive preview before you commit.</p>
-            </div>
-            <div class="portfolio-grid">
-                <!-- GAiN Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 1</div>
-                    <h3>GAiN</h3>
-                    <div class="card-product-name">G2M & Access Intell Navigator</div>
-                    <p>Navigate IRP/ERP reference pricing networks across 40+ countries. Interactive force-directed graph showing how pharmaceutical pricing flows between regulatory bodies.</p>
-                    <a href="erp-network.html" target="_blank" class="portfolio-btn">Try Now →</a>
-                </div>
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Global Health Intelligence</div>
+    <h1>The intelligence layer<br>between <em>approval</em> and <em>access</em></h1>
+    <p class="hero-sub">Pharma and medtech executives need real-time intelligence to navigate global regulatory landscapes, reimbursement decisions, and market access barriers. Without it, launch delays compound into revenue losses.</p>
+    <div class="hero-btns">
+      <a href="#experience" class="btn-primary">Explore our modules</a>
+      <a href="#why-now" class="btn-secondary">Why it matters</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-                <!-- PatNav Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 2</div>
-                    <h3>PatNav</h3>
-                    <div class="card-product-name">Patient Navigation Suite</div>
-                    <p>Map patient journeys from prescription to adherence. Visualize prior authorization workflows and co-pay barrier analysis across therapeutic areas.</p>
-                    <button class="portfolio-btn disabled" onclick="alert('Coming soon'); return false;">Coming Soon</button>
-                </div>
-
-                <!-- eGovS Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 3</div>
-                    <h3>eGovS</h3>
-                    <div class="card-product-name">Electronic Government Savviness</div>
-                    <p>Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows.</p>
-                    <button class="portfolio-btn disabled" onclick="alert('Coming soon'); return false;">Coming Soon</button>
-                </div>
-
-                <!-- HTA-Axi Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 4</div>
-                    <h3>HTA-Axi</h3>
-                    <div class="card-product-name">HEOR & Dossiers</div>
-                    <p>Full-cycle HEOR support with economic modelling, budget impact analysis, and value dossier development for first-submission success.</p>
-                    <button class="portfolio-btn disabled" onclick="alert('Coming soon'); return false;">Coming Soon</button>
-                </div>
-
-                <!-- Cross-Intell Public Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 5</div>
-                    <h3>Cross-Intell Public</h3>
-                    <div class="card-product-name">Intell on Public Healthcare Systems</div>
-                    <p>Real-time intelligence across 30+ public healthcare systems. Reimbursement decisions, payer policy feeds, and competitive positioning data.</p>
-                    <button class="portfolio-btn disabled" onclick="alert('Coming soon'); return false;">Coming Soon</button>
-                </div>
-
-                <!-- Cross-Intell Private Card -->
-                <div class="portfolio-card">
-                    <div class="card-tag">Module 6</div>
-                    <h3>Cross-Intell Private</h3>
-                    <div class="card-product-name">Intell on Private Healthcare Systems</div>
-                    <p>Dedicated competitive intelligence with custom market models, real-time share tracking, and forward-looking scenario planning.</p>
-                    <button class="portfolio-btn disabled" onclick="alert('Coming soon'); return false;">Coming Soon</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHY NOW / COST OF INACTION SECTION -->
-    <section id="cost-of-inaction">
-        <div class="coi-content">
-            <div class="section-header">
-                <div class="section-eyebrow">Why Now</div>
-                <h2 class="section-title">The Cost of Inaction</h2>
-                <p class="section-subtitle">Real consequences when intelligence is delayed or incomplete.</p>
-            </div>
-            <div class="coi-grid">
-                <!-- Clock Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="6" x2="12" y2="12"/>
-                            <line x1="12" y1="12" x2="16" y2="12"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>$24M/month</h3>
-                        <p>Revenue lost per delayed launch in top 10 markets.</p>
-                    </div>
-                </div>
-
-                <!-- Declining Chart Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <polyline points="22 7 13 16 8 11 2 17"/>
-                            <line x1="22" y1="7" x2="22" y2="2"/>
-                            <line x1="22" y1="2" x2="17" y2="2"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>578 days</h3>
-                        <p>Average access delay due to regulatory and reimbursement complexity.</p>
-                    </div>
-                </div>
-
-                <!-- Target/Missed Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="9"/>
-                            <circle cx="12" cy="12" r="6"/>
-                            <circle cx="12" cy="12" r="3"/>
-                            <line x1="12" y1="0" x2="12" y2="24" stroke-dasharray="2,2"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>34% miss</h3>
-                        <p>Market access targets due to incomplete intelligence on payer requirements.</p>
-                    </div>
-                </div>
-
-                <!-- Pill/Capsule Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 6 L16 6 Q20 6 20 12 Q20 18 16 18 L8 18 Q4 18 4 12 Q4 6 8 6"/>
-                            <line x1="12" y1="4" x2="12" y2="20"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>$300B</h3>
-                        <p>Industry capital at risk annually from access delays and payer rejections.</p>
-                    </div>
-                </div>
-
-                <!-- Document/Clipboard Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="2" width="16" height="20" rx="1"/>
-                            <line x1="8" y1="6" x2="16" y2="6"/>
-                            <line x1="8" y1="10" x2="16" y2="10"/>
-                            <line x1="8" y1="14" x2="16" y2="14"/>
-                            <line x1="8" y1="18" x2="12" y2="18"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>40% lack</h3>
-                        <p>Real-time visibility into shifting reimbursement policies across markets.</p>
-                    </div>
-                </div>
-
-                <!-- Magnifying Glass Icon -->
-                <div class="coi-item">
-                    <div class="coi-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="10" cy="10" r="6"/>
-                            <line x1="14" y1="14" x2="21" y2="21"/>
-                        </svg>
-                    </div>
-                    <div class="coi-text">
-                        <h3>6-18 months</h3>
-                        <p>Time to discover competitive shifts and market opportunities manually.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES SECTION -->
-    <section id="services">
-        <div class="services-content">
-            <div class="section-header">
-                <div class="section-eyebrow">Our Services</div>
-                <h2 class="section-title">Six Intelligence Modules. One Platform.</h2>
-                <p class="section-subtitle">Each module solves a specific problem in pharmaceutical access and market reimbursement.</p>
-            </div>
-            <div class="services-grid">
-                <!-- GAiN Service Card -->
-                <a href="gain.html" class="service-card">
-                    <div class="svc-tag">Service 1</div>
-                    <h3>GAiN</h3>
-                    <div class="pain-box">Reference pricing and IRP/ERP navigation across 40+ markets—too fragmented to track manually.</div>
-                    <p class="solution-text">Interactive, real-time mapping of how pharmaceutical pricing flows through regulatory bodies. Know which markets are aligned, which are outliers, and where to focus your pricing strategy.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('GAiN')">View Plans →</button>
-                </a>
-
-                <!-- eGov Service Card -->
-                <a href="egov.html" class="service-card">
-                    <div class="svc-tag">Service 2</div>
-                    <h3>eGov</h3>
-                    <div class="pain-box">80+ global health authorities moving at different speeds—legislation shifts buried in policy feeds.</div>
-                    <p class="solution-text">Real-time intelligence on legislative and reimbursement policy shifts across markets. AI-powered alerts so you spot advocacy windows before competitors do.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('eGov')">View Plans →</button>
-                </a>
-
-                <!-- PatNav Service Card -->
-                <a href="patnav.html" class="service-card">
-                    <div class="svc-tag">Service 3</div>
-                    <h3>PatNav</h3>
-                    <div class="pain-box">Patient journeys fragmented across payers, providers, and pharmacies—impossible to see the full picture.</div>
-                    <p class="solution-text">Map patient flows from prescription to adherence. Visualize prior authorization barriers and co-pay obstacles so you can design smarter patient support programs.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('PatNav')">View Plans →</button>
-                </a>
-
-                <!-- CrossIntell Private Service Card -->
-                <a href="crossintell-private.html" class="service-card">
-                    <div class="svc-tag">Service 4</div>
-                    <h3>Cross-Intell Private</h3>
-                    <div class="pain-box">Competitive share tracking across private systems—market shifts detected only after you've already lost share.</div>
-                    <p class="solution-text">Real-time competitive intelligence with custom market models. Forward-looking scenario planning so you stay ahead of market shifts, not behind them.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('CrossIntell Private')">View Plans →</button>
-                </a>
-
-                <!-- CrossIntell Public Service Card -->
-                <a href="crossintell-public.html" class="service-card">
-                    <div class="svc-tag">Service 5</div>
-                    <h3>Cross-Intell Public</h3>
-                    <div class="pain-box">Public payer decisions scattered across different systems—no single source of truth for reimbursement decisions.</div>
-                    <p class="solution-text">Real-time intelligence across 30+ public healthcare systems. Payer policy feeds and competitive positioning data in one unified view.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('CrossIntell Public')">View Plans →</button>
-                </a>
-
-                <!-- HTA-Axi Service Card -->
-                <a href="hta-axi.html" class="service-card">
-                    <div class="svc-tag">Service 6</div>
-                    <h3>HTA-Axi</h3>
-                    <div class="pain-box">Dossier development takes months—by the time you submit, payer preferences have shifted.</div>
-                    <p class="solution-text">Full-cycle HEOR support with economic modelling and budget impact analysis. Dossier templates informed by real-time payer feedback for first-submission success.</p>
-                    <button type="button" class="btn-sneak" onclick="event.stopPropagation(); openPricing('HTA-Axi')">View Plans →</button>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING MODAL (kept from original for backward compatibility) -->
-    <div id="pricingModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalServiceTitle">Service Plans</h2>
-                <span class="close-modal" onclick="closePricing()">&times;</span>
-            </div>
-            <div id="pricingContent">
-                <!-- Content will be inserted by JavaScript -->
-            </div>
-        </div>
+<!-- =========================================================
+     EXPERIENCE — 6 Product Modules
+     ========================================================= -->
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Experience</div>
+      <h2>Experience the intelligence firsthand</h2>
+      <p>Each module addresses a specific intelligence gap. Know more before you commit.</p>
     </div>
 
-    <!-- ABOUT SECTION -->
-    <section id="about">
-        <div class="about-content">
-            <div class="section-header">
-                <div class="section-eyebrow">About Us</div>
-                <h2 class="section-title">Intelligence at Scale</h2>
-                <p class="section-subtitle">We built Axi Innovation because pharma and medtech executives deserve better than guessing. Real-time intelligence, deployed at global scale.</p>
-            </div>
-            <p class="about-text">Our platform integrates regulatory filings, reimbursement policy updates, payer algorithms, and competitive market signals into actionable intelligence. No more waiting for quarterly reports. No more missed access windows.</p>
-            <p class="about-text">Designed by life sciences strategists, engineers, and data scientists who've navigated these markets themselves.</p>
-        </div>
-    </section>
+    <div class="cards-grid">
 
-    <!-- CONTACT SECTION -->
-    <section id="contact">
-        <div class="contact-content">
-            <div class="contact-header">
-                <h2>Ready to move faster?</h2>
-                <p>Request early access to Axi Intelligence and unlock real-time visibility into your global market access roadmap.</p>
-            </div>
-            <form class="contact-form" action="https://formsubmit.co/contact@axiinnovation.com" method="POST">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Your name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="company">Company</label>
-                    <input type="text" id="company" name="company" required placeholder="Your company">
-                </div>
-                <div class="form-group">
-                    <label for="role">Role</label>
-                    <input type="text" id="role" name="role" required placeholder="Your role">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your access challenges..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Send Request</button>
-            </form>
-        </div>
-    </section>
+      <!-- Module 1: GAiN -->
+      <a href="gain.html" class="product-card">
+        <div class="card-module">Module 01</div>
+        <div class="card-name">GAiN</div>
+        <div class="card-tagline">G2M &amp; Access Intelligence Navigator</div>
+        <p class="card-desc">Navigate IRP/ERP reference pricing networks across 40+ countries. Interactive force-directed graph showing how pharmaceutical pricing flows between regulatory bodies.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-brand">Axi <span>Innovation</span></div>
-        <ul class="footer-links">
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#cost-of-inaction">Why Now</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="mailto:contact@axiinnovation.com">contact@axiinnovation.com</a></li>
-            <li><a href="privacy-policy.html">Data Policy</a></li>
+      <!-- Module 2: PatNav -->
+      <a href="patnav.html" class="product-card">
+        <div class="card-module">Module 02</div>
+        <div class="card-name">PatNav</div>
+        <div class="card-tagline">Patient Navigation Suite</div>
+        <p class="card-desc">Map patient journeys from prescription to adherence. Visualize prior authorization workflows and co-pay barrier analysis across therapeutic areas.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
+
+      <!-- Module 3: eGovS -->
+      <a href="egov.html" class="product-card">
+        <div class="card-module">Module 03</div>
+        <div class="card-name">eGovS</div>
+        <div class="card-tagline">Electronic Government Savviness</div>
+        <p class="card-desc">Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
+
+      <!-- Module 4: HTA-Axi -->
+      <a href="hta-axi.html" class="product-card">
+        <div class="card-module">Module 04</div>
+        <div class="card-name">HTA-Axi</div>
+        <div class="card-tagline">HEOR &amp; Value Dossiers</div>
+        <p class="card-desc">Full-cycle HEOR support with economic modelling, budget impact analysis, and value dossier development engineered for first-submission success.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
+
+      <!-- Module 5: CrossIntell Public -->
+      <a href="crossintell-public.html" class="product-card">
+        <div class="card-module">Module 05</div>
+        <div class="card-name">Crossintell Public</div>
+        <div class="card-tagline">Intelligence on Public Healthcare Systems</div>
+        <p class="card-desc">Real-time intelligence across 30+ public healthcare systems. Reimbursement decisions, payer policy feeds, and competitive positioning data.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
+
+      <!-- Module 6: CrossIntell Private -->
+      <a href="crossintell-private.html" class="product-card">
+        <div class="card-module">Module 06</div>
+        <div class="card-name">Crossintell Private</div>
+        <div class="card-tagline">Intelligence on Private Healthcare Systems</div>
+        <p class="card-desc">Dedicated competitive intelligence with custom market models, real-time share tracking, and forward-looking scenario planning.</p>
+        <span class="card-btn">Know more →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     WHY NOW — Statistics
+     ========================================================= -->
+<section class="section why-now-bg" id="why-now">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Why Now</div>
+      <h2>The cost of inaction</h2>
+      <p>Real consequences when intelligence is delayed or incomplete.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">$24M</div>
+        <div class="stat-label">Revenue lost per month per delayed launch in top 10 markets</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">578</div>
+        <div class="stat-label">Average days of access delay due to regulatory and reimbursement complexity</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">34%</div>
+        <div class="stat-label">Of launches miss market access targets due to incomplete payer intelligence</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">$300B</div>
+        <div class="stat-label">Industry capital at risk annually from access delays and payer rejections</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">40%</div>
+        <div class="stat-label">Of executives lack real-time visibility into shifting reimbursement policies</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">6–18<span style="font-size:24px;color:var(--text-dim)">mo</span></div>
+        <div class="stat-label">Time to discover competitive shifts and market opportunities manually</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PLANS
+     ========================================================= -->
+<section class="section" id="plans">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="eyebrow">Plans</div>
+      <h2>Built for every stage of market access</h2>
+      <p>Whether you're mapping a first launch or optimising a global portfolio, there's a plan for you.</p>
+    </div>
+
+    <div class="plans-grid">
+
+      <div class="plan-card">
+        <div class="plan-name">Navigator</div>
+        <div class="plan-price">Custom<span>/yr</span></div>
+        <p class="plan-desc">For teams navigating a single market or therapeutic area with focused intelligence needs.</p>
+        <ul class="plan-features">
+          <li>Access to 1 intelligence module</li>
+          <li>Up to 3 user seats</li>
+          <li>Quarterly briefings</li>
+          <li>Standard support</li>
         </ul>
-        <div class="footer-copyright">&copy; 2026 Axi Innovation. All rights reserved. | Global Health Intelligence Platform</div>
-    </footer>
+        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;">Request Pricing</a>
+      </div>
 
-    <script>
-        // Service data for pricing modal
-        const serviceData = {
-            'GAiN': {
-                name: 'GAiN – G2M & Access Intelligence Navigator',
-                features: [
-                    'Real-time IRP/ERP pricing network mapping',
-                    'Interactive reference pricing analysis across 40+ markets',
-                    'Pricing strategy recommendations',
-                    'Market alignment tracking',
-                    'Quarterly updates on policy shifts'
-                ],
-                pricing: [
-                    { tier: 'Starter', price: '$5,000/month', features: 'Single market tracking' },
-                    { tier: 'Professional', price: '$15,000/month', features: 'Multi-market access + analytics' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'Full platform + dedicated support' }
-                ]
-            },
-            'eGov': {
-                name: 'eGov – Electronic Government Savviness',
-                features: [
-                    'Real-time monitoring of 80+ health authorities',
-                    'AI-powered policy shift alerts',
-                    'Advocacy window tracking',
-                    'Legislative change notifications',
-                    'Market timing recommendations'
-                ],
-                pricing: [
-                    { tier: 'Starter', price: '$7,000/month', features: '5 market monitoring' },
-                    { tier: 'Professional', price: '$18,000/month', features: '20+ market monitoring' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'All markets + custom alerts' }
-                ]
-            },
-            'PatNav': {
-                name: 'PatNav – Patient Navigation Suite',
-                features: [
-                    'Patient journey mapping',
-                    'Prior authorization analysis',
-                    'Co-pay barrier visualization',
-                    'Therapeutic area breakdowns',
-                    'Patient support program optimization'
-                ],
-                pricing: [
-                    { tier: 'Starter', price: '$6,000/month', features: 'Single therapeutic area' },
-                    { tier: 'Professional', price: '$16,000/month', features: 'Multiple therapeutic areas' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'Full platform access' }
-                ]
-            },
-            'CrossIntell Private': {
-                name: 'Cross-Intell Private – Competitive Intelligence on Private Systems',
-                features: [
-                    'Real-time competitive share tracking',
-                    'Market share analysis',
-                    'Custom market modeling',
-                    'Forward-looking scenario planning',
-                    'Monthly competitive briefings'
-                ],
-                pricing: [
-                    { tier: 'Starter', price: '$8,000/month', features: 'Single market' },
-                    { tier: 'Professional', price: '$20,000/month', features: 'Multi-market coverage' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'Full global coverage' }
-                ]
-            },
-            'CrossIntell Public': {
-                name: 'Cross-Intell Public – Intelligence on Public Healthcare Systems',
-                features: [
-                    'Real-time coverage across 30+ public systems',
-                    'Payer policy feed monitoring',
-                    'Competitive positioning data',
-                    'Reimbursement decision tracking',
-                    'Public payer trend analysis'
-                ],
-                pricing: [
-                    { tier: 'Starter', price: '$7,500/month', features: '10 public systems' },
-                    { tier: 'Professional', price: '$19,000/month', features: 'All major systems' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'Custom tracking + support' }
-                ]
-            },
-            'HTA-Axi': {
-                name: 'HTA-Axi – HEOR & Value Dossiers',
-                features: [
-                    'Full-cycle HEOR support',
-                    'Economic modeling',
-                    'Budget impact analysis',
-                    'Dossier template library',
-                    'Payer feedback integration'
-                ],
-                pricing: [
-                    { tier: 'Per-Submission', price: '$12,000', features: 'Single dossier' },
-                    { tier: 'Annual', price: '$45,000/year', features: 'Up to 4 dossiers' },
-                    { tier: 'Enterprise', price: 'Custom', features: 'Unlimited support' }
-                ]
-            }
-        };
+      <div class="plan-card featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Navigator Pro</div>
+        <div class="plan-price">Custom<span>/yr</span></div>
+        <p class="plan-desc">For market access teams covering multiple markets and requiring cross-module intelligence.</p>
+        <ul class="plan-features">
+          <li>Access to 3 intelligence modules</li>
+          <li>Up to 10 user seats</li>
+          <li>Monthly briefings &amp; alerts</li>
+          <li>Dedicated account manager</li>
+          <li>API access</li>
+        </ul>
+        <a href="#early-access" class="btn-primary" style="width:100%;text-align:center;">Request Pricing</a>
+      </div>
 
-        // Open pricing modal
-        function openPricing(serviceName) {
-            const modal = document.getElementById('pricingModal');
-            const service = serviceData[serviceName];
-            if (!service) return;
+      <div class="plan-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom<span>/yr</span></div>
+        <p class="plan-desc">For global pharma and medtech teams requiring full platform access and bespoke intelligence.</p>
+        <ul class="plan-features">
+          <li>All 6 intelligence modules</li>
+          <li>Unlimited user seats</li>
+          <li>Real-time alerts &amp; dashboards</li>
+          <li>Bespoke market reports</li>
+          <li>White-glove onboarding</li>
+          <li>Priority support SLA</li>
+        </ul>
+        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;">Contact Us</a>
+      </div>
 
-            document.getElementById('modalServiceTitle').innerText = service.name;
+    </div>
+    <p class="plans-note">All plans include a 30-day pilot period. Pricing is tailored to your portfolio and market scope.</p>
+  </div>
+</section>
 
-            let pricingHTML = '<div class="pricing-details"><h3 style="margin-bottom: 20px; color: #0a1428; font-family: \'Cormorant Garamond\', serif; font-size: 24px;">Features</h3><ul style="list-style: none; margin-bottom: 30px;">';
-            service.features.forEach(feature => {
-                pricingHTML += '<li style="padding: 10px 0; border-bottom: 1px solid #e0dbd0; font-size: 14px;">✓ ' + feature + '</li>';
-            });
-            pricingHTML += '</ul>';
+<!-- =========================================================
+     EARLY ACCESS — Contact Form
+     ========================================================= -->
+<section class="section access-bg" id="early-access">
+  <div class="access-inner">
+    <div class="section-header">
+      <div class="eyebrow">Early Access</div>
+      <h2>Join the founding cohort</h2>
+      <p>Axi Navigation is currently in private beta. Request early access and we'll be in touch within 48 hours.</p>
+    </div>
 
-            pricingHTML += '<h3 style="margin-bottom: 20px; color: #0a1428; font-family: \'Cormorant Garamond\', serif; font-size: 24px;">Pricing</h3><table class="pricing-table"><thead><tr><th>Plan</th><th>Price</th><th>Includes</th></tr></thead><tbody>';
-            service.pricing.forEach(plan => {
-                pricingHTML += '<tr><td style="font-weight: 600;">' + plan.tier + '</td><td style="color: #c8af64; font-weight: 600;">' + plan.price + '</td><td>' + plan.features + '</td></tr>';
-            });
-            pricingHTML += '</tbody></table>';
-            pricingHTML += '<p class="pricing-note">All plans include API access, monthly reporting, and email support. Enterprise plans include dedicated account management.</p></div>';
+    <form id="accessForm" onsubmit="submitForm(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" placeholder="Marcello" required>
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" placeholder="Scattolini" required>
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" placeholder="Pharma Co." required>
+        </div>
+        <div class="form-group">
+          <label>Job title</label>
+          <input type="text" placeholder="VP Market Access">
+        </div>
+        <div class="form-group form-full">
+          <label>Work email</label>
+          <input type="email" placeholder="you@company.com" required>
+        </div>
+        <div class="form-group form-full">
+          <label>Which modules interest you?</label>
+          <select>
+            <option value="">Select a module…</option>
+            <option>GAiN — G2M &amp; Access Intelligence Navigator</option>
+            <option>PatNav — Patient Navigation Suite</option>
+            <option>eGovS — Electronic Government Savviness</option>
+            <option>HTA-Axi — HEOR &amp; Value Dossiers</option>
+            <option>Crossintell Public</option>
+            <option>Crossintell Private</option>
+            <option>Full platform access</option>
+          </select>
+        </div>
+        <div class="form-group form-full">
+          <label>Tell us about your challenge (optional)</label>
+          <textarea placeholder="Briefly describe your market access challenge or what you'd like to achieve…"></textarea>
+        </div>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary">Request Early Access</button>
+      </div>
+    </form>
 
-            document.getElementById('pricingContent').innerHTML = pricingHTML;
-            modal.style.display = 'block';
-        }
+    <div class="form-success" id="formSuccess">
+      <div style="font-size:32px">✦</div>
+      <p>Thank you — your request has been received. We'll be in touch within 48 hours.</p>
+    </div>
+  </div>
+</section>
 
-        // Close pricing modal
-        function closePricing() {
-            document.getElementById('pricingModal').style.display = 'none';
-        }
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer class="footer">
+  <div class="footer-brand">Axi <span>Navigation</span></div>
+  <div class="footer-copy">&copy; 2026 Axi Navigation. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="mailto:contact@axiinnovation.com">Contact</a>
+  </div>
+</footer>
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('pricingModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
+<!-- =========================================================
+     SCRIPTS
+     ========================================================= -->
+<script>
+  /* Navbar active state on scroll */
+  const navbar = document.getElementById('navbar');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 0) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+  window.addEventListener('scroll', () => {
+    /* Scrolled style */
+    if (window.scrollY > 60) {
+      navbar.style.background = 'rgba(6,17,31,0.98)';
+    } else {
+      navbar.style.background = 'rgba(6,17,31,0.94)';
+    }
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#' && document.querySelector(href)) {
-                    e.preventDefault();
-                    document.querySelector(href).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+    /* Active link highlight */
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  /* Form submit */
+  function submitForm(e) {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const subject = 'Axi Navigation — Early Access Request';
+    const body = 'New early access request submitted from axiinnovation.com';
+    window.location.href = `mailto:contact@axiinnovation.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    document.getElementById('accessForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
 </body>
 </html>

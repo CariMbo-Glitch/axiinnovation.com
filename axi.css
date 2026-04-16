@@ -618,6 +618,20 @@ img { max-width: 100%; display: block; }
 }
 .footer-links a:hover { color: var(--gold); }
 
+/* --- Card icon --------------------------------------------- */
+.card-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 22px;
+  opacity: 0.75;
+  transition: opacity var(--ease), transform var(--ease);
+  display: block;
+}
+.product-card:hover .card-icon {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
 /* --- Alternate section background -------------------------- */
 .section-alt {
   background: var(--bg2);

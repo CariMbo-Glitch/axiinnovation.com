@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +16,26 @@
 <nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#experience">Experience</a></li>
-    <li><a href="index.html#why-now">Why Now</a></li>
-    <li><a href="index.html#plans">Plans</a></li>
-    <li><a href="index.html#early-access" class="nav-cta">Early Access</a></li>
+    <li><a href="index.html#experience" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="index.html#why-now" data-i18n="nav.whyNow">Why Now</a></li>
+    <li><a href="index.html#plans" data-i18n="nav.plans">Plans</a></li>
+    <li><a href="index.html#early-access" class="nav-cta" data-i18n="nav.earlyAccess">Early Access</a></li>
   </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back">Back to modules</a>
-    <div class="eyebrow" style="margin-top:28px;">Module 03 &nbsp;·&nbsp; Coming Soon</div>
+    <a href="index.html#experience" class="btn-back" data-i18n="btn.backModules">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 03 &nbsp;·&nbsp; <span data-i18n="label.comingSoon">Coming Soon</span></div>
     <h1>eGovS — <em>Electronic</em><br>Government Savviness</h1>
-    <p class="product-hero-sub">Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows so your government affairs team is always one step ahead.</p>
+    <p class="product-hero-sub" data-i18n="egov.hero.sub">Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows so your government affairs team is always one step ahead.</p>
     <div class="product-hero-meta">
       <div class="meta-item">
         <div class="meta-value">80+</div>
@@ -51,12 +57,41 @@
   </div>
 </div>
 
+<!-- PROBLEM SECTION -->
+<section class="problem-section">
+  <div class="section-inner">
+    <div class="problem-header">
+      <div class="eyebrow" data-i18n="eyebrow.reality">The Reality</div>
+      <h2 data-i18n="egov.prob.title">Policy moves faster than most teams can track</h2>
+      <p data-i18n="egov.prob.sub">The gap between signal and action is where competitive advantage is won or lost.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="egov.prob.stat1">6–18 mo</div>
+        <div class="problem-text" data-i18n="egov.prob.text1">The legislation lead-time window separating companies that shape policy from those that merely react to it.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="egov.prob.stat2">80+</div>
+        <div class="problem-text" data-i18n="egov.prob.text2">Health authority bodies publishing decisions that affect market access — impossible to monitor manually at scale.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="egov.prob.stat3">40%</div>
+        <div class="problem-text" data-i18n="egov.prob.text3">Faster advocacy response for teams that identify policy shifts before they become regulatory constraints.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="egov.prob.stat4">3–5 yr</div>
+        <div class="problem-text" data-i18n="egov.prob.text4">Typical horizon between early consultation signals and final reimbursement impact — intelligence must start now.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Capabilities</div>
-      <h2>Never miss a policy shift</h2>
+      <div class="eyebrow" data-i18n="eyebrow.capabilities">Capabilities</div>
+      <h2 data-i18n="egov.cap.title">Never miss a policy shift</h2>
       <p>eGovS tracks every health authority, committee, and legislative body that shapes your access environment — and translates signals into actionable intelligence.</p>
     </div>
     <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
@@ -130,8 +165,8 @@
 <section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">The Strategic Imperative</div>
-      <h2>Why eGovS exists</h2>
+      <div class="eyebrow" data-i18n="eyebrow.strategic">The Strategic Imperative</div>
+      <h2 data-i18n="egov.why.title">Why eGovS exists</h2>
     </div>
     <div class="stats-grid">
       <div class="stat-item">
@@ -153,23 +188,24 @@
 <!-- CTA -->
 <section class="section">
   <div class="section-inner" style="text-align:center;">
-    <div class="eyebrow">Get Started</div>
-    <h2 style="margin-bottom:16px;">Request access to eGovS</h2>
-    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Join government affairs and market access leaders who monitor the regulatory landscape before it shapes their strategy.</p>
-    <a href="index.html#early-access" class="btn-primary">Request Early Access</a>
+    <div class="eyebrow" data-i18n="eyebrow.getStarted">Get Started</div>
+    <h2 style="margin-bottom:16px;" data-i18n="egov.cta.title">Request access to eGovS</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;" data-i18n="egov.cta.sub">Join government affairs and market access leaders who monitor the regulatory landscape before it shapes their strategy.</p>
+    <a href="index.html#early-access" class="btn-primary" data-i18n="btn.requestAccess">Request Early Access</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand">Axi <span>Navigation</span></div>
-  <div class="footer-copy">&copy; 2026 Axi Navigation</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 Axi Navigation</div>
   <div class="footer-links">
-    <a href="index.html#experience">All Modules</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="index.html#experience" data-i18n="nav.allModules">All Modules</a>
+    <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
   </div>
 </footer>
 
+<script src="translations.js"></script>
 <script>
   const nb = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

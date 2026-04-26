@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +16,26 @@
 <nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#experience">Experience</a></li>
-    <li><a href="index.html#why-now">Why Now</a></li>
-    <li><a href="index.html#plans">Plans</a></li>
-    <li><a href="index.html#early-access" class="nav-cta">Early Access</a></li>
+    <li><a href="index.html#experience" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="index.html#why-now" data-i18n="nav.whyNow">Why Now</a></li>
+    <li><a href="index.html#plans" data-i18n="nav.plans">Plans</a></li>
+    <li><a href="index.html#early-access" class="nav-cta" data-i18n="nav.earlyAccess">Early Access</a></li>
   </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back">Back to modules</a>
-    <div class="eyebrow" style="margin-top:28px;">Module 01 &nbsp;·&nbsp; Live</div>
+    <a href="index.html#experience" class="btn-back" data-i18n="btn.backModules">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 01 &nbsp;·&nbsp; <span data-i18n="label.live">Live</span></div>
     <h1>GAiN — <em>G2M &amp; Access</em><br>Intelligence Navigator</h1>
-    <p class="product-hero-sub">Navigate IRP/ERP reference pricing networks across 40+ countries. Map how pharmaceutical pricing flows between regulatory bodies and forecast the impact of every launch decision before you commit.</p>
+    <p class="product-hero-sub" data-i18n="gain.hero.sub">Navigate IRP/ERP reference pricing networks across 40+ countries. Map how pharmaceutical pricing flows between regulatory bodies and forecast the impact of every launch decision before you commit.</p>
     <div class="product-hero-meta">
       <div class="meta-item">
         <div class="meta-value">202+</div>
@@ -55,7 +61,7 @@
 <div class="preview-section">
   <div class="preview-inner">
     <div class="preview-label">
-      <div class="eyebrow">Live Demos</div>
+      <div class="eyebrow" data-i18n="eyebrow.liveDemo">Live Demos</div>
       <h3>Have a taste of what GAiN can do</h3>
       <p>Two interactive visualisations — no login required. Click and explore.</p>
     </div>
@@ -98,13 +104,42 @@
   </div>
 </div>
 
+<!-- PROBLEM SECTION -->
+<section class="problem-section">
+  <div class="section-inner">
+    <div class="problem-header">
+      <div class="eyebrow" data-i18n="eyebrow.reality">The Reality</div>
+      <h2 data-i18n="gain.prob.title">What the industry faces without it</h2>
+      <p data-i18n="gain.prob.sub">Every launch decision carries hidden pricing risk. GAiN makes the invisible visible.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="gain.prob.stat1">$20M+</div>
+        <div class="problem-text" data-i18n="gain.prob.text1">Annual revenue erosion per market from a single launch-sequencing error in an IRP reference country.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="gain.prob.stat2">34%</div>
+        <div class="problem-text" data-i18n="gain.prob.text2">Of drug launches miss first-year revenue forecasts due to blind spots in IRP cascade modelling.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="gain.prob.stat3">40+</div>
+        <div class="problem-text" data-i18n="gain.prob.text3">Countries operating active IRP/ERP regimes — each a potential cascade trigger for your portfolio price.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="gain.prob.stat4">12–18 mo</div>
+        <div class="problem-text" data-i18n="gain.prob.text4">Average time from regulatory approval to reimbursement listing, costing peak-sales runway with every passing month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Capabilities</div>
-      <h2>Complete reimbursement visibility</h2>
-      <p>GAiN delivers real-time intelligence across your portfolio — from IRP/ERP network effects to competitive white space and access trajectory forecasting.</p>
+      <div class="eyebrow" data-i18n="eyebrow.capabilities">Capabilities</div>
+      <h2 data-i18n="gain.cap.title">Complete reimbursement visibility</h2>
+      <p data-i18n="gain.cap.sub">GAiN delivers real-time intelligence across your portfolio — from IRP/ERP network effects to competitive white space and access trajectory forecasting.</p>
     </div>
     <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
 
@@ -180,8 +215,8 @@
 <section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">The Strategic Imperative</div>
-      <h2>Why GAiN exists</h2>
+      <div class="eyebrow" data-i18n="eyebrow.strategic">The Strategic Imperative</div>
+      <h2 data-i18n="gain.why.title">Why GAiN exists</h2>
     </div>
     <div class="stats-grid">
       <div class="stat-item">
@@ -203,23 +238,24 @@
 <!-- CTA -->
 <section class="section">
   <div class="section-inner" style="text-align:center;">
-    <div class="eyebrow">Get Started</div>
-    <h2 style="margin-bottom:16px;">Request access to GAiN</h2>
-    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Join pharma and medtech teams already using GAiN to eliminate IRP blind spots and launch with precision.</p>
-    <a href="index.html#early-access" class="btn-primary">Request Early Access</a>
+    <div class="eyebrow" data-i18n="eyebrow.getStarted">Get Started</div>
+    <h2 style="margin-bottom:16px;" data-i18n="gain.cta.title">Request access to GAiN</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;" data-i18n="gain.cta.sub">Join pharma and medtech teams already using GAiN to eliminate IRP blind spots and launch with precision.</p>
+    <a href="index.html#early-access" class="btn-primary" data-i18n="btn.requestAccess">Request Early Access</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand">Axi <span>Navigation</span></div>
-  <div class="footer-copy">&copy; 2026 Axi Navigation</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 Axi Navigation</div>
   <div class="footer-links">
-    <a href="index.html#experience">All Modules</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="index.html#experience" data-i18n="nav.allModules">All Modules</a>
+    <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
   </div>
 </footer>
 
+<script src="translations.js"></script>
 <script>
   const nb = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

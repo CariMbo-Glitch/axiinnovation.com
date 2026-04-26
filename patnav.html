@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,20 +16,26 @@
 <nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#experience">Experience</a></li>
-    <li><a href="index.html#why-now">Why Now</a></li>
-    <li><a href="index.html#plans">Plans</a></li>
-    <li><a href="index.html#early-access" class="nav-cta">Early Access</a></li>
+    <li><a href="index.html#experience" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="index.html#why-now" data-i18n="nav.whyNow">Why Now</a></li>
+    <li><a href="index.html#plans" data-i18n="nav.plans">Plans</a></li>
+    <li><a href="index.html#early-access" class="nav-cta" data-i18n="nav.earlyAccess">Early Access</a></li>
   </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="product-hero">
   <div class="product-hero-inner">
-    <a href="index.html#experience" class="btn-back">Back to modules</a>
-    <div class="eyebrow" style="margin-top:28px;">Module 02 &nbsp;·&nbsp; Coming Soon</div>
+    <a href="index.html#experience" class="btn-back" data-i18n="btn.backModules">Back to modules</a>
+    <div class="eyebrow" style="margin-top:28px;">Module 02 &nbsp;·&nbsp; <span data-i18n="label.comingSoon">Coming Soon</span></div>
     <h1>PatNav — <em>Patient</em><br>Navigation Suite</h1>
-    <p class="product-hero-sub">Map every patient touchpoint from prescription to long-term adherence. Identify prior authorisation barriers, co-pay friction, and drop-off points that erode therapy uptake and revenue.</p>
+    <p class="product-hero-sub" data-i18n="patnav.hero.sub">Map every patient touchpoint from prescription to long-term adherence. Identify prior authorisation barriers, co-pay friction, and drop-off points that erode therapy uptake and revenue.</p>
     <div class="product-hero-meta">
       <div class="meta-item">
         <div class="meta-value">360°</div>
@@ -51,13 +57,42 @@
   </div>
 </div>
 
+<!-- PROBLEM SECTION -->
+<section class="problem-section">
+  <div class="section-inner">
+    <div class="problem-header">
+      <div class="eyebrow" data-i18n="eyebrow.reality">The Reality</div>
+      <h2 data-i18n="patnav.prob.title">The access gap patients and your P&amp;L both pay for</h2>
+      <p data-i18n="patnav.prob.sub">Adherence failure is not a patient problem. It is an access intelligence problem.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="patnav.prob.stat1">50%</div>
+        <div class="problem-text" data-i18n="patnav.prob.text1">Of patients with chronic conditions discontinue therapy within 12 months — invisible to most launch revenue models.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="patnav.prob.stat2">$500B+</div>
+        <div class="problem-text" data-i18n="patnav.prob.text2">Annual global cost of medication non-adherence, driven by access friction and co-pay burden.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="patnav.prob.stat3">30%</div>
+        <div class="problem-text" data-i18n="patnav.prob.text3">Improvement in persistence when prior-authorisation barriers are systematically identified and addressed.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="patnav.prob.stat4">3×</div>
+        <div class="problem-text" data-i18n="patnav.prob.text4">Greater dropout risk for patients facing out-of-pocket costs above $100/month vs co-pay-assisted peers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CAPABILITIES -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Capabilities</div>
-      <h2>From prescription to adherence</h2>
-      <p>PatNav visualises the full patient journey, revealing where access breaks down and where intervention has the greatest commercial and clinical impact.</p>
+      <div class="eyebrow" data-i18n="eyebrow.capabilities">Capabilities</div>
+      <h2 data-i18n="patnav.cap.title">From prescription to adherence</h2>
+      <p data-i18n="patnav.cap.sub">PatNav visualises the full patient journey, revealing where access breaks down and where intervention has the greatest commercial and clinical impact.</p>
     </div>
     <div class="cards-grid" style="grid-template-columns: repeat(2,1fr);">
 
@@ -127,8 +162,8 @@
 <section class="section section-alt" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">The Strategic Imperative</div>
-      <h2>Why PatNav exists</h2>
+      <div class="eyebrow" data-i18n="eyebrow.strategic">The Strategic Imperative</div>
+      <h2 data-i18n="patnav.why.title">Why PatNav exists</h2>
     </div>
     <div class="stats-grid">
       <div class="stat-item">
@@ -150,23 +185,24 @@
 <!-- CTA -->
 <section class="section">
   <div class="section-inner" style="text-align:center;">
-    <div class="eyebrow">Get Started</div>
-    <h2 style="margin-bottom:16px;">Request access to PatNav</h2>
-    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;">Be among the first to map patient journeys with the precision your access teams need. Early access cohort forming now.</p>
-    <a href="index.html#early-access" class="btn-primary">Request Early Access</a>
+    <div class="eyebrow" data-i18n="eyebrow.getStarted">Get Started</div>
+    <h2 style="margin-bottom:16px;" data-i18n="patnav.cta.title">Request access to PatNav</h2>
+    <p style="color:var(--text-dim);max-width:480px;margin:0 auto 36px;font-size:15px;" data-i18n="patnav.cta.sub">Be among the first to map patient journeys with the precision your access teams need. Early access cohort forming now.</p>
+    <a href="index.html#early-access" class="btn-primary" data-i18n="btn.requestAccess">Request Early Access</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand">Axi <span>Navigation</span></div>
-  <div class="footer-copy">&copy; 2026 Axi Navigation</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 Axi Navigation</div>
   <div class="footer-links">
-    <a href="index.html#experience">All Modules</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="index.html#experience" data-i18n="nav.allModules">All Modules</a>
+    <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
   </div>
 </footer>
 
+<script src="translations.js"></script>
 <script>
   const nb = document.getElementById('navbar');
   window.addEventListener('scroll', () => {

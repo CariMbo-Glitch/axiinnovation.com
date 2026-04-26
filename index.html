@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,11 +135,17 @@
 <nav class="navbar" id="navbar">
   <a href="index.html" class="nav-brand">Axi <span>Navigation</span></a>
   <ul class="nav-links">
-    <li><a href="#why-now">Why Now</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#plans">Plans</a></li>
-    <li><a href="#early-access" class="nav-cta">Early Access</a></li>
+    <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="#why-now" data-i18n="nav.whyNow">Why Now</a></li>
+    <li><a href="#plans" data-i18n="nav.plans">Plans</a></li>
+    <li><a href="#early-access" class="nav-cta" data-i18n="nav.earlyAccess">Early Access</a></li>
   </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+  </div>
 </nav>
 
 <!-- =========================================================
@@ -147,16 +153,19 @@
      ========================================================= -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Global Health Intelligence</div>
-    <h1>The intelligence layer<br>between <em>approval</em> and <em>access</em></h1>
-    <p class="hero-sub">Pharma and medtech executives need real-time intelligence to navigate global regulatory landscapes, reimbursement decisions, and market access barriers. Without it, launch delays compound into revenue losses.</p>
+    <div class="eyebrow" data-i18n="eyebrow.globalIntel">Global Health Intelligence</div>
+    <h1>
+      <span data-i18n="index.hero.title1">The intelligence layer</span><br>
+      <span data-i18n="index.hero.title2">between <em>approval</em> and <em>access</em></span>
+    </h1>
+    <p class="hero-sub" data-i18n="index.hero.sub">Pharma and medtech executives need real-time intelligence to navigate global regulatory landscapes, reimbursement decisions, and market access barriers. Without it, launch delays compound into revenue losses.</p>
     <div class="hero-btns">
-      <a href="#experience" class="btn-primary">Explore our modules</a>
-      <a href="#why-now" class="btn-secondary">Why it matters</a>
+      <a href="#experience" class="btn-primary" data-i18n="btn.explore">Explore our modules</a>
+      <a href="#why-now" class="btn-secondary" data-i18n="btn.whyMatters">Why it matters</a>
     </div>
   </div>
   <div class="hero-scroll">
-    <span>Scroll</span>
+    <span data-i18n="index.hero.scroll">Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
@@ -167,20 +176,20 @@
 <section class="section" id="experience">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Experience</div>
-      <h2>Experience the intelligence firsthand</h2>
-      <p>Each module addresses a specific intelligence gap. Know more before you commit.</p>
+      <div class="eyebrow" data-i18n="eyebrow.experience">Experience</div>
+      <h2 data-i18n="index.exp.title">Experience the intelligence firsthand</h2>
+      <p data-i18n="index.exp.sub">Each module addresses a specific intelligence gap. Know more before you commit.</p>
     </div>
 
     <div class="cards-grid">
 
       <!-- Module 1: GAiN -->
       <a href="gain.html" class="product-card">
-        <div class="card-module">Module 01 &nbsp;·&nbsp; <span style="color:var(--gold);letter-spacing:1px;">Live</span></div>
+        <div class="card-module">Module 01 &nbsp;·&nbsp; <span style="color:var(--gold);letter-spacing:1px;" data-i18n="label.live">Live</span></div>
         <div class="card-name">GAiN</div>
         <div class="card-tagline">G2M &amp; Access Intelligence Navigator</div>
         <p class="card-desc">Navigate IRP/ERP reference pricing networks across 40+ countries. Interactive force-directed graph showing how pharmaceutical pricing flows between regulatory bodies.</p>
-        <span class="card-btn">Deep dive into it →</span>
+        <span class="card-btn" data-i18n="btn.deepDive">Deep dive into it →</span>
       </a>
 
       <!-- Module 2: PatNav -->
@@ -189,7 +198,7 @@
         <div class="card-name">PatNav</div>
         <div class="card-tagline">Patient Navigation Suite</div>
         <p class="card-desc">Map patient journeys from prescription to adherence. Visualize prior authorization workflows and co-pay barrier analysis across therapeutic areas.</p>
-        <span class="card-btn">Know more →</span>
+        <span class="card-btn" data-i18n="btn.knowMore">Know more →</span>
       </a>
 
       <!-- Module 3: eGovS -->
@@ -198,7 +207,7 @@
         <div class="card-name">eGovS</div>
         <div class="card-tagline">Electronic Government Savviness</div>
         <p class="card-desc">Monitor 80+ global health authorities in real-time. AI-powered alerts on legislation, reimbursement policy shifts, and advocacy windows.</p>
-        <span class="card-btn">Know more →</span>
+        <span class="card-btn" data-i18n="btn.knowMore">Know more →</span>
       </a>
 
       <!-- Module 4: HTA-Axi -->
@@ -207,7 +216,7 @@
         <div class="card-name">HTA-Axi</div>
         <div class="card-tagline">HEOR &amp; Value Dossiers</div>
         <p class="card-desc">Full-cycle HEOR support with economic modelling, budget impact analysis, and value dossier development engineered for first-submission success.</p>
-        <span class="card-btn">Know more →</span>
+        <span class="card-btn" data-i18n="btn.knowMore">Know more →</span>
       </a>
 
       <!-- Module 5: CrossIntell Public -->
@@ -216,7 +225,7 @@
         <div class="card-name">Crossintell Public</div>
         <div class="card-tagline">Intelligence on Public Healthcare Systems</div>
         <p class="card-desc">Real-time intelligence across 30+ public healthcare systems. Reimbursement decisions, payer policy feeds, and competitive positioning data.</p>
-        <span class="card-btn">Know more →</span>
+        <span class="card-btn" data-i18n="btn.knowMore">Know more →</span>
       </a>
 
       <!-- Module 6: CrossIntell Private -->
@@ -225,7 +234,7 @@
         <div class="card-name">Crossintell Private</div>
         <div class="card-tagline">Intelligence on Private Healthcare Systems</div>
         <p class="card-desc">Dedicated competitive intelligence with custom market models, real-time share tracking, and forward-looking scenario planning.</p>
-        <span class="card-btn">Deep dive into it →</span>
+        <span class="card-btn" data-i18n="btn.deepDive">Deep dive into it →</span>
       </a>
 
     </div>
@@ -233,40 +242,32 @@
 </section>
 
 <!-- =========================================================
-     WHY NOW — Statistics
+     WHY NOW — Problem Grid (4-stat 2×2)
      ========================================================= -->
 <section class="section why-now-bg" id="why-now">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Why Now</div>
-      <h2>The cost of inaction</h2>
-      <p>Real consequences when intelligence is delayed or incomplete.</p>
+      <div class="eyebrow" data-i18n="eyebrow.whyNow">Why Now</div>
+      <h2 data-i18n="index.why.title">The cost of inaction</h2>
+      <p data-i18n="index.why.sub">Real consequences when intelligence is delayed or incomplete.</p>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-value">$24M</div>
-        <div class="stat-label">Revenue lost per month per delayed launch in top 10 markets</div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="index.why.stat1">$24M</div>
+        <div class="problem-text" data-i18n="index.why.text1">Revenue lost per month per delayed launch in top-10 markets — inaction has a measurable price.</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-value">578</div>
-        <div class="stat-label">Average days of access delay due to regulatory and reimbursement complexity</div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="index.why.stat2">34%</div>
+        <div class="problem-text" data-i18n="index.why.text2">Of launches miss market access targets due to incomplete or fragmented payer intelligence.</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-value">34%</div>
-        <div class="stat-label">Of launches miss market access targets due to incomplete payer intelligence</div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="index.why.stat3">578 days</div>
+        <div class="problem-text" data-i18n="index.why.text3">Average access delay between regulatory approval and patient availability in major markets.</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-value">$300B</div>
-        <div class="stat-label">Industry capital at risk annually from access delays and payer rejections</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">40%</div>
-        <div class="stat-label">Of executives lack real-time visibility into shifting reimbursement policies</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">6–18<span style="font-size:24px;color:var(--text-dim)">mo</span></div>
-        <div class="stat-label">Time to discover competitive shifts and market opportunities manually</div>
+      <div class="problem-item">
+        <div class="problem-stat" data-i18n="index.why.stat4">$300B</div>
+        <div class="problem-text" data-i18n="index.why.text4">Industry capital at risk annually from access delays, payer rejections, and launch sequencing errors.</div>
       </div>
     </div>
   </div>
@@ -278,9 +279,9 @@
 <section class="section" id="plans">
   <div class="section-inner">
     <div class="section-header">
-      <div class="eyebrow">Plans</div>
-      <h2>Built for every stage of market access</h2>
-      <p>Whether you're mapping a first launch or optimising a global portfolio, there's a plan for you.</p>
+      <div class="eyebrow" data-i18n="eyebrow.plans">Plans</div>
+      <h2 data-i18n="index.plans.title">Built for every stage of market access</h2>
+      <p data-i18n="index.plans.sub">Whether you're mapping a first launch or optimising a global portfolio, there's a plan for you.</p>
     </div>
 
     <div class="plans-grid">
@@ -295,7 +296,7 @@
           <li>Quarterly briefings</li>
           <li>Standard support</li>
         </ul>
-        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;">Request Pricing</a>
+        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;" data-i18n="btn.requestPricing">Request Pricing</a>
       </div>
 
       <div class="plan-card featured">
@@ -311,7 +312,7 @@
           <li>Tailored tool</li>
           <li>Monthly call with Board Member</li>
         </ul>
-        <a href="#early-access" class="btn-primary" style="width:100%;text-align:center;">Request Pricing</a>
+        <a href="#early-access" class="btn-primary" style="width:100%;text-align:center;" data-i18n="btn.requestPricing">Request Pricing</a>
       </div>
 
       <div class="plan-card">
@@ -326,11 +327,11 @@
           <li>White-glove onboarding</li>
           <li>Priority support SLA</li>
         </ul>
-        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;">Contact Us</a>
+        <a href="#early-access" class="btn-secondary" style="width:100%;text-align:center;" data-i18n="btn.contactUs">Contact Us</a>
       </div>
 
     </div>
-    <p class="plans-note">All plans include a 30-day pilot period. Pricing is tailored to your portfolio and market scope.</p>
+    <p class="plans-note" data-i18n="index.plans.note">All plans include a 30-day pilot period. Pricing is tailored to your portfolio and market scope.</p>
   </div>
 </section>
 
@@ -340,9 +341,9 @@
 <section class="section access-bg" id="early-access">
   <div class="access-inner">
     <div class="section-header">
-      <div class="eyebrow">Early Access</div>
-      <h2>Join the founding cohort</h2>
-      <p>Axi Navigation is currently in private beta. Request early access and we'll be in touch within 48 hours.</p>
+      <div class="eyebrow" data-i18n="eyebrow.earlyAccess">Early Access</div>
+      <h2 data-i18n="index.access.title">Join the founding cohort</h2>
+      <p data-i18n="index.access.sub">Axi Navigation is currently in private beta. Request early access and we'll be in touch within 48 hours.</p>
     </div>
 
     <form id="accessForm" onsubmit="submitForm(event)">
@@ -386,7 +387,7 @@
         </div>
       </div>
       <div class="form-submit">
-        <button type="submit" class="btn-primary">Request Early Access</button>
+        <button type="submit" class="btn-primary" data-i18n="btn.requestAccess">Request Early Access</button>
       </div>
     </form>
 
@@ -402,16 +403,17 @@
      ========================================================= -->
 <footer class="footer">
   <div class="footer-brand">Axi <span>Navigation</span></div>
-  <div class="footer-copy">&copy; 2026 Axi Navigation. All rights reserved.</div>
+  <div class="footer-copy" data-i18n="footer.copy">&copy; 2026 Axi Navigation. All rights reserved.</div>
   <div class="footer-links">
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="mailto:contact@axiinnovation.com">Contact</a>
+    <a href="privacy-policy.html" data-i18n="nav.privacy">Privacy Policy</a>
+    <a href="mailto:contact@axiinnovation.com" data-i18n="nav.contact">Contact</a>
   </div>
 </footer>
 
 <!-- =========================================================
      SCRIPTS
      ========================================================= -->
+<script src="translations.js"></script>
 <script>
   /* Navbar active state on scroll */
   const navbar = document.getElementById('navbar');
@@ -419,14 +421,11 @@
   const navLinks = document.querySelectorAll('.nav-links a');
 
   window.addEventListener('scroll', () => {
-    /* Scrolled style */
     if (window.scrollY > 60) {
       navbar.style.background = 'rgba(6,17,31,0.98)';
     } else {
       navbar.style.background = 'rgba(6,17,31,0.94)';
     }
-
-    /* Active link highlight */
     let current = '';
     sections.forEach(s => {
       if (window.scrollY >= s.offsetTop - 120) current = s.id;
@@ -439,7 +438,6 @@
   /* Form submit */
   function submitForm(e) {
     e.preventDefault();
-    const data = new FormData(e.target);
     const subject = 'Axi Navigation — Early Access Request';
     const body = 'New early access request submitted from axiinnovation.com';
     window.location.href = `mailto:contact@axiinnovation.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

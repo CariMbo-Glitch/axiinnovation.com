@@ -149,6 +149,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <span>eGov Affairs</span>
   </div>
   <div class="topbar-controls">
+    <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.5px;padding:5px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;">DEMO</div>
     <div class="pill-group" id="lang-pills">
       <button class="pill-btn active cyan" onclick="setLang('en')">EN</button>
       <button class="pill-btn cyan" onclick="setLang('pt')">PT</button>
@@ -159,40 +160,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <div class="layout">
   <aside class="sidebar">
-    <div class="scope-bar">
-      <div class="scope-btn active" data-scope="country" onclick="setScope('country')" data-i18n="scope_country">Country</div>
-      <div class="scope-btn" data-scope="regional" onclick="setScope('regional')" data-i18n="scope_regional">Regional</div>
-      <div class="scope-btn" data-scope="global" onclick="setScope('global')" data-i18n="scope_global">Global</div>
-    </div>
-    <div class="filter-group" id="country-wrap">
-      <div class="filter-label" data-i18n="filter_country">Country</div>
-      <select class="filter-select" id="filter-country" onchange="render()"></select>
-    </div>
-    <div class="filter-group hidden" id="region-wrap">
-      <div class="filter-label" data-i18n="filter_region">Region</div>
-      <select class="filter-select" id="filter-region" onchange="render()"></select>
+    <div class="filter-group">
+      <div class="filter-label">Country</div>
+      <div class="filter-select" style="pointer-events:none;opacity:0.85;">🇺🇸 United States</div>
     </div>
     <div class="filter-group">
-      <div class="filter-label" data-i18n="search_label">Topic Search</div>
-      <input type="text" class="filter-select" id="topic-search" placeholder="e.g. diabetes mellitus, hypertension..." oninput="onSearchInput()" style="font-size:12px;">
+      <div class="filter-label">Topic</div>
+      <div class="filter-select" style="pointer-events:none;opacity:0.85;color:var(--accent-cyan);font-weight:600;">obesity</div>
     </div>
-    <div class="search-divider" style="text-align:center;font-size:9px;color:var(--text-muted);margin:-4px 0 10px;text-transform:uppercase;letter-spacing:1px;">— or filter by product —</div>
-    <div class="filter-group">
-      <div class="filter-label" data-i18n="filter_manufacturer">Manufacturer</div>
-      <select class="filter-select" id="filter-mfr" onchange="onMfrChange()"></select>
+    <div style="margin-top:24px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.8px;margin-bottom:8px;">Demo Mode</div>
+      <p style="font-size:11px;color:var(--text-secondary);line-height:1.6;">This is a preview with fixed filters. Full version unlocks country, topic, manufacturer, and product filtering.</p>
     </div>
-    <div class="filter-group">
-      <div class="filter-label" data-i18n="filter_area">Therapeutic Area</div>
-      <select class="filter-select" id="filter-area" onchange="onAreaChange()"></select>
-    </div>
-    <div class="filter-group">
-      <div class="filter-label" data-i18n="filter_product">Product</div>
-      <select class="filter-select" id="filter-product" onchange="onFilterChange()"></select>
-    </div>
-    <div class="filter-group" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
-      <div class="filter-label">⚙ Data Import</div>
-      <button class="filter-select" onclick="openImport()" style="cursor:pointer;text-align:center;font-weight:600;color:var(--accent-cyan);font-size:11px;">Import API JSON</button>
-    </div>
+    <!-- Hidden elements to keep JS working -->
+    <select class="hidden" id="filter-country"><option value="us" selected>US</option></select>
+    <select class="hidden" id="filter-region"><option value="North America">North America</option></select>
+    <select class="hidden" id="filter-mfr"><option value="Novo Nordisk">Novo Nordisk</option></select>
+    <select class="hidden" id="filter-area"><option value="all">All</option></select>
+    <select class="hidden" id="filter-product"><option value="Ozempic (semaglutide)">Ozempic</option></select>
+    <input type="hidden" id="topic-search" value="obesity">
+    <div class="search-divider hidden"></div>
   </aside>
 
   <main class="main">
@@ -504,23 +491,14 @@ function setLang(l){
   render();
 }
 function setScope(s){
-  scope=s;
-  document.querySelectorAll('.scope-btn').forEach(b=>b.classList.toggle('active',b.dataset.scope===s));
-  document.getElementById('country-wrap').classList.toggle('hidden',s!=='country');
-  document.getElementById('region-wrap').classList.toggle('hidden',s!=='regional');
+  // Demo: locked to country scope
+  scope='country';
   render();
 }
 
 function initFilters(){
-  const cSel=document.getElementById('filter-country');
-  Object.entries(CTRY).sort((a,b)=>a[1].name.localeCompare(b[1].name)).forEach(([k,v])=>{cSel.innerHTML+=`<option value="${k}">${v.flag} ${v.name}</option>`;});
-  cSel.value='us';
-  const rSel=document.getElementById('filter-region');
-  Object.keys(REGIONS).forEach(r=>{rSel.innerHTML+=`<option value="${r}">${r}</option>`;});
-  const mSel=document.getElementById('filter-mfr');
-  Object.keys(MFR).sort().forEach(m=>{mSel.innerHTML+=`<option value="${m}">${m}</option>`;});
-  mSel.value='Novo Nordisk';
-  onMfrChange();
+  // Demo: filters pre-locked, just render
+  render();
 }
 
 function onMfrChange(){
@@ -564,9 +542,7 @@ function onSearchInput(){
 }
 
 function getActiveTopic(){
-  const q=document.getElementById('topic-search').value.trim();
-  if(q.length>=2) return q.toLowerCase();
-  return document.getElementById('filter-product').value;
+  return 'obesity';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

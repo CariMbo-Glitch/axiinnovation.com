@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eGov Affairs Cockpit</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<style>
+:root{
+  --bg-primary:#0b0e14;--bg-secondary:#131825;--bg-card:#1a2035;--bg-hover:#222b44;
+  --border:#263050;--text-primary:#e4e8f1;--text-secondary:#8892a8;--text-muted:#5a6380;
+  --accent-green:#10b981;--accent-green-dim:rgba(16,185,129,0.12);
+  --accent-red:#ef4444;--accent-red-dim:rgba(239,68,68,0.12);
+  --accent-blue:#3b82f6;--accent-purple:#8b5cf6;--accent-amber:#f59e0b;
+  --accent-cyan:#06b6d4;--accent-pink:#ec4899;--radius:10px;--shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden;}
+::selection{background:var(--accent-blue);color:#fff;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg-primary);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.topbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(11,14,20,0.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.topbar-brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;letter-spacing:-0.3px;}
+.topbar-brand svg{width:24px;height:24px;color:var(--accent-blue);}
+.topbar-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill-group{display:flex;gap:1px;background:var(--bg-card);border-radius:6px;padding:2px;border:1px solid var(--border);}
+.pill-btn{background:none;border:none;color:var(--text-muted);padding:5px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap;}
+.pill-btn.active{color:#fff;}
+.pill-btn.active.purple{background:var(--accent-purple);}
+.pill-btn.active.cyan{background:var(--accent-cyan);}
+.pill-btn:hover:not(.active){color:var(--text-secondary);}
+
+.layout{display:flex;min-height:calc(100vh - 53px);}
+.sidebar{width:240px;padding:16px;border-right:1px solid var(--border);background:var(--bg-secondary);flex-shrink:0;overflow-y:auto;}
+.main{flex:1;padding:20px;overflow-y:auto;position:relative;}
+
+.filter-group{margin-bottom:14px;}
+.filter-label{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.8px;margin-bottom:5px;}
+.filter-select{width:100%;padding:7px 10px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;cursor:pointer;appearance:none;outline:none;transition:border .2s;}
+.filter-select:focus{border-color:var(--accent-blue);}
+.filter-select option{background:var(--bg-card);color:var(--text-primary);}
+
+.scope-bar{display:flex;gap:6px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.scope-btn{flex:1;padding:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:11px;font-weight:600;text-align:center;cursor:pointer;transition:all .2s;}
+.scope-btn.active{background:var(--accent-blue);border-color:var(--accent-blue);color:#fff;}
+.scope-btn:hover:not(.active){border-color:var(--accent-blue);color:var(--text-secondary);}
+.hidden{display:none!important;}
+
+/* Summary */
+.summary-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.summary-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1;min-width:100px;}
+.summary-stat .val{font-size:20px;font-weight:800;margin-bottom:2px;}
+.summary-stat .lbl{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;}
+
+/* Columns */
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.col-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.col-header h2{font-size:14px;font-weight:700;}
+.badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:700;}
+.supporters .badge{background:var(--accent-green-dim);color:var(--accent-green);}
+.detractors .badge{background:var(--accent-red-dim);color:var(--accent-red);}
+
+/* Cards */
+.m-card{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:7px;cursor:pointer;transition:all .15s;}
+.m-card:hover{background:var(--bg-hover);transform:translateY(-1px);box-shadow:var(--shadow);}
+.m-card .rank{font-size:11px;font-weight:800;color:var(--text-muted);min-width:20px;text-align:center;}
+.m-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;flex-shrink:0;}
+.m-info{flex:1;min-width:0;}
+.m-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m-meta{font-size:10px;color:var(--text-secondary);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m-score{font-size:14px;font-weight:800;min-width:40px;text-align:right;}
+.supporters .m-score{color:var(--accent-green);}
+.detractors .m-score{color:var(--accent-red);}
+.m-flag{font-size:10px;color:var(--text-muted);margin-left:3px;}
+
+/* D3 Map */
+#map-container{width:100%;display:none;position:relative;}
+#map-container.active{display:block;}
+#map-container svg{width:100%;height:auto;display:block;}
+.country-path{fill:#1e293b;stroke:#334155;stroke-width:0.5;transition:fill .2s;cursor:pointer;}
+.country-path:hover{fill:#334155;}
+.country-path.highlighted{fill:var(--accent-blue);fill-opacity:0.6;}
+.country-path.has-data{fill:#1e3a5f;}
+.country-path.has-data:hover{fill:#2d5a8a;}
+
+/* Map Tooltip */
+.map-tooltip{position:absolute;pointer-events:none;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,0.6);min-width:240px;opacity:0;transition:opacity .15s;z-index:200;}
+.map-tooltip.visible{opacity:1;}
+.map-tooltip h4{font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.map-tooltip .tt-section{margin-bottom:8px;}
+.map-tooltip .tt-label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.map-tooltip .tt-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;}
+.map-tooltip .tt-name{color:var(--text-primary);}
+.map-tooltip .tt-score-green{color:var(--accent-green);font-weight:700;}
+.map-tooltip .tt-score-red{color:var(--accent-red);font-weight:700;}
+.map-hint{text-align:center;font-size:11px;color:var(--text-muted);margin-top:12px;font-style:italic;}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.6);position:relative;}
+.modal-hdr{display:flex;align-items:center;gap:14px;padding:20px 20px 14px;border-bottom:1px solid var(--border);}
+.modal-av{width:52px;height:52px;border-radius:50%;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;}
+.modal-ttl h3{font-size:17px;font-weight:700;}
+.modal-ttl p{font-size:11px;color:var(--text-secondary);margin-top:3px;}
+.modal-x{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-muted);font-size:22px;cursor:pointer;line-height:1;}
+.modal-x:hover{color:var(--text-primary);}
+.modal-body{padding:18px;}
+.section{margin-bottom:18px;}
+.section-title{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.8px;margin-bottom:8px;}
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:7px;}
+.sc{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:9px;text-align:center;}
+.sc .v{font-size:18px;font-weight:800;margin-bottom:2px;}
+.sc .l{font-size:9px;color:var(--text-secondary);text-transform:uppercase;}
+.formula-box{background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;padding:11px;font-family:'SF Mono',Consolas,monospace;font-size:11px;color:var(--accent-cyan);line-height:1.7;}
+.social-grid{display:flex;flex-wrap:wrap;gap:7px;}
+.social-chip{display:flex;align-items:center;gap:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:7px;padding:7px 11px;cursor:pointer;transition:all .15s;}
+.social-chip:hover{border-color:var(--accent-blue);background:var(--bg-hover);}
+.social-chip .icon{font-size:15px;}
+.social-chip .cnt{font-size:13px;font-weight:700;}
+.social-chip .pn{font-size:9px;color:var(--text-secondary);}
+.social-detail{margin-top:8px;padding:9px;background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-primary);line-height:1.6;display:none;}
+#topic-search{background:var(--bg-card);border:1px solid var(--accent-blue);border-radius:6px;color:var(--text-primary);padding:8px 10px;transition:border .2s,box-shadow .2s;}
+#topic-search:focus{box-shadow:0 0 0 2px rgba(59,130,246,0.25);outline:none;}
+#topic-search::placeholder{color:var(--text-muted);font-size:11px;}
+
+
+@media(max-width:768px){
+  .layout{flex-direction:column;}
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:12px;max-height:220px;overflow-y:auto;}
+  .columns{grid-template-columns:1fr;}
+  .main{padding:12px;}
+  .modal{max-width:100%;}
+  .topbar-controls{gap:4px;}
+  .summary-bar{gap:5px;}
+  .summary-stat{padding:6px 8px;min-width:70px;}
+  .summary-stat .val{font-size:15px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>eGov Affairs</span>
+  </div>
+  <div class="topbar-controls">
+    <div class="pill-group" id="lang-pills">
+      <button class="pill-btn active cyan" onclick="setLang('en')">EN</button>
+      <button class="pill-btn cyan" onclick="setLang('pt')">PT</button>
+      <button class="pill-btn cyan" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="scope-bar">
+      <div class="scope-btn active" data-scope="country" onclick="setScope('country')" data-i18n="scope_country">Country</div>
+      <div class="scope-btn" data-scope="regional" onclick="setScope('regional')" data-i18n="scope_regional">Regional</div>
+      <div class="scope-btn" data-scope="global" onclick="setScope('global')" data-i18n="scope_global">Global</div>
+    </div>
+    <div class="filter-group" id="country-wrap">
+      <div class="filter-label" data-i18n="filter_country">Country</div>
+      <select class="filter-select" id="filter-country" onchange="render()"></select>
+    </div>
+    <div class="filter-group hidden" id="region-wrap">
+      <div class="filter-label" data-i18n="filter_region">Region</div>
+      <select class="filter-select" id="filter-region" onchange="render()"></select>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label" data-i18n="search_label">Topic Search</div>
+      <input type="text" class="filter-select" id="topic-search" placeholder="e.g. diabetes mellitus, hypertension..." oninput="onSearchInput()" style="font-size:12px;">
+    </div>
+    <div class="search-divider" style="text-align:center;font-size:9px;color:var(--text-muted);margin:-4px 0 10px;text-transform:uppercase;letter-spacing:1px;">— or filter by product —</div>
+    <div class="filter-group">
+      <div class="filter-label" data-i18n="filter_manufacturer">Manufacturer</div>
+      <select class="filter-select" id="filter-mfr" onchange="onMfrChange()"></select>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label" data-i18n="filter_area">Therapeutic Area</div>
+      <select class="filter-select" id="filter-area" onchange="onAreaChange()"></select>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label" data-i18n="filter_product">Product</div>
+      <select class="filter-select" id="filter-product" onchange="onFilterChange()"></select>
+    </div>
+    <div class="filter-group" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+      <div class="filter-label">⚙ Data Import</div>
+      <button class="filter-select" onclick="openImport()" style="cursor:pointer;text-align:center;font-weight:600;color:var(--accent-cyan);font-size:11px;">Import API JSON</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="summary-bar" id="summary-bar"></div>
+    <!-- MAP (global view) -->
+    <div id="map-container">
+      <div class="map-tooltip" id="map-tooltip"></div>
+      <div class="map-hint" data-i18n="map_hint">Hover for top 3 supporters & detractors. Click a country to drill in.</div>
+    </div>
+    <!-- CARDS (country/regional view) -->
+    <div id="cards-container">
+      <div class="columns">
+        <div class="supporters">
+          <div class="col-header"><h2 data-i18n="col_supporters">Top Supporters</h2><span class="badge">TOP 20</span></div>
+          <div id="supporters-list"></div>
+        </div>
+        <div class="detractors">
+          <div class="col-header"><h2 data-i18n="col_detractors">Top Detractors</h2><span class="badge">TOP 20</span></div>
+          <div id="detractors-list"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeDetail(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-x" onclick="closeDetail()">&times;</button>
+    <div class="modal-hdr"><div class="modal-av" id="modal-av"></div><div class="modal-ttl"><h3 id="modal-name"></h3><p id="modal-meta"></p></div></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+<!-- SLIDE PANEL -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// i18n
+// ═══════════════════════════════════════════════════════════════════════════════
+const I18N={
+en:{scope_country:"Country",scope_regional:"Regional",scope_global:"Global",filter_country:"Country",filter_region:"Region",filter_manufacturer:"Manufacturer",filter_area:"Therapeutic Area",filter_product:"Product",area_all:"All Areas",col_supporters:"Top Supporters",col_detractors:"Top Detractors",section_score:"Engagement Score Breakdown",section_formula:"Scoring Formula",section_speeches:"Speeches & Floor Activity",section_bills:"Legislative Bills",section_social:"Social Media Presence",section_social_hint:"Click a platform to see how to reach them",label_sentiment:"Sentiment",label_posts:"Posts",label_likes:"Likes",label_speeches:"Speeches",label_relevance:"Relevance",label_favorable:"Favorable Bills",label_opposing:"Opposing Bills",label_social_score:"Social Score",label_speech_score:"Speech Score",label_bill_score:"Bill Score",label_committee_score:"Committee",label_final_grade:"Final Grade",label_speech_detail:"speeches addressing this topic",label_bill_favorable:"bills favorable",label_bill_opposing:"bills opposing",social_hint_msg:"Reach via {platform} — {count} posts, {likes} likes. Handle: @{handle}",stat_total:"Total Scored",stat_countries:"Countries",stat_avg_sup:"Avg Support",stat_avg_det:"Avg Detract",map_hint:"Hover for top 3 supporters & detractors. Click a country to drill in.",tt_supporters:"SUPPORTERS",tt_detractors:"DETRACTORS",search_placeholder:"Search any topic (e.g. diabetes, hypertension)...",search_label:"Topic Search"},
+pt:{scope_country:"País",scope_regional:"Regional",scope_global:"Global",filter_country:"País",filter_region:"Região",filter_manufacturer:"Fabricante",filter_area:"Área Terapêutica",filter_product:"Produto",area_all:"Todas",col_supporters:"Principais Apoiadores",col_detractors:"Principais Opositores",section_score:"Detalhamento do Score",section_formula:"Fórmula",section_speeches:"Discursos em Plenário",section_bills:"Projetos de Lei",section_social:"Redes Sociais",section_social_hint:"Clique para saber como engajá-lo",label_sentiment:"Sentimento",label_posts:"Publicações",label_likes:"Curtidas",label_speeches:"Discursos",label_relevance:"Relevância",label_favorable:"PLs Favoráveis",label_opposing:"PLs Contrários",label_social_score:"Score Social",label_speech_score:"Score Discurso",label_bill_score:"Score PLs",label_committee_score:"Comissão",label_final_grade:"Nota Final",label_speech_detail:"discursos sobre este tema",label_bill_favorable:"PLs favoráveis",label_bill_opposing:"PLs contrários",social_hint_msg:"Alcance via {platform} — {count} publicações, {likes} curtidas. Perfil: @{handle}",stat_total:"Total",stat_countries:"Países",stat_avg_sup:"Média Apoio",stat_avg_det:"Média Oposição",map_hint:"Passe o mouse para ver top 3. Clique no país para detalhar.",tt_supporters:"APOIADORES",tt_detractors:"OPOSITORES",search_placeholder:"Buscar tema (ex: diabetes, hipertensão)...",search_label:"Busca por Tema"},
+fr:{scope_country:"Pays",scope_regional:"Régional",scope_global:"Mondial",filter_country:"Pays",filter_region:"Région",filter_manufacturer:"Fabricant",filter_area:"Aire Thérapeutique",filter_product:"Produit",area_all:"Toutes",col_supporters:"Principaux Soutiens",col_detractors:"Principaux Opposants",section_score:"Détail du Score",section_formula:"Formule",section_speeches:"Discours Parlementaires",section_bills:"Projets de Loi",section_social:"Réseaux Sociaux",section_social_hint:"Cliquez pour savoir comment l'atteindre",label_sentiment:"Sentiment",label_posts:"Publications",label_likes:"Likes",label_speeches:"Discours",label_relevance:"Pertinence",label_favorable:"PdL Favorables",label_opposing:"PdL Opposés",label_social_score:"Score Social",label_speech_score:"Score Discours",label_bill_score:"Score PdL",label_committee_score:"Commission",label_final_grade:"Note Finale",label_speech_detail:"discours sur ce sujet",label_bill_favorable:"PdL favorables",label_bill_opposing:"PdL opposés",social_hint_msg:"Contactez via {platform} — {count} publications, {likes} likes. Profil : @{handle}",stat_total:"Total",stat_countries:"Pays",stat_avg_sup:"Moy. Soutien",stat_avg_det:"Moy. Opposition",map_hint:"Survolez pour le top 3. Cliquez sur un pays pour détailler.",tt_supporters:"SOUTIENS",tt_detractors:"OPPOSANTS",search_placeholder:"Chercher un sujet (ex : diabète, hypertension)...",search_label:"Recherche Thématique"}
+};
+let lang='en',scope='country';
+function t(k){return I18N[lang][k]||k;}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════════════════
+const MFR={
+"Pfizer":[{n:"Ibrance (palbociclib)",a:"Oncology"},{n:"Eliquis (apixaban)",a:"Cardiovascular"},{n:"Xeljanz (tofacitinib)",a:"Immunology"},{n:"Viagra (sildenafil)",a:"Urology"},{n:"Zoloft (sertraline)",a:"Neurology"},{n:"Prevnar 13/20",a:"Infectious Disease"},{n:"Paxlovid",a:"Infectious Disease"}],
+"Roche":[{n:"Ocrevus (ocrelizumab)",a:"Neurology"},{n:"Tecentriq (atezolizumab)",a:"Oncology"},{n:"Hemlibra (emicizumab)",a:"Hematology"},{n:"Herceptin (trastuzumab)",a:"Oncology"},{n:"Avastin (bevacizumab)",a:"Oncology"},{n:"Rituxan (rituximab)",a:"Oncology"},{n:"Tamiflu (oseltamivir)",a:"Infectious Disease"}],
+"Novartis":[{n:"Kymriah (tisagenlecleucel)",a:"Oncology"},{n:"Zolgensma (onasemnogene)",a:"Rare Disease"},{n:"Entresto (sacubitril/valsartan)",a:"Cardiovascular"},{n:"Cosentyx (secukinumab)",a:"Immunology"},{n:"Kisqali (ribociclib)",a:"Oncology"},{n:"Gleevec (imatinib)",a:"Oncology"},{n:"Lucentis (ranibizumab)",a:"Ophthalmology"}],
+"Johnson & Johnson":[{n:"Stelara (ustekinumab)",a:"Immunology"},{n:"Darzalex (daratumumab)",a:"Oncology"},{n:"Tremfya (guselkumab)",a:"Immunology"},{n:"Imbruvica (ibrutinib)",a:"Oncology"},{n:"Erleada (apalutamide)",a:"Oncology"},{n:"Risperdal (risperidone)",a:"Neurology"}],
+"Merck & Co":[{n:"Keytruda (pembrolizumab)",a:"Oncology"},{n:"Gardasil 9",a:"Infectious Disease"},{n:"Januvia (sitagliptin)",a:"Diabetes"},{n:"Lynparza (olaparib)",a:"Oncology"},{n:"Singulair (montelukast)",a:"Respiratory"}],
+"AbbVie":[{n:"Humira (adalimumab)",a:"Immunology"},{n:"Skyrizi (risankizumab)",a:"Immunology"},{n:"Rinvoq (upadacitinib)",a:"Immunology"},{n:"Venclexta (venetoclax)",a:"Oncology"},{n:"Botox (onabotulinumtoxinA)",a:"Neurology"}],
+"Sanofi":[{n:"Dupixent (dupilumab)",a:"Immunology"},{n:"Aubagio (teriflunomide)",a:"Neurology"},{n:"Lantus (insulin glargine)",a:"Diabetes"},{n:"Kevzara (sarilumab)",a:"Immunology"},{n:"Plavix (clopidogrel)",a:"Cardiovascular"}],
+"Novo Nordisk":[{n:"Ozempic (semaglutide)",a:"Diabetes"},{n:"Wegovy (semaglutide)",a:"Obesity"},{n:"Saxenda (liraglutide)",a:"Obesity"},{n:"Rybelsus (oral semaglutide)",a:"Diabetes"},{n:"Tresiba (insulin degludec)",a:"Diabetes"},{n:"Victoza (liraglutide)",a:"Diabetes"},{n:"NovoSeven (eptacog alfa)",a:"Hematology"}],
+"AstraZeneca":[{n:"Tagrisso (osimertinib)",a:"Oncology"},{n:"Imfinzi (durvalumab)",a:"Oncology"},{n:"Farxiga (dapagliflozin)",a:"Diabetes"},{n:"Symbicort",a:"Respiratory"},{n:"Nexium (esomeprazole)",a:"Gastroenterology"}],
+"GSK":[{n:"Shingrix",a:"Infectious Disease"},{n:"Trelegy Ellipta",a:"Respiratory"},{n:"Nucala (mepolizumab)",a:"Respiratory"},{n:"Dovato",a:"Infectious Disease"},{n:"Benlysta (belimumab)",a:"Immunology"},{n:"Arexvy",a:"Infectious Disease"}],
+"Eli Lilly":[{n:"Mounjaro (tirzepatide)",a:"Diabetes"},{n:"Zepbound (tirzepatide)",a:"Obesity"},{n:"Verzenio (abemaciclib)",a:"Oncology"},{n:"Trulicity (dulaglutide)",a:"Diabetes"},{n:"Taltz (ixekizumab)",a:"Immunology"},{n:"Prozac (fluoxetine)",a:"Neurology"},{n:"Donanemab (Kisunla)",a:"Neurology"}],
+"Bristol-Myers Squibb":[{n:"Opdivo (nivolumab)",a:"Oncology"},{n:"Eliquis (apixaban)",a:"Cardiovascular"},{n:"Revlimid (lenalidomide)",a:"Oncology"},{n:"Orencia (abatacept)",a:"Immunology"},{n:"Yervoy (ipilimumab)",a:"Oncology"},{n:"Reblozyl (luspatercept)",a:"Hematology"}],
+"Amgen":[{n:"Enbrel (etanercept)",a:"Immunology"},{n:"Repatha (evolocumab)",a:"Cardiovascular"},{n:"Prolia/Xgeva (denosumab)",a:"Bone Health"},{n:"Lumakras (sotorasib)",a:"Oncology"},{n:"Blincyto (blinatumomab)",a:"Oncology"},{n:"Tepezza (teprotumumab)",a:"Ophthalmology"}],
+"Gilead Sciences":[{n:"Biktarvy",a:"Infectious Disease"},{n:"Veklury (remdesivir)",a:"Infectious Disease"},{n:"Harvoni",a:"Infectious Disease"},{n:"Sovaldi (sofosbuvir)",a:"Infectious Disease"},{n:"Yescarta (axicabtagene)",a:"Oncology"}],
+"Bayer":[{n:"Xarelto (rivaroxaban)",a:"Cardiovascular"},{n:"Eylea (aflibercept)",a:"Ophthalmology"},{n:"Nubeqa (darolutamide)",a:"Oncology"},{n:"Stivarga (regorafenib)",a:"Oncology"}],
+"Takeda":[{n:"Entyvio (vedolizumab)",a:"Immunology"},{n:"Ninlaro (ixazomib)",a:"Oncology"},{n:"Vyvanse (lisdexamfetamine)",a:"Neurology"},{n:"Takhzyro (lanadelumab)",a:"Rare Disease"},{n:"Adcetris (brentuximab vedotin)",a:"Oncology"}],
+"Boehringer Ingelheim":[{n:"Jardiance (empagliflozin)",a:"Diabetes"},{n:"Ofev (nintedanib)",a:"Respiratory"},{n:"Pradaxa (dabigatran)",a:"Cardiovascular"},{n:"Spiriva (tiotropium)",a:"Respiratory"}],
+"Biogen":[{n:"Leqembi (lecanemab)",a:"Neurology"},{n:"Tecfidera (dimethyl fumarate)",a:"Neurology"},{n:"Spinraza (nusinersen)",a:"Rare Disease"},{n:"Tysabri (natalizumab)",a:"Neurology"}],
+"Regeneron":[{n:"Eylea (aflibercept)",a:"Ophthalmology"},{n:"Dupixent (dupilumab)",a:"Immunology"},{n:"Libtayo (cemiplimab)",a:"Oncology"},{n:"Praluent (alirocumab)",a:"Cardiovascular"}],
+"Moderna":[{n:"Spikevax (mRNA-1273)",a:"Infectious Disease"},{n:"mRNA-1345 (RSV)",a:"Infectious Disease"},{n:"mRNA-4157 (cancer vaccine)",a:"Oncology"}],
+"Vertex":[{n:"Trikafta",a:"Rare Disease"},{n:"Casgevy",a:"Rare Disease"},{n:"Kalydeco (ivacaftor)",a:"Rare Disease"}],
+"Daiichi Sankyo":[{n:"Enhertu (T-DXd)",a:"Oncology"},{n:"Lixiana (edoxaban)",a:"Cardiovascular"},{n:"Vanflyta (quizartinib)",a:"Oncology"}],
+"CSL Behring":[{n:"Hizentra",a:"Immunology"},{n:"Hemgenix",a:"Rare Disease"},{n:"Privigen",a:"Immunology"}],
+"Alexion (AZ)":[{n:"Soliris (eculizumab)",a:"Rare Disease"},{n:"Ultomiris (ravulizumab)",a:"Rare Disease"}],
+"UCB":[{n:"Cimzia (certolizumab)",a:"Immunology"},{n:"Bimzelx (bimekizumab)",a:"Immunology"},{n:"Vimpat (lacosamide)",a:"Neurology"}],
+"Astellas":[{n:"Xtandi (enzalutamide)",a:"Oncology"},{n:"Padcev (enfortumab vedotin)",a:"Oncology"},{n:"Prograf (tacrolimus)",a:"Immunology"}],
+"Merck KGaA":[{n:"Bavencio (avelumab)",a:"Oncology"},{n:"Mavenclad (cladribine)",a:"Neurology"},{n:"Erbitux (cetuximab)",a:"Oncology"}],
+"Eisai":[{n:"Leqembi (lecanemab)",a:"Neurology"},{n:"Lenvima (lenvatinib)",a:"Oncology"}],
+"Ipsen":[{n:"Somatuline (lanreotide)",a:"Oncology"},{n:"Cabometyx (cabozantinib)",a:"Oncology"},{n:"Dysport",a:"Neurology"}],
+"BioNTech":[{n:"Comirnaty (BNT162b2)",a:"Infectious Disease"},{n:"BNT211 (CAR-T)",a:"Oncology"}],
+"Teva":[{n:"Ajovy (fremanezumab)",a:"Neurology"},{n:"Austedo (deutetrabenazine)",a:"Neurology"},{n:"Copaxone (glatiramer)",a:"Neurology"}],
+"Otsuka":[{n:"Abilify (aripiprazole)",a:"Neurology"},{n:"Rexulti (brexpiprazole)",a:"Neurology"},{n:"Jynarque (tolvaptan)",a:"Rare Disease"}],
+"Servier":[{n:"Oncaspar (pegaspargase)",a:"Oncology"},{n:"Tibsovo (ivosidenib)",a:"Oncology"}],
+"Lundbeck":[{n:"Vyepti (eptinezumab)",a:"Neurology"},{n:"Trintellix (vortioxetine)",a:"Neurology"}],
+"Bausch Health":[{n:"Xifaxan (rifaximin)",a:"Gastroenterology"},{n:"Siliq (brodalumab)",a:"Immunology"}],
+};
+
+const CTRY={
+us:{name:"United States",flag:"🇺🇸",region:"North America",upper:"Senate",lower:"House",hc:"HELP / Energy & Commerce",parties:["Democrat","Republican","Independent"],iso:"USA"},
+cn:{name:"China",flag:"🇨🇳",region:"Asia-Pacific",upper:"NPC Standing Cte",lower:"NPC",hc:"Health Committee",parties:["CPC","CPPCC Allied"],iso:"CHN"},
+jp:{name:"Japan",flag:"🇯🇵",region:"Asia-Pacific",upper:"Councillors",lower:"Representatives",hc:"Health & Welfare Cte",parties:["LDP","Komeito","CDP","Ishin","JCP"],iso:"JPN"},
+de:{name:"Germany",flag:"🇩🇪",region:"Europe",upper:"Bundesrat",lower:"Bundestag",hc:"Gesundheitsausschuss",parties:["CDU/CSU","SPD","Grüne","FDP","AfD","BSW"],iso:"DEU"},
+fr:{name:"France",flag:"🇫🇷",region:"Europe",upper:"Sénat",lower:"Assemblée nationale",hc:"Affaires Sociales",parties:["RE","LR","PS","LFI","RN","EELV","PCF"],iso:"FRA"},
+it:{name:"Italy",flag:"🇮🇹",region:"Europe",upper:"Senato",lower:"Camera",hc:"Commissione Sanità",parties:["FdI","PD","M5S","Lega","FI","Azione"],iso:"ITA"},
+gb:{name:"United Kingdom",flag:"🇬🇧",region:"Europe",upper:"Lords",lower:"Commons",hc:"Health & Social Care Cte",parties:["Conservative","Labour","Lib Dems","SNP"],iso:"GBR"},
+es:{name:"Spain",flag:"🇪🇸",region:"Europe",upper:"Senado",lower:"Congreso",hc:"Comisión de Sanidad",parties:["PSOE","PP","Vox","Sumar","ERC"],iso:"ESP"},
+ca:{name:"Canada",flag:"🇨🇦",region:"North America",upper:"Senate",lower:"Commons",hc:"Standing Cte on Health",parties:["Liberal","Conservative","NDP","Bloc Québécois"],iso:"CAN"},
+kr:{name:"South Korea",flag:"🇰🇷",region:"Asia-Pacific",upper:"—",lower:"National Assembly",hc:"Health & Welfare Cte",parties:["PPP","Democratic Party","Justice Party"],iso:"KOR"},
+br:{name:"Brazil",flag:"🇧🇷",region:"Latin America",upper:"Senado",lower:"Câmara",hc:"CAS / CSSF",parties:["PT","PL","PSD","MDB","União","PP","NOVO","Podemos","PSB"],iso:"BRA"},
+au:{name:"Australia",flag:"🇦🇺",region:"Asia-Pacific",upper:"Senate",lower:"House",hc:"Community Affairs Cte",parties:["Labor","Liberal","National","Greens"],iso:"AUS"},
+in:{name:"India",flag:"🇮🇳",region:"Asia-Pacific",upper:"Rajya Sabha",lower:"Lok Sabha",hc:"Standing Cte on Health",parties:["BJP","INC","AAP","TMC","DMK","SP"],iso:"IND"},
+mx:{name:"Mexico",flag:"🇲🇽",region:"Latin America",upper:"Senado",lower:"Cámara",hc:"Comisión de Salud",parties:["MORENA","PAN","PRI","PRD","MC"],iso:"MEX"},
+ru:{name:"Russia",flag:"🇷🇺",region:"Europe",upper:"Federation Council",lower:"State Duma",hc:"Cte on Health",parties:["United Russia","CPRF","LDPR","Just Russia"],iso:"RUS"},
+ch:{name:"Switzerland",flag:"🇨🇭",region:"Europe",upper:"Council of States",lower:"National Council",hc:"SGK",parties:["SVP","SP","FDP","Centre","Grüne"],iso:"CHE"},
+nl:{name:"Netherlands",flag:"🇳🇱",region:"Europe",upper:"Eerste Kamer",lower:"Tweede Kamer",hc:"Commissie VWS",parties:["VVD","PVV","NSC","BBB","GL-PvdA","D66"],iso:"NLD"},
+tr:{name:"Turkey",flag:"🇹🇷",region:"Europe",upper:"—",lower:"Grand National Assembly",hc:"Health Commission",parties:["AKP","CHP","MHP","İYİ","HDP"],iso:"TUR"},
+pl:{name:"Poland",flag:"🇵🇱",region:"Europe",upper:"Senat",lower:"Sejm",hc:"Komisja Zdrowia",parties:["PiS","KO","Polska 2050","PSL","Lewica"],iso:"POL"},
+ar:{name:"Argentina",flag:"🇦🇷",region:"Latin America",upper:"Senado",lower:"Cámara",hc:"Comisión de Salud",parties:["La Libertad Avanza","UCR","PRO","PJ","Coalición Cívica"],iso:"ARG"},
+};
+const REGIONS={"North America":["us","ca","mx"],"Europe":["de","fr","it","gb","es","ru","ch","nl","tr","pl"],"Asia-Pacific":["cn","jp","kr","au","in"],"Latin America":["br","ar"]};
+const NP={
+"North America":{f:["James","Sarah","Michael","Jennifer","Robert","Maria","David","Laura","John","Emily","William","Patricia","Thomas","Elizabeth","Christopher","Susan","Daniel","Margaret"],l:["Smith","Johnson","Williams","Brown","Jones","Garcia","Martinez","Davis","Wilson","Anderson","Taylor","Thomas","Moore","Jackson","Martin","Lee","Clark","Lewis"]},
+"Europe":{f:["Alexander","Sophie","Maximilian","Emma","Lukas","Anna","Felix","Marie","Henrik","Clara","Sebastian","Julia","Friedrich","Elena","Pierre","Isabelle","Viktor","Natalia"],l:["Müller","Schmidt","Weber","Fischer","Schneider","Dubois","Laurent","Moreau","Rossi","Conti","García","Fernández","Kowalski","Novák","Johansson","Petrov","De Vries","Romano"]},
+"Asia-Pacific":{f:["Hiroshi","Yuki","Takeshi","Haruka","Wei","Jing","Xin","Min-Jun","Seung","Ji-Yeon","Amit","Priya","Rajesh","Ananya","Andrew","Kate","David","Mei"],l:["Tanaka","Sato","Yamamoto","Wang","Li","Zhang","Chen","Kim","Park","Lee","Choi","Sharma","Patel","Kumar","Singh","Thompson","Mitchell","Campbell"]},
+"Latin America":{f:["Carlos","Maria","José","Ana","Pedro","Lucia","Roberto","Carmen","Fernando","Isabel","Diego","Gabriela","Miguel","Valentina","Alejandro","Sofía","Rafael","Camila"],l:["Silva","Santos","Oliveira","Souza","Pereira","Costa","Fernández","López","González","Rodríguez","Martínez","García","Herrera","Romero","Álvarez","Díaz"]},
+};
+const PLATFORMS=["twitter","instagram","facebook","linkedin","tiktok"];
+const PLAT_ICONS={twitter:"𝕏",instagram:"📷",facebook:"📘",linkedin:"💼",tiktok:"♪"};
+const PLAT_COLORS={twitter:"#1da1f2",instagram:"#e1306c",facebook:"#1877f2",linkedin:"#0a66c2",tiktok:"#010101"};
+const PLAT_WEIGHTS={linkedin:3.0,twitter:1.5,facebook:1.0,instagram:0.6,tiktok:0.3};
+const COUNTRY_INFLUENCE={us:1.0,cn:0.95,jp:0.9,de:0.88,fr:0.85,gb:0.85,br:0.82,it:0.8,es:0.78,ca:0.78,kr:0.77,au:0.75,ch:0.75,in:0.72,mx:0.7,nl:0.7,be:0.68,se:0.65,ar:0.62,sa:0.6};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// REAL DATA: BRAZIL (Senado Federal + Câmara dos Deputados, 57ª Legislatura)
+// ═══════════════════════════════════════════════════════════════════════════════
+const BR_REAL=[
+// SENADO FEDERAL (81 seats — 3 per state)
+// PT
+{n:"Humberto Costa",p:"PT",ch:"upper",uf:"PE",cr:"full"},{n:"Randolfe Rodrigues",p:"PT",ch:"upper",uf:"AP",cr:"full"},
+{n:"Paulo Paim",p:"PT",ch:"upper",uf:"RS",cr:"full"},{n:"Fabiano Contarato",p:"PT",ch:"upper",uf:"ES",cr:"sub"},
+{n:"Jaques Wagner",p:"PT",ch:"upper",uf:"BA",cr:"full"},{n:"Teresa Leitão",p:"PT",ch:"upper",uf:"PE",cr:"sub"},
+{n:"Augusta Brito",p:"PT",ch:"upper",uf:"CE",cr:"sub"},{n:"Rogério Carvalho",p:"PT",ch:"upper",uf:"SE",cr:"full"},
+{n:"Beto Faro",p:"PT",ch:"upper",uf:"PA",cr:"sub"},
+// PL
+{n:"Flávio Bolsonaro",p:"PL",ch:"upper",uf:"RJ",cr:"full"},{n:"Rogério Marinho",p:"PL",ch:"upper",uf:"RN",cr:"full"},
+{n:"Magno Malta",p:"PL",ch:"upper",uf:"ES",cr:"sub"},{n:"Marcos Rogério",p:"PL",ch:"upper",uf:"RO",cr:"full"},
+{n:"Eduardo Gomes",p:"PL",ch:"upper",uf:"TO",cr:"sub"},{n:"Jorge Seif",p:"PL",ch:"upper",uf:"SC",cr:"sub"},
+{n:"Wellington Fagundes",p:"PL",ch:"upper",uf:"MT",cr:"sub"},{n:"Wilder Morais",p:"PL",ch:"upper",uf:"GO",cr:null},
+{n:"Jaime Bagattoli",p:"PL",ch:"upper",uf:"RO",cr:null},{n:"Izalci Lucas",p:"PL",ch:"upper",uf:"DF",cr:"sub"},
+{n:"Carlos Portinho",p:"PL",ch:"upper",uf:"RJ",cr:null},{n:"Ciro Nogueira",p:"PL",ch:"upper",uf:"PI",cr:"full"},
+{n:"Dr. Hiran",p:"PL",ch:"upper",uf:"RR",cr:null},{n:"Cleitinho",p:"PL",ch:"upper",uf:"MG",cr:null},
+// PSD
+{n:"Rodrigo Pacheco",p:"PSD",ch:"upper",uf:"MG",cr:"chair"},{n:"Angelo Coronel",p:"PSD",ch:"upper",uf:"BA",cr:"full"},
+{n:"Nelsinho Trad",p:"PSD",ch:"upper",uf:"MS",cr:"full"},{n:"Omar Aziz",p:"PSD",ch:"upper",uf:"AM",cr:"chair"},
+{n:"Otto Alencar",p:"PSD",ch:"upper",uf:"BA",cr:"full"},{n:"Vanderlan Cardoso",p:"PSD",ch:"upper",uf:"GO",cr:"sub"},
+{n:"Lucas Barreto",p:"PSD",ch:"upper",uf:"AP",cr:null},{n:"Daniella Ribeiro",p:"PSD",ch:"upper",uf:"PB",cr:"sub"},
+{n:"Irajá",p:"PSD",ch:"upper",uf:"TO",cr:null},{n:"Jussara Lima",p:"PSD",ch:"upper",uf:"PI",cr:"sub"},
+{n:"Mara Gabrilli",p:"PSD",ch:"upper",uf:"SP",cr:"full"},{n:"Margareth Buzetti",p:"PSD",ch:"upper",uf:"MT",cr:null},
+{n:"Sérgio Petecão",p:"PSD",ch:"upper",uf:"AC",cr:null},{n:"Zenaide Maia",p:"PSD",ch:"upper",uf:"RN",cr:"sub"},
+// MDB
+{n:"Renan Calheiros",p:"MDB",ch:"upper",uf:"AL",cr:"chair"},{n:"Eduardo Braga",p:"MDB",ch:"upper",uf:"AM",cr:"full"},
+{n:"Marcelo Castro",p:"MDB",ch:"upper",uf:"PI",cr:"chair"},{n:"Veneziano Vital do Rêgo",p:"MDB",ch:"upper",uf:"PB",cr:"full"},
+{n:"Jader Barbalho",p:"MDB",ch:"upper",uf:"PA",cr:"full"},{n:"Confúcio Moura",p:"MDB",ch:"upper",uf:"RO",cr:"sub"},
+{n:"Ivete da Silveira",p:"MDB",ch:"upper",uf:"SC",cr:null},{n:"Fernando Farias",p:"MDB",ch:"upper",uf:"AL",cr:null},
+// União Brasil
+{n:"Davi Alcolumbre",p:"União",ch:"upper",uf:"AP",cr:"chair"},{n:"Efraim Filho",p:"União",ch:"upper",uf:"PB",cr:"full"},
+{n:"Sergio Moro",p:"União",ch:"upper",uf:"PR",cr:"full"},{n:"Márcio Bittar",p:"União",ch:"upper",uf:"AC",cr:null},
+{n:"Jayme Campos",p:"União",ch:"upper",uf:"MT",cr:null},{n:"Professora Dorinha Seabra",p:"União",ch:"upper",uf:"TO",cr:"sub"},
+{n:"Alan Rick",p:"União",ch:"upper",uf:"AC",cr:null},
+// PP
+{n:"Tereza Cristina",p:"PP",ch:"upper",uf:"MS",cr:"full"},{n:"Luis Carlos Heinze",p:"PP",ch:"upper",uf:"RS",cr:"sub"},
+{n:"Esperidião Amin",p:"PP",ch:"upper",uf:"SC",cr:"full"},{n:"Laércio Oliveira",p:"PP",ch:"upper",uf:"SE",cr:null},
+// Podemos
+{n:"Oriovisto Guimarães",p:"Podemos",ch:"upper",uf:"PR",cr:null},{n:"Styvenson Valentim",p:"Podemos",ch:"upper",uf:"RN",cr:null},
+{n:"Marcos do Val",p:"Podemos",ch:"upper",uf:"ES",cr:null},{n:"Zequinha Marinho",p:"Podemos",ch:"upper",uf:"PA",cr:null},
+// Republicanos
+{n:"Hamilton Mourão",p:"Republicanos",ch:"upper",uf:"RS",cr:"full"},{n:"Mecias de Jesus",p:"Republicanos",ch:"upper",uf:"RR",cr:null},
+{n:"Damares Alves",p:"Republicanos",ch:"upper",uf:"DF",cr:"sub"},{n:"Astronauta Marcos Pontes",p:"PL",ch:"upper",uf:"SP",cr:null},
+// PSB
+{n:"Jorge Kajuru",p:"PSB",ch:"upper",uf:"GO",cr:null},{n:"Leila Barros",p:"PDT",ch:"upper",uf:"DF",cr:"sub"},
+// Novo / PSDB
+{n:"Eduardo Girão",p:"Novo",ch:"upper",uf:"CE",cr:"sub"},{n:"Plínio Valério",p:"PSDB",ch:"upper",uf:"AM",cr:null},
+// PDT
+{n:"Ana Paula Lobato",p:"PDT",ch:"upper",uf:"MA",cr:null},
+// CÂMARA DOS DEPUTADOS — key health committee (CSSF) + prominent members
+{n:"Pinheirinho",p:"PP",ch:"lower",uf:"MG",cr:"chair"},{n:"Pedro Westphalen",p:"PP",ch:"lower",uf:"RS",cr:"full"},
+{n:"Giovani Cherini",p:"PL",ch:"lower",uf:"RS",cr:"full"},{n:"Dr. Frederico",p:"PL",ch:"lower",uf:"MG",cr:"sub"},
+{n:"Carmen Zanotto",p:"Cidadania",ch:"lower",uf:"SC",cr:"full"},{n:"Dr. Zacharias Calil",p:"União",ch:"lower",uf:"GO",cr:"sub"},
+{n:"Jorge Solla",p:"PT",ch:"lower",uf:"BA",cr:"full"},{n:"Jandira Feghali",p:"PCdoB",ch:"lower",uf:"RJ",cr:"sub"},
+{n:"Alexandre Padilha",p:"PT",ch:"lower",uf:"SP",cr:"full"},{n:"Hiran Gonçalves",p:"PP",ch:"lower",uf:"RR",cr:"sub"},
+{n:"Dra. Alessandra Haber",p:"MDB",ch:"lower",uf:"PA",cr:"sub"},{n:"Iza Arruda",p:"MDB",ch:"lower",uf:"PE",cr:null},
+{n:"Nikolas Ferreira",p:"PL",ch:"lower",uf:"MG",cr:null},{n:"Eduardo Bolsonaro",p:"PL",ch:"lower",uf:"SP",cr:null},
+{n:"Guilherme Boulos",p:"PSOL",ch:"lower",uf:"SP",cr:null},{n:"Érika Hilton",p:"PSOL",ch:"lower",uf:"SP",cr:null},
+{n:"Hugo Motta",p:"Republicanos",ch:"lower",uf:"PB",cr:"chair"},{n:"Elmar Nascimento",p:"União",ch:"lower",uf:"BA",cr:"full"},
+{n:"Antonio Brito",p:"PSD",ch:"lower",uf:"BA",cr:"full"},{n:"Luiz Philippe de Orleans e Bragança",p:"PL",ch:"lower",uf:"SP",cr:null},
+{n:"Dra. Eudócia",p:"PL",ch:"lower",uf:"AL",cr:"sub"}
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MEMBER GENERATION + SCORING
+// ═══════════════════════════════════════════════════════════════════════════════
+function srand(seed){let s=Math.abs(seed)||1;return function(){s=(s*16807)%2147483647;return(s-1)/2147483646;};}
+function hashStr(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193);}return h>>>0;}
+function pick(arr,rng){return arr[Math.floor(rng()*arr.length)];}
+
+const memberCache={};
+function getMembers(code){
+  if(memberCache[code]) return memberCache[code];
+  const c=CTRY[code];if(!c)return[];
+
+  // Use real data for Brazil
+  if(code==='br' && BR_REAL.length>0){
+    return getBRMembers(c);
+  }
+
+  const names=NP[c.region]||NP["Europe"];
+  const rng=srand(hashStr(code)*7919);
+  const count=22+Math.floor(rng()*10);
+  const members=[];
+  for(let i=0;i<count;i++){
+    const first=pick(names.f,rng),last=pick(names.l,rng);
+    const party=pick(c.parties,rng);
+    const chamber=c.upper==="—"?"lower":(rng()<0.25?"upper":"lower");
+    const chamberName=chamber==="upper"?c.upper:c.lower;
+    const cr=rng();
+    const committeeRole=cr<0.08?"chair":(cr<0.25?"full":(cr<0.45?"sub":null));
+    const social=genSocial(rng,first[0]+last);
+    members.push({id:code+"-"+i,name:first+" "+last,party,chamber,chamberName,committee:committeeRole?c.hc:null,committeeRole,social,country:code,countryName:c.name,flag:c.flag});
+  }
+  memberCache[code]=members;
+  return members;
+}
+
+function genSocial(rng,nameStr){
+  const social={};
+  const numP=2+Math.floor(rng()*4);
+  [...PLATFORMS].sort(()=>rng()-0.5).slice(0,numP).forEach(p=>{
+    const posts=Math.floor(rng()*80)+1;
+    const postData=[];
+    for(let j=0;j<posts;j++){
+      postData.push({daysAgo:Math.floor(rng()*365),likes:Math.floor(Math.pow(rng(),0.5)*500)});
+    }
+    social[p]={handle:nameStr.toLowerCase().replace(/[^a-z]/g,'').slice(0,12),posts,postData};
+  });
+  return social;
+}
+
+function getBRMembers(c){
+  const members=[];
+  BR_REAL.forEach((r,i)=>{
+    const rng=srand(hashStr('br-real-'+r.n)*7919);
+    const chamber=r.ch;
+    const chamberName=chamber==='upper'?c.upper:c.lower;
+    const handle=r.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'').slice(0,14);
+    const social=genSocial(rng,handle);
+    members.push({
+      id:'br-'+i,name:r.n,party:r.p,chamber,chamberName,
+      committee:r.cr?c.hc:null,committeeRole:r.cr,
+      social,country:'br',countryName:c.name,flag:c.flag,
+      uf:r.uf,realData:true
+    });
+  });
+  memberCache['br']=members;
+  return members;
+}
+
+function scoreMembers(members,product){
+  return members.map(m=>{
+    const rng=srand(hashStr((product||"x")+'|'+m.id));
+    const isFav=rng()>0.42;
+    const sentiment=isFav?+(0.55+rng()*0.44).toFixed(2):+(0.06+rng()*0.38).toFixed(2);
+
+    // Social Score: platform-weighted, engagement-amplified, time-decayed
+    let socialScore=0;let totalLikes=0;let totalPosts=0;
+    Object.entries(m.social).forEach(([p,d])=>{
+      const w=PLAT_WEIGHTS[p]||1.0;
+      totalPosts+=d.posts;
+      d.postData.forEach(post=>{
+        const decay=Math.exp(-0.01*post.daysAgo); // half-life ~69 days
+        const engagement=Math.log2(1+post.likes);
+        totalLikes+=post.likes;
+        socialScore+=w*sentiment*(1+engagement)*decay;
+      });
+    });
+    socialScore=+(socialScore).toFixed(1);
+
+    // Speech Score: relevance × count × average decay
+    const spRel=isFav?+(0.45+rng()*0.55).toFixed(2):+(0.08+rng()*0.45).toFixed(2);
+    const speeches=Math.floor(rng()*14)+1;
+    const avgSpeechDays=Math.floor(rng()*180)+30;
+    const speechDecay=Math.exp(-0.01*avgSpeechDays);
+    const speechScore=+(spRel*speeches*10*speechDecay).toFixed(1);
+
+    // Bill Score: additive ±15 per bill
+    const favBills=isFav?Math.floor(rng()*4):0;
+    const oppBills=!isFav?Math.floor(rng()*3):0;
+    const billScore=+((favBills*15)-(oppBills*15)).toFixed(1);
+
+    // Committee Score: tiered (chair=30, full=15, sub=7) × country influence
+    const influence=COUNTRY_INFLUENCE[m.country]||0.5;
+    const tierPts=m.committeeRole==='chair'?30:(m.committeeRole==='full'?15:(m.committeeRole==='sub'?7:0));
+    const committeeScore=+(tierPts*influence).toFixed(1);
+
+    // Final grade
+    const grade=+(socialScore+speechScore+billScore+committeeScore).toFixed(1);
+    return{...m,sentiment,socialScore,totalPosts,totalLikes,spRel,speeches,speechScore,favBills,oppBills,billScore,committeeScore,grade,isFav};
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// UI CONTROLLERS
+// ═══════════════════════════════════════════════════════════════════════════════
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('#lang-pills .pill-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim()===l.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[lang][k])el.textContent=I18N[lang][k];});
+  document.getElementById('topic-search').placeholder=t('search_placeholder');
+  render();
+}
+function setScope(s){
+  scope=s;
+  document.querySelectorAll('.scope-btn').forEach(b=>b.classList.toggle('active',b.dataset.scope===s));
+  document.getElementById('country-wrap').classList.toggle('hidden',s!=='country');
+  document.getElementById('region-wrap').classList.toggle('hidden',s!=='regional');
+  render();
+}
+
+function initFilters(){
+  const cSel=document.getElementById('filter-country');
+  Object.entries(CTRY).sort((a,b)=>a[1].name.localeCompare(b[1].name)).forEach(([k,v])=>{cSel.innerHTML+=`<option value="${k}">${v.flag} ${v.name}</option>`;});
+  cSel.value='us';
+  const rSel=document.getElementById('filter-region');
+  Object.keys(REGIONS).forEach(r=>{rSel.innerHTML+=`<option value="${r}">${r}</option>`;});
+  const mSel=document.getElementById('filter-mfr');
+  Object.keys(MFR).sort().forEach(m=>{mSel.innerHTML+=`<option value="${m}">${m}</option>`;});
+  mSel.value='Novo Nordisk';
+  onMfrChange();
+}
+
+function onMfrChange(){
+  const products=MFR[document.getElementById('filter-mfr').value]||[];
+  const areas=[...new Set(products.map(p=>p.a))].sort();
+  const aSel=document.getElementById('filter-area');
+  aSel.innerHTML=`<option value="all">${t('area_all')}</option>`;
+  areas.forEach(a=>{aSel.innerHTML+=`<option value="${a}">${a}</option>`;});
+  onAreaChange();
+}
+function onAreaChange(){
+  const mfr=document.getElementById('filter-mfr').value;
+  const area=document.getElementById('filter-area').value;
+  let products=MFR[mfr]||[];
+  if(area!=='all') products=products.filter(p=>p.a===area);
+  const pSel=document.getElementById('filter-product');
+  pSel.innerHTML='';
+  products.forEach(p=>{pSel.innerHTML+=`<option value="${p.n}">${p.n}</option>`;});
+  onFilterChange();
+}
+function onFilterChange(){
+  if(!document.getElementById('topic-search').value.trim()) render();
+}
+
+let searchTimeout=null;
+function onSearchInput(){
+  const q=document.getElementById('topic-search').value.trim();
+  const filtersDisabled=q.length>0;
+  ['filter-mfr','filter-area','filter-product'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.disabled=filtersDisabled;
+    el.style.opacity=filtersDisabled?'0.4':'1';
+  });
+  document.querySelector('.search-divider').style.opacity=filtersDisabled?'0.3':'1';
+  clearTimeout(searchTimeout);
+  if(q.length>=2){
+    searchTimeout=setTimeout(()=>render(),300);
+  } else if(q.length===0){
+    render();
+  }
+}
+
+function getActiveTopic(){
+  const q=document.getElementById('topic-search').value.trim();
+  if(q.length>=2) return q.toLowerCase();
+  return document.getElementById('filter-product').value;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════════════════════════════════════
+function getCountryCodes(){
+  if(scope==='country') return [document.getElementById('filter-country').value];
+  if(scope==='regional') return REGIONS[document.getElementById('filter-region').value]||[];
+  return Object.keys(CTRY);
+}
+
+function render(){
+  const topic=getActiveTopic();
+  const mapC=document.getElementById('map-container');
+  const cardsC=document.getElementById('cards-container');
+
+  if(scope==='global'){
+    mapC.classList.add('active');cardsC.classList.add('hidden');
+    renderMap(topic);
+    renderSummary(Object.keys(CTRY),topic);
+  } else {
+    mapC.classList.remove('active');cardsC.classList.remove('hidden');
+    const codes=getCountryCodes();
+    let all=[];codes.forEach(c=>{all=all.concat(getMembers(c));});
+    const scored=scoreMembers(all,topic);
+    const supporters=scored.filter(m=>m.isFav).sort((a,b)=>b.grade-a.grade).slice(0,20);
+    const detractors=scored.filter(m=>!m.isFav).sort((a,b)=>a.grade-b.grade).slice(0,20);
+    const showFlag=scope!=='country';
+    renderCol('supporters-list',supporters,showFlag);
+    renderCol('detractors-list',detractors,showFlag);
+    renderSummary(codes,topic);
+  }
+}
+
+function renderSummary(codes,product){
+  let all=[];codes.forEach(c=>{all=all.concat(getMembers(c));});
+  const scored=scoreMembers(all,product);
+  const sup=scored.filter(m=>m.isFav);
+  const det=scored.filter(m=>!m.isFav);
+  const avgS=sup.length?+(sup.reduce((s,m)=>s+m.grade,0)/sup.length).toFixed(1):0;
+  const avgD=det.length?+(det.reduce((s,m)=>s+m.grade,0)/det.length).toFixed(1):0;
+  document.getElementById('summary-bar').innerHTML=`
+    <div class="summary-stat"><div class="val" style="color:var(--accent-blue)">${scored.length}</div><div class="lbl">${t('stat_total')}</div></div>
+    <div class="summary-stat"><div class="val" style="color:var(--accent-purple)">${codes.length}</div><div class="lbl">${t('stat_countries')}</div></div>
+    <div class="summary-stat"><div class="val" style="color:var(--accent-green)">+${avgS}</div><div class="lbl">${t('stat_avg_sup')}</div></div>
+    <div class="summary-stat"><div class="val" style="color:var(--accent-red)">${avgD}</div><div class="lbl">${t('stat_avg_det')}</div></div>`;
+}
+
+function avatarColor(n){return `hsl(${hashStr(n)%360},40%,38%)`;}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+
+function renderCol(id,members,showFlag){
+  const el=document.getElementById(id);el.innerHTML='';
+  members.forEach((m,i)=>{
+    const card=document.createElement('div');card.className='m-card';card.onclick=()=>openDetail(m);
+    const ufTag=m.uf?` <span style="color:var(--text-muted);font-size:9px">${m.uf}</span>`:'';
+    card.innerHTML=`<span class="rank">${i+1}</span><div class="m-avatar" style="background:${avatarColor(m.name)}">${initials(m.name)}</div><div class="m-info"><div class="m-name">${m.name}${ufTag}${showFlag?'<span class="m-flag">'+m.flag+'</span>':''}</div><div class="m-meta">${m.party} · ${m.chamberName}${m.committee?' · '+m.committee:''}</div></div><div class="m-score">${m.grade>0?'+':''}${m.grade}</div>`;
+    el.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// D3 MAP
+// ═══════════════════════════════════════════════════════════════════════════════
+let mapSvg=null,mapReady=false,geoData=null;
+const ISO_MAP={};// will map ISO_A3 -> our country code
+Object.entries(CTRY).forEach(([k,v])=>{ISO_MAP[v.iso]=k;});
+
+function initMap(){
+  const container=document.getElementById('map-container');
+  const w=container.clientWidth||900,h=Math.min(w*0.55,500);
+  mapSvg=d3.select('#map-container').insert('svg','div.map-tooltip').attr('viewBox',`0 0 ${w} ${h}`).attr('preserveAspectRatio','xMidYMid meet');
+  // Load world data
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world=>{
+    geoData=topojson.feature(world,world.objects.countries);
+    const projection=d3.geoNaturalEarth1().fitSize([w,h],geoData);
+    const path=d3.geoPath(projection);
+    mapSvg.selectAll('path').data(geoData.features).enter().append('path')
+      .attr('d',path)
+      .attr('class',d=>{
+        const iso=d.properties.name;// fallback
+        const id3=d.id;// numeric id - we'll use ISO lookup
+        // world-atlas uses numeric IDs, we need to match
+        const code=findCountryCode(d);
+        return 'country-path'+(code?' has-data':'');
+      })
+      .attr('data-code',d=>findCountryCode(d)||'')
+      .on('mouseenter',function(ev,d){showTooltip(ev,d,this);})
+      .on('mousemove',function(ev){moveTooltip(ev);})
+      .on('mouseleave',hideTooltip)
+      .on('click',function(ev,d){clickCountry(d);});
+    mapReady=true;
+  }).catch(()=>{
+    container.innerHTML+='<p style="text-align:center;color:var(--accent-red);padding:40px;">Map data unavailable offline. Connect to internet for D3 globe.</p>';
+  });
+}
+
+// Map ISO numeric to our codes (world-atlas uses UN M49 numeric codes)
+const NUMERIC_ISO={"840":"us","156":"cn","392":"jp","276":"de","250":"fr","380":"it","826":"gb","724":"es","124":"ca","410":"kr","076":"br","036":"au","356":"in","484":"mx","643":"ru","756":"ch","528":"nl","792":"tr","616":"pl","032":"ar"};
+function findCountryCode(feature){
+  return NUMERIC_ISO[feature.id]||null;
+}
+
+function showTooltip(ev,d,el){
+  const code=findCountryCode(d);
+  if(!code||!CTRY[code]) return;
+  const product=getActiveTopic();
+  const members=getMembers(code);
+  const scored=scoreMembers(members,product);
+  const sup=scored.filter(m=>m.isFav).sort((a,b)=>b.grade-a.grade).slice(0,3);
+  const det=scored.filter(m=>!m.isFav).sort((a,b)=>a.grade-b.grade).slice(0,3);
+  const c=CTRY[code];
+  let html=`<h4>${c.flag} ${c.name}</h4>`;
+  html+=`<div class="tt-section"><div class="tt-label">${t('tt_supporters')}</div>`;
+  sup.forEach(m=>{html+=`<div class="tt-row"><span class="tt-name">${m.name}</span><span class="tt-score-green">+${m.grade}</span></div>`;});
+  if(!sup.length) html+=`<div class="tt-row"><span class="tt-name" style="color:var(--text-muted)">—</span></div>`;
+  html+=`</div><div class="tt-section"><div class="tt-label">${t('tt_detractors')}</div>`;
+  det.forEach(m=>{html+=`<div class="tt-row"><span class="tt-name">${m.name}</span><span class="tt-score-red">${m.grade}</span></div>`;});
+  if(!det.length) html+=`<div class="tt-row"><span class="tt-name" style="color:var(--text-muted)">—</span></div>`;
+  html+=`</div>`;
+
+  const tip=document.getElementById('map-tooltip');
+  tip.innerHTML=html;tip.classList.add('visible');
+  d3.select(el).classed('highlighted',true);
+  moveTooltip(ev);
+}
+function moveTooltip(ev){
+  const tip=document.getElementById('map-tooltip');
+  const rect=document.getElementById('map-container').getBoundingClientRect();
+  let x=ev.clientX-rect.left+12,y=ev.clientY-rect.top+12;
+  if(x+260>rect.width) x=x-270;
+  if(y+200>rect.height) y=y-200;
+  tip.style.left=x+'px';tip.style.top=y+'px';
+}
+function hideTooltip(){
+  document.getElementById('map-tooltip').classList.remove('visible');
+  d3.selectAll('.country-path').classed('highlighted',false);
+}
+function clickCountry(d){
+  const code=findCountryCode(d);
+  if(!code||!CTRY[code]) return;
+  // Switch to country view
+  document.getElementById('filter-country').value=code;
+  setScope('country');
+}
+
+function renderMap(product){
+  if(!mapReady) return;
+  // Update colors based on engagement
+  d3.selectAll('.country-path[data-code]').each(function(){
+    const code=d3.select(this).attr('data-code');
+    if(code&&CTRY[code]){
+      d3.select(this).classed('has-data',true);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DETAIL VIEWS
+// ═══════════════════════════════════════════════════════════════════════════════
+function openDetail(m){
+  const html=buildDetail(m);
+  document.getElementById('modal-av').style.background=avatarColor(m.name);
+  document.getElementById('modal-av').textContent=initials(m.name);
+  document.getElementById('modal-name').textContent=m.name;
+  document.getElementById('modal-meta').textContent=`${m.party}${m.uf?' · '+m.uf:''} · ${m.chamberName} · ${m.countryName}${m.committee?' · '+m.committee+(m.committeeRole?' ('+m.committeeRole+')':''):''}`;
+  document.getElementById('modal-body').innerHTML=html;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeDetail(e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function buildDetail(m){
+  let socialHtml='';
+  Object.entries(m.social).forEach(([p,d])=>{
+    const platLikes=d.postData.reduce((s,x)=>s+x.likes,0);
+    socialHtml+=`<div class="social-chip" onclick="event.stopPropagation();showSocial(this,'${p}','${d.handle}',${d.posts},${platLikes})"><span class="icon" style="color:${PLAT_COLORS[p]}">${PLAT_ICONS[p]}</span><div><div class="cnt">${d.posts} <span style="font-size:9px;color:var(--text-muted)">· ${formatK(platLikes)} ♥</span></div><div class="pn">${p} <span style="font-size:8px;opacity:0.6">×${PLAT_WEIGHTS[p]}</span></div></div></div>`;
+  });
+  return `
+<div class="section"><div class="section-title">${t('section_score')}</div>
+<div class="score-grid">
+<div class="sc"><div class="v" style="color:var(--accent-cyan)">${m.socialScore}</div><div class="l">${t('label_social_score')}</div></div>
+<div class="sc"><div class="v" style="color:var(--accent-purple)">${m.speechScore}</div><div class="l">${t('label_speech_score')}</div></div>
+<div class="sc"><div class="v" style="color:${m.billScore>=0?'var(--accent-green)':'var(--accent-red)'}">${m.billScore>0?'+':''}${m.billScore}</div><div class="l">${t('label_bill_score')}</div></div>
+<div class="sc"><div class="v" style="color:var(--accent-amber)">${m.committeeScore}</div><div class="l">${t('label_committee_score')}</div></div>
+<div class="sc"><div class="v" style="color:${m.grade>=0?'var(--accent-green)':'var(--accent-red)'}"><strong>${m.grade>0?'+':''}${m.grade}</strong></div><div class="l">${t('label_final_grade')}</div></div>
+</div>
+<div style="margin-top:8px;font-size:10px;color:var(--text-muted);line-height:1.6;">
+${t('label_sentiment')}: <strong style="color:var(--accent-blue)">${m.sentiment}</strong> · ${t('label_posts')}: <strong>${m.totalPosts}</strong> · ${t('label_likes')}: <strong>${formatK(m.totalLikes)}</strong>
+</div></div>
+<div class="section"><div class="section-title">${t('section_speeches')}</div>
+<p style="font-size:11px;color:var(--text-secondary);line-height:1.5;"><strong style="color:var(--accent-amber)">${m.speeches}</strong> ${t('label_speech_detail')} · ${t('label_relevance')}: <strong style="color:var(--accent-purple)">${m.spRel}</strong></p></div>
+<div class="section"><div class="section-title">${t('section_bills')}</div>
+<p style="font-size:11px;color:var(--text-secondary);line-height:1.5;"><strong style="color:var(--accent-green)">${m.favBills}</strong> ${t('label_bill_favorable')} (+15 ea.) · <strong style="color:var(--accent-red)">${m.oppBills}</strong> ${t('label_bill_opposing')} (−15 ea.)</p></div>
+<div class="section"><div class="section-title">${t('section_social')}</div>
+<p style="font-size:10px;color:var(--text-muted);margin-bottom:7px;">${t('section_social_hint')}</p>
+<div class="social-grid">${socialHtml}</div>
+<div class="social-detail"></div></div>`;
+}
+function formatK(n){return n>=1000?(n/1000).toFixed(1)+'k':n.toString();}
+
+function showSocial(el,platform,handle,count,likes){
+  const msg=t('social_hint_msg').replace('{platform}',platform[0].toUpperCase()+platform.slice(1)).replace('{count}',count).replace('{handle}',handle).replace('{likes}',formatK(likes||0));
+  const section=el.closest('.section');
+  if(section){const box=section.querySelector('.social-detail');if(box){box.style.display='block';box.innerHTML=`<p>${msg}</p>`;}}
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DATA IMPORT (paste JSON from dadosabertos.camara.leg.br or legis.senado.leg.br)
+// ═══════════════════════════════════════════════════════════════════════════════
+function openImport(){
+  const overlay=document.getElementById('modal-overlay');
+  document.getElementById('modal-av').style.background='var(--accent-cyan)';
+  document.getElementById('modal-av').textContent='⚙';
+  document.getElementById('modal-name').textContent='Import API Data';
+  document.getElementById('modal-meta').textContent='Paste JSON from Brazilian Câmara or Senado APIs';
+  document.getElementById('modal-body').innerHTML=`
+<div class="section">
+<div class="section-title">Instructions</div>
+<p style="font-size:11px;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;">
+Paste the JSON response from one of these endpoints:<br>
+<code style="color:var(--accent-cyan);font-size:10px;">dadosabertos.camara.leg.br/api/v2/deputados?itens=513</code><br>
+<code style="color:var(--accent-cyan);font-size:10px;">legis.senado.leg.br/dadosabertos/senador/lista/atual</code><br>
+The dashboard will parse it and replace synthetic data for Brazil.
+</p>
+<select id="import-type" style="width:100%;padding:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:12px;margin-bottom:8px;">
+<option value="camara">Câmara dos Deputados (deputados)</option>
+<option value="senado">Senado Federal (senadores)</option>
+</select>
+<textarea id="import-json" placeholder="Paste JSON here..." style="width:100%;height:200px;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-size:11px;font-family:monospace;resize:vertical;"></textarea>
+<button onclick="processImport()" style="margin-top:8px;width:100%;padding:10px;background:var(--accent-cyan);border:none;border-radius:6px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;">Import & Refresh</button>
+<div id="import-status" style="margin-top:8px;font-size:11px;color:var(--text-secondary);"></div>
+</div>`;
+  overlay.classList.add('open');
+}
+
+function processImport(){
+  const type=document.getElementById('import-type').value;
+  const raw=document.getElementById('import-json').value.trim();
+  const status=document.getElementById('import-status');
+  try {
+    const json=JSON.parse(raw);
+    let imported=0;
+    if(type==='camara'){
+      // Câmara API: {dados:[{id,nome,siglaPartido,siglaUf,...}]}
+      const dados=json.dados||json;
+      if(!Array.isArray(dados)) throw new Error('Expected {dados:[...]} or an array');
+      dados.forEach((d,i)=>{
+        BR_REAL.push({n:d.nome||d.name,p:d.siglaPartido||d.party||'?',ch:'lower',uf:d.siglaUf||d.state||'?',cr:null});
+        imported++;
+      });
+    } else {
+      // Senado API: {ListaParlamentarEmExercicio:{Parlamentares:{Parlamentar:[...]}}}
+      let list=json;
+      if(json.ListaParlamentarEmExercicio) list=json.ListaParlamentarEmExercicio.Parlamentares.Parlamentar;
+      if(json.dados) list=json.dados;
+      if(!Array.isArray(list)) list=[list];
+      list.forEach((s,i)=>{
+        const ident=s.IdentificacaoParlamentar||s;
+        BR_REAL.push({
+          n:ident.NomeParlamentar||ident.nome||s.nome||'?',
+          p:ident.SiglaPartidoParlamentar||ident.siglaPartido||s.siglaPartido||'?',
+          ch:'upper',uf:ident.UfParlamentar||ident.siglaUf||s.siglaUf||'?',cr:null
+        });
+        imported++;
+      });
+    }
+    // Clear cache to force regeneration
+    delete memberCache['br'];
+    render();
+    status.innerHTML='<span style="color:var(--accent-green)">✓ Imported '+imported+' members. Brazil data refreshed.</span>';
+  } catch(e){
+    status.innerHTML='<span style="color:var(--accent-red)">Error: '+e.message+'</span>';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{initFilters();initMap();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
+</script>
+</body>
+</html>

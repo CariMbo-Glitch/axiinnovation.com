@@ -1,4 +1,4 @@
-/* Axi Navigation â shared JS for navbar, fade-up, contact modal, Formspree submission */
+/* Axi Innovation â shared JS for navbar, fade-up, contact modal, Formspree submission */
 
 document.addEventListener('DOMContentLoaded', function () {
     // Mobile nav toggle
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const em = formData.get('email')||''; const r = formData.get('role')||'';
                 const int = formData.get('interest')||''; const msg = formData.get('message')||'';
                 const body = encodeURIComponent('Name: '+n+'\nCompany: '+c+'\nEmail: '+em+'\nRole: '+r('\nInterest: '+int+'\n\nMessage:\n'+msg);
-                window.location.href = 'mailto:contact@axinavigation.com?subject='+encodeURIComponent('Website enquiry â '+int)+'&body='+body;
+                window.location.href = 'mailto:contact@axiinnovation.com?subject='+encodeURIComponent('Website enquiry â '+int)+'&body='+body;
             } finally { submitBtn.disabled=false; submitBtn.textContent='Send Message'; }
         });
     }

@@ -1,5 +1,5 @@
 /* ============================================================
-   AXI NAVIGATION — Multilingual Translations
+   Axi Innovation — Multilingual Translations
    Languages: EN-US (default) · PT-BR · ES-LA · FR
    ============================================================ */
 
@@ -71,10 +71,10 @@ const AXI_LANG = {
 
     /* INDEX — Early Access */
     'index.access.title': 'Join the founding cohort',
-    'index.access.sub':   'Axi Navigation is currently in private beta. Request early access and we\'ll be in touch within 48 hours.',
+    'index.access.sub':   'Axi Innovation is currently in private beta. Request early access and we\'ll be in touch within 48 hours.',
 
     /* Footer */
-    'footer.copy': '© 2026 Axi Navigation. All rights reserved.',
+    'footer.copy': '© 2026 Axi Innovation. All rights reserved.',
 
     /* ── GAiN — Module 01 ── */
     'gain.hero.title1': 'GAiN — <em>G2M &amp; Access</em>',
@@ -251,10 +251,10 @@ const AXI_LANG = {
 
     /* INDEX — Early Access */
     'index.access.title': 'Faça parte do grupo fundador',
-    'index.access.sub':   'A Axi Navigation está atualmente em beta privado. Solicite acesso antecipado e entraremos em contato em até 48 horas.',
+    'index.access.sub':   'A Axi Innovation está atualmente em beta privado. Solicite acesso antecipado e entraremos em contato em até 48 horas.',
 
     /* Footer */
-    'footer.copy': '© 2026 Axi Navigation. Todos os direitos reservados.',
+    'footer.copy': '© 2026 Axi Innovation. Todos os direitos reservados.',
 
     /* GAiN */
     'gain.prob.title':  'O que a indústria enfrenta sem isso',
@@ -419,10 +419,10 @@ const AXI_LANG = {
 
     /* INDEX — Early Access */
     'index.access.title': 'Únase al grupo fundador',
-    'index.access.sub':   'Axi Navigation está actualmente en beta privada. Solicite acceso anticipado y nos pondremos en contacto en 48 horas.',
+    'index.access.sub':   'Axi Innovation está actualmente en beta privada. Solicite acceso anticipado y nos pondremos en contacto en 48 horas.',
 
     /* Footer */
-    'footer.copy': '© 2026 Axi Navigation. Todos los derechos reservados.',
+    'footer.copy': '© 2026 Axi Innovation. Todos los derechos reservados.',
 
     /* GAiN */
     'gain.prob.title':  'Lo que enfrenta la industria sin esto',
@@ -585,10 +585,10 @@ const AXI_LANG = {
 
     /* INDEX — Early Access */
     'index.access.title': 'Rejoignez le groupe fondateur',
-    'index.access.sub':   'Axi Navigation est actuellement en bêta privée. Demandez un accès anticipé et nous vous contacterons dans les 48 heures.',
+    'index.access.sub':   'Axi Innovation est actuellement en bêta privée. Demandez un accès anticipé et nous vous contacterons dans les 48 heures.',
 
     /* Footer */
-    'footer.copy': '© 2026 Axi Navigation. Tous droits réservés.',
+    'footer.copy': '© 2026 Axi Innovation. Tous droits réservés.',
 
     /* GAiN */
     'gain.prob.title':  'Ce à quoi l\'industrie est confrontée sans cela',

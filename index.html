@@ -125,6 +125,89 @@
       margin-top: 24px;
     }
     .form-success p { color: var(--text); margin-top: 12px; }
+
+    /* ---- Clients carousel ---- */
+    .clients-section {
+      padding: 56px 60px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .clients-title {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .clients-title .eyebrow {
+      margin-bottom: 0;
+    }
+    .clients-track-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+    .clients-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: clientScroll 32s linear infinite;
+    }
+    .clients-track:hover {
+      animation-play-state: paused;
+    }
+    @keyframes clientScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .client-item {
+      flex: 0 0 auto;
+      width: 200px;
+      margin: 0 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .client-logo {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: grayscale(100%) brightness(1.8) contrast(0.6);
+      opacity: 0.5;
+      transition: all 0.4s ease;
+    }
+    .client-item:hover .client-logo {
+      opacity: 0.85;
+      filter: grayscale(100%) brightness(2) contrast(0.7);
+    }
+    .client-logo img {
+      max-height: 40px;
+      max-width: 160px;
+      width: auto;
+      object-fit: contain;
+    }
+    .client-industry {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.45;
+      transition: opacity 0.4s ease;
+      text-align: center;
+    }
+    .client-item:hover .client-industry {
+      opacity: 0.85;
+    }
+    @media (max-width: 960px) {
+      .clients-section { padding: 40px 24px; }
+      .client-item { width: 150px; margin: 0 24px; }
+      .client-logo img { max-height: 32px; max-width: 120px; }
+      .clients-track { animation-duration: 22s; }
+    }
   </style>
 </head>
 <body>
@@ -394,6 +477,93 @@
     <div class="form-success" id="formSuccess">
       <div style="font-size:32px">✦</div>
       <p>Thank you — your request has been received. We'll be in touch within 48 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRUSTED BY INDUSTRY LEADERS
+     ========================================================= -->
+<section class="clients-section">
+  <div class="clients-title">
+    <div class="eyebrow">Trusted by Industry Leaders</div>
+  </div>
+  <div class="clients-track-wrapper">
+    <div class="clients-track">
+      <!-- Set 1 -->
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/jnj.com?size=200" alt="Johnson &amp; Johnson" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma &middot; Med Tech</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/novartis.com?size=200" alt="Novartis" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/roche.com?size=200" alt="Roche" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma &middot; Diagnostics</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/sanofi.com?size=200" alt="Sanofi" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/vale.com?size=200" alt="Vale" loading="lazy">
+        </div>
+        <div class="client-industry">Mining &middot; Commodities</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/walmart.com?size=200" alt="Walmart" loading="lazy">
+        </div>
+        <div class="client-industry">Retail &middot; Healthcare</div>
+      </div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/jnj.com?size=200" alt="Johnson &amp; Johnson" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma &middot; Med Tech</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/novartis.com?size=200" alt="Novartis" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/roche.com?size=200" alt="Roche" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma &middot; Diagnostics</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/sanofi.com?size=200" alt="Sanofi" loading="lazy">
+        </div>
+        <div class="client-industry">Pharma</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/vale.com?size=200" alt="Vale" loading="lazy">
+        </div>
+        <div class="client-industry">Mining &middot; Commodities</div>
+      </div>
+      <div class="client-item">
+        <div class="client-logo">
+          <img src="https://logo.clearbit.com/walmart.com?size=200" alt="Walmart" loading="lazy">
+        </div>
+        <div class="client-industry">Retail &middot; Healthcare</div>
+      </div>
     </div>
   </div>
 </section>
